@@ -1,49 +1,60 @@
+
+"use client";
+
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { CTA_LINKS } from "@/lib/constants";
+import { motion, useInView } from "motion/react";
+import { useRef } from "react";
 
 export function ContactPreview() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-20% 0px" });
+
   return (
-    <section className="py-20 bg-stone-50 border-t border-stone-200 text-center">
-      <Container size="narrow">
-        <ScrollReveal>
-          <div className="w-16 h-16 bg-stone-200 rounded-full flex items-center justify-center mx-auto mb-6 text-stone-600">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M21.2 8.4c.5.38.8.97.8 1.6v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V10a2 2 0 0 1 .8-1.6l8-6a2 2 0 0 1 2.4 0l8 6Z" />
-              <path d="m22 10-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 10" />
-            </svg>
-          </div>
-
-          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4 text-stone-900">
-            Press & Inquiries
-          </h2>
-
-          <p className="text-stone-600 mb-8 max-w-md mx-auto">
-            For media interviews, bulk orders, or direct communication with the
-            publisher and authors.
-          </p>
-
-          <Button variant="secondary" href={CTA_LINKS.contact.href}>
-            {CTA_LINKS.contact.label}
-          </Button>
-
-          <div className="mt-12 text-sm text-stone-400">
-            <p className="uppercase tracking-widest font-semibold">
-              CGG International W.L.L.
+    <section
+      ref={ref}
+      className="relative bg-stone-50 border-t border-stone-200 overflow-hidden"
+    >
+      <Container className="py-16 md:py-20">
+        <div className="relative flex flex-col lg:flex-row items-start lg:items-center justify-between gap-10">
+          <div className="max-w-2xl">
+            <p className="font-body text-sm uppercase tracking-[0.25em] text-stone-500 mb-4">
+              Press & Inquiries
+            </p>
+            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-semibold text-stone-950 mb-4 text-balance">
+              Start the conversation.
+            </h2>
+            <p className="font-body text-stone-600 text-lg leading-relaxed">
+              For media interviews, bulk orders, or direct communication with the
+              publisher and authors.
             </p>
           </div>
-        </ScrollReveal>
+
+          <div className="shrink-0">
+            <Button variant="secondary" size="lg" href={CTA_LINKS.contact.href}>
+              {CTA_LINKS.contact.label}
+            </Button>
+          </div>
+
+          {/* Oversized arrow on far right */}
+          <div
+            className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 text-display text-stone-900/10 select-none pointer-events-none"
+            aria-hidden="true"
+          >
+            →
+          </div>
+        </div>
       </Container>
+
+      {/* Animated crimson bottom border */}
+      <motion.div
+        aria-hidden="true"
+        initial={{ scaleX: 0 }}
+        animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
+        transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+        className="absolute bottom-0 left-0 h-0.5 w-full bg-crimson-600 origin-left"
+      />
     </section>
   );
 }

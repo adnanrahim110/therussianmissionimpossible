@@ -2,7 +2,6 @@ import { BookContact } from "@/components/book/BookContact";
 import { BookDetails } from "@/components/book/BookDetails";
 import { BookExcerpt } from "@/components/book/BookExcerpt";
 import { BookHero } from "@/components/book/BookHero";
-import { BookStats } from "@/components/book/BookStats";
 import { BookTestimonials } from "@/components/book/BookTestimonials";
 import { BookTimeline } from "@/components/book/BookTimeline";
 
@@ -19,7 +18,6 @@ export default function BookPage() {
       <BookDetails />
       <BookTimeline />
       <BookExcerpt />
-      <BookStats />
       <BookTestimonials />
       <BookContact />
     </>

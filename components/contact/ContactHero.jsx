@@ -30,7 +30,7 @@ export function ContactHero() {
         className="absolute inset-0 opacity-20"
         style={prefersReducedMotion ? {} : { y, opacity }}
       >
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]" />
+        <div className="absolute inset-0 grid-overlay-dark" />
         <div className="absolute bottom-0 left-0 w-125 h-125 bg-stone-500/10 rounded-full blur-3xl opacity-40 mix-blend-overlay translate-y-1/2 -translate-x-1/4" />
       </motion.div>
 

@@ -1,5 +1,4 @@
 import { AuthorProfiles } from "@/components/authors/AuthorProfile";
-import { AuthorsContact } from "@/components/authors/AuthorsContact";
 import { AuthorsCTA } from "@/components/authors/AuthorsCTA";
 import { AuthorsHero } from "@/components/authors/AuthorsHero";
 import { AuthorsTestimonials } from "@/components/authors/AuthorsTestimonials";
@@ -15,9 +14,8 @@ export default function AuthorsPage() {
     <>
       <AuthorsHero />
       <AuthorProfiles />
-      <AuthorsCTA />
       <AuthorsTestimonials />
-      <AuthorsContact />
+      <AuthorsCTA />
     </>
   );
 }

@@ -1,119 +1,246 @@
 "use client";
 
 import { Container } from "@/components/ui/Container";
-import { Divider } from "@/components/ui/Divider";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { useTilt3D } from "@/hooks/useTilt3D";
 import { AUTHORS } from "@/lib/content";
 import { cn } from "@/lib/utils";
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from "motion/react";
-import { useRef } from "react";
+import { motion } from "motion/react";
 
-export function AuthorProfiles() {
+function initialsFor(name) {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase();
+}
+
+function accentFor(index) {
+  if (index % 3 === 1) {
+    return {
+      line: "bg-olive-600",
+      badgeLine: "border-l-olive-600",
+      badgeText: "text-olive-800",
+      soft: "bg-olive-600/8",
+    };
+  }
+  if (index % 3 === 2) {
+    return {
+      line: "bg-stone-900/25",
+      badgeLine: "border-l-stone-900/30",
+      badgeText: "text-stone-700",
+      soft: "bg-stone-900/6",
+    };
+  }
+  return {
+    line: "bg-crimson-600",
+    badgeLine: "border-l-crimson-600",
+    badgeText: "text-crimson-700",
+    soft: "bg-crimson-600/8",
+  };
+}
+
+function PhotoStack({ initials, accent }) {
+  const tilt = useTilt3D({ maxTilt: 7, scale: 1.03 });
+
   return (
-    <div className="bg-stone-50">
-      {AUTHORS.map((author, index) => (
-        <div key={index}>
-          <AuthorSection author={author} index={index} />
-          {index < AUTHORS.length - 1 && (
-            <Container>
-              <Divider variant="ornament" className="opacity-50" />
-            </Container>
-          )}
+    <div className="perspective-container">
+      <motion.div
+        ref={tilt.ref}
+        style={tilt.style}
+        onMouseMove={tilt.handleMouseMove}
+        onMouseLeave={tilt.handleMouseLeave}
+        className="relative aspect-4/5 w-full max-w-md mx-auto preserve-3d"
+      >
+        <div className="absolute inset-0 rounded-[2px] bg-white border border-stone-200 shadow-[0_18px_60px_rgba(28,26,23,0.14)] rotate-[-6deg] translate-x-3 translate-y-3" />
+        <div className="absolute inset-0 rounded-[2px] bg-stone-50 border border-stone-200 shadow-[0_16px_50px_rgba(28,26,23,0.12)] rotate-[4deg] translate-x-1.5 translate-y-1.5" />
+
+        <div className="relative h-full w-full rounded-[2px] bg-white border border-stone-200 overflow-hidden shadow-[0_28px_90px_rgba(28,26,23,0.16)]">
+          <div aria-hidden="true" className="absolute inset-0 grid-overlay-light opacity-45" />
+          <div aria-hidden="true" className="absolute inset-0 grain-overlay pointer-events-none opacity-55" />
+          <div aria-hidden="true" className={cn("absolute left-0 top-0 bottom-0 w-1", accent.line)} />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-linear-to-br from-white via-transparent to-stone-200/60"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 shadow-[inset_0_0_110px_rgba(28,26,23,0.10)]"
+          />
+
+          <div className="absolute inset-0 grid place-items-center">
+            <span className="font-heading text-[96px] md:text-[120px] font-black text-stone-300/55 select-none">
+              {initials}
+            </span>
+          </div>
+
+          <div className="absolute left-6 right-6 bottom-6 flex items-center justify-between gap-8">
+            <div className="font-body text-[10px] uppercase tracking-[0.34em] text-stone-500">
+              Portrait placeholder
+            </div>
+            <span className="crosshair-marker scale-75 opacity-60" />
+          </div>
         </div>
-      ))}
+      </motion.div>
+    </div>
+  );
+}
+
+function QuoteCallout({ quote, accent }) {
+  return (
+    <div className={cn("relative rounded-[2px] border border-stone-200 bg-stone-50 overflow-hidden", accent.soft)}>
+      <div aria-hidden="true" className="absolute inset-0 grid-overlay-light opacity-35" />
+      <div aria-hidden="true" className="absolute inset-0 grain-overlay pointer-events-none opacity-55" />
+      <div aria-hidden="true" className={cn("absolute left-0 top-0 bottom-0 w-1", accent.line)} />
+
+      <div className="relative p-6 md:p-7">
+        <div aria-hidden="true" className="font-heading font-black leading-none text-[72px] text-stone-200/80 -mt-6">
+          &ldquo;
+        </div>
+        <p className="font-heading text-xl md:text-2xl font-medium italic leading-snug text-stone-900 text-pretty -mt-6">
+          {quote}
+        </p>
+      </div>
     </div>
   );
 }
 
 function AuthorSection({ author, index }) {
   const isEven = index % 2 === 0;
-  const imageRef = useRef(null);
-  const prefersReducedMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: imageRef,
-    offset: ["start end", "end start"],
-  });
+  const sectionBg = isEven ? "bg-stone-50" : "bg-white";
+  const accent = accentFor(index);
 
-  const imageY = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
-
-  // Fake initials-based placeholder like AuthorCard since we don't have images
-  const initials = author.name
-    .split(" ")
-    .map((n) => n[0])
-    .join("");
+  const initials = initialsFor(author.name);
+  const anchorId = `author-${index}`;
+  const code = `OS-A${String(index + 1).padStart(2, "0")}`;
 
   return (
-    <section className="section-padding overflow-hidden">
-      <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Text Content */}
-          <div className={cn("order-2", isEven ? "lg:order-1" : "lg:order-2")}>
-            <ScrollReveal>
-              <div className="inline-block px-3 py-1 bg-stone-200 text-stone-700 text-xs font-semibold uppercase tracking-wider rounded-full mb-6">
-                {author.role}
+    <section
+      id={anchorId}
+      className={cn(
+        "relative overflow-hidden section-padding scroll-mt-24 border-b border-stone-200",
+        sectionBg,
+        index > 0 && "clip-diagonal-top -mt-1",
+      )}
+    >
+      <div aria-hidden="true" className="absolute inset-0 grid-overlay-light opacity-45" />
+      <div aria-hidden="true" className="absolute inset-0 grain-overlay pointer-events-none opacity-50" />
+
+      <div
+        aria-hidden="true"
+        className={cn(
+          "absolute -top-10 right-[-6vw] font-heading font-black leading-none select-none pointer-events-none",
+          "text-[clamp(4.5rem,10vw,10rem)]",
+          "text-stone-200/55",
+        )}
+      >
+        {initials}
+      </div>
+
+      <Container className="relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-start">
+          {/* Image */}
+          <div
+            className={cn(
+              "relative lg:col-span-5",
+              isEven ? "lg:order-2 lg:col-start-8" : "lg:order-1 lg:col-start-1",
+            )}
+          >
+            <ScrollReveal variant="rotate-in">
+              <div className={cn("relative", isEven ? "lg:pt-14" : "lg:pt-8")}>
+                <PhotoStack initials={initials} accent={accent} />
               </div>
-
-              <h2 className="font-heading text-3xl md:text-5xl font-bold text-stone-900 mb-6">
-                {author.name}
-              </h2>
-
-              <p className="font-body text-lg text-stone-700 leading-relaxed mb-8">
-                {author.bio}
-              </p>
-
-              <blockquote className="border-l-4 border-crimson-600 pl-6 my-8">
-                <p className="font-heading text-xl md:text-2xl text-stone-800 italic leading-snug">
-                  "{author.quote}"
-                </p>
-              </blockquote>
             </ScrollReveal>
           </div>
 
-          {/* Image Placeholder */}
+          {/* Text */}
           <div
             className={cn(
-              "order-1 relative",
-              isEven ? "lg:order-2" : "lg:order-1",
+              "relative lg:col-span-7",
+              isEven ? "lg:order-1 lg:col-start-1" : "lg:order-2 lg:col-start-6",
             )}
           >
-            <ScrollReveal delay={0.2}>
+            <ScrollReveal variant="clip-left">
               <div
-                ref={imageRef}
-                className="aspect-4/5 w-full max-w-md mx-auto relative rounded-2xl overflow-hidden bg-stone-200 shadow-xl border border-stone-300"
+                className={cn(
+                  "relative rounded-[2px] border border-stone-200 bg-white shadow-[0_28px_90px_rgba(28,26,23,0.10)] overflow-hidden",
+                  isEven ? "lg:-mr-8" : "lg:-ml-8",
+                )}
               >
-                {!prefersReducedMotion && (
-                  <motion.div
-                    className="absolute inset-0 bg-stone-300 flex items-center justify-center"
-                    style={{ y: imageY, scale: 1.1 }} // Scale slightly so parallax doesn't show edges
-                  >
-                    {/* Inner styling of placeholder */}
-                    <div className="absolute inset-0 bg-linear-to-tr from-stone-400/20 to-transparent" />
-                    <span className="font-heading text-[120px] font-bold text-stone-400/50 mix-blend-overlay">
-                      {initials}
-                    </span>
-                  </motion.div>
-                )}
+                <div aria-hidden="true" className="absolute inset-0 grid-overlay-light opacity-35" />
+                <div aria-hidden="true" className="absolute inset-0 grain-overlay pointer-events-none opacity-55" />
+                <div aria-hidden="true" className={cn("absolute left-0 top-0 bottom-0 w-1", accent.line)} />
 
-                {prefersReducedMotion && (
-                  <div className="absolute inset-0 bg-stone-300 flex items-center justify-center">
-                    <span className="font-heading text-[120px] font-bold text-stone-400/50 mix-blend-overlay">
-                      {initials}
-                    </span>
+                <div className="relative p-8 md:p-10">
+                  <div className="flex items-start justify-between gap-10">
+                    <div
+                      className={cn(
+                        "inline-flex items-center gap-2 rounded-[2px] border border-stone-200 bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] border-l-2",
+                        accent.badgeLine,
+                        accent.badgeText,
+                      )}
+                    >
+                      <span className="crosshair-marker scale-75 opacity-55" />
+                      {author.role}
+                    </div>
+
+                    <div className="text-right">
+                      <div className="font-body text-[11px] uppercase tracking-[0.32em] text-stone-500 tabular-nums">
+                        {code}
+                      </div>
+                      <div className="mt-2 font-body text-[11px] uppercase tracking-[0.32em] text-stone-400 tabular-nums">
+                        {String(index + 1).padStart(2, "0")}/
+                        {String(AUTHORS.length).padStart(2, "0")}
+                      </div>
+                    </div>
                   </div>
-                )}
 
-                {/* Frame inset shadow overlay */}
-                <div className="absolute inset-0 shadow-[inset_0_0_40px_rgba(0,0,0,0.1)] pointer-events-none rounded-2xl" />
+                  <h2 className="mt-9 font-heading text-4xl md:text-5xl lg:text-6xl font-black leading-[0.95] text-stone-950 text-balance">
+                    {author.name}
+                  </h2>
+
+                  <div className="mt-7 font-body text-stone-700 text-lg leading-relaxed">
+                    <p>
+                      <span className="font-heading text-6xl font-black text-crimson-600 float-left mr-3 mt-1 leading-none">
+                        {author.bio[0]}
+                      </span>
+                      {author.bio.slice(1)}
+                    </p>
+                  </div>
+
+                  <div className="mt-10">
+                    <QuoteCallout quote={author.quote} accent={accent} />
+                  </div>
+
+                  <div className="mt-10 flex items-center justify-between gap-8">
+                    <div className="flex items-center gap-3 text-xs uppercase tracking-[0.28em] text-stone-500">
+                      <span className="crosshair-marker scale-75 opacity-60" />
+                      Archive verified
+                    </div>
+                    <div className="hidden md:flex items-center gap-3 text-xs uppercase tracking-[0.28em] text-stone-400">
+                      <span className="tabular-nums">{anchorId.toUpperCase()}</span>
+                      <span className="text-stone-300">/</span>
+                      <span className="tabular-nums">OS-3.0</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </ScrollReveal>
           </div>
         </div>
       </Container>
     </section>
+  );
+}
+
+export function AuthorProfiles() {
+  return (
+    <div className="bg-stone-50">
+      {AUTHORS.map((author, index) => (
+        <AuthorSection key={author.name} author={author} index={index} />
+      ))}
+    </div>
   );
 }

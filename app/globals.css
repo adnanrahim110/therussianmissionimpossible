@@ -67,6 +67,8 @@
   --font-body: var(--font-source-sans-3);
 
   /* ---- Border radius ---- */
+  --radius-sharp: 2px;
+  --radius-editorial: 4px;
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 16px;
@@ -93,7 +95,6 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-
     *,
     *::before,
     *::after {
@@ -125,6 +126,61 @@
   .container-wide {
     @apply max-w-360 mx-auto px-4 sm:px-6 lg:px-8;
   }
+
+  /* Film grain overlay — CSS-only SVG noise */
+  .grain-overlay {
+    position: relative;
+  }
+
+  .grain-overlay::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+  }
+
+  /* Golden-ratio grid overlay */
+  .grid-overlay-light {
+    background-image:
+      linear-gradient(to right, rgba(181, 173, 161, 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(181, 173, 161, 0.06) 1px, transparent 1px);
+    background-size: 61.8% 61.8%;
+  }
+
+  .grid-overlay-dark {
+    background-image:
+      linear-gradient(to right, rgba(250, 249, 247, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(250, 249, 247, 0.03) 1px, transparent 1px);
+    background-size: 61.8% 61.8%;
+  }
+
+  /* Crosshair marker */
+  .crosshair-marker {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    flex-shrink: 0;
+    background-image:
+      linear-gradient(to bottom, var(--color-crimson-600), var(--color-crimson-600)),
+      linear-gradient(to right, var(--color-crimson-600), var(--color-crimson-600));
+    background-size: 1px 100%, 100% 1px;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  /* 3D perspective */
+  .perspective-container {
+    perspective: 1200px;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
 }
 
 @layer utilities {
@@ -134,5 +190,29 @@
 
   .text-pretty {
     text-wrap: pretty;
+  }
+
+  /* Clip-path utilities */
+  .clip-diagonal-top {
+    clip-path: polygon(0 4%, 100% 0%, 100% 100%, 0% 100%);
+  }
+
+  .clip-diagonal-bottom {
+    clip-path: polygon(0 0%, 100% 0%, 100% 96%, 0% 100%);
+  }
+
+  .clip-angular-reveal {
+    clip-path: polygon(0 3%, 3% 0, 100% 0, 100% 97%, 97% 100%, 0 100%);
+  }
+
+  /* Editorial text scales */
+  .text-display {
+    font-size: clamp(4rem, 8vw, 10rem);
+    line-height: 0.9;
+  }
+
+  .text-mega {
+    font-size: clamp(6rem, 12vw, 15rem);
+    line-height: 0.85;
   }
 }

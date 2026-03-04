@@ -3,14 +3,13 @@
 import { cn } from "@/lib/utils";
 import {
   animate,
-  motion,
   useInView,
   useMotionValue,
   useReducedMotion,
 } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
-export function CountUp({ end, suffix = "", duration = 2, className }) {
+export function CountUp({ end, suffix = "", label, duration = 2, className }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
   const prefersReducedMotion = useReducedMotion();
@@ -24,9 +23,11 @@ export function CountUp({ end, suffix = "", duration = 2, className }) {
     }
 
     if (isInView) {
+      // Spring-based animation
       const controls = animate(count, end, {
-        duration,
-        ease: "easeOut",
+        type: "spring",
+        stiffness: 50,
+        damping: 20,
         onUpdate: (latest) => {
           setDisplayValue(Math.floor(latest).toString());
         },
@@ -37,8 +38,10 @@ export function CountUp({ end, suffix = "", duration = 2, className }) {
 
   return (
     <div ref={ref} className={cn("font-heading tabular-nums", className)}>
-      {displayValue}
-      {suffix}
+      <span>{displayValue}</span>
+      {suffix && (
+        <span className="text-[0.6em] text-stone-400 ml-1">{suffix}</span>
+      )}
     </div>
   );
 }

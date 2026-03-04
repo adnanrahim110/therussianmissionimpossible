@@ -15,7 +15,6 @@ export function AnimatedText({
   const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
   const prefersReducedMotion = useReducedMotion();
 
-  // If splitBy is "line", we expect `text` to be an array of lines or we split by \n.
   const lines = typeof text === "string" ? text.split("\n") : text;
 
   if (prefersReducedMotion) {
@@ -31,7 +30,7 @@ export function AnimatedText({
     visible: (i = 1) => ({
       opacity: 1,
       transition: {
-        staggerChildren: splitBy === "word" ? 0.05 : 0.15,
+        staggerChildren: splitBy === "char" ? 0.02 : splitBy === "word" ? 0.05 : 0.15,
         delayChildren: delay * i,
       },
     }),
@@ -41,10 +40,12 @@ export function AnimatedText({
     hidden: {
       opacity: 0,
       y: "100%",
+      rotateX: splitBy === "char" ? -90 : 0,
     },
     visible: {
       opacity: 1,
       y: 0,
+      rotateX: 0,
       transition: {
         type: "spring",
         damping: 24,
@@ -52,6 +53,39 @@ export function AnimatedText({
       },
     },
   };
+
+  // Character split mode
+  if (splitBy === "char") {
+    const chars =
+      typeof text === "string" ? text.split("") : lines.join(" ").split("");
+
+    return (
+      <Tag className={cn("text-balance", className)} ref={ref}>
+        <motion.span
+          variants={container}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          className="inline-flex flex-wrap"
+          style={{ perspective: "600px" }}
+        >
+          {chars.map((char, index) => (
+            <span
+              key={index}
+              className="overflow-hidden inline-flex"
+            >
+              <motion.span
+                variants={childVariant}
+                className="inline-block"
+                style={{ transformOrigin: "bottom center" }}
+              >
+                {char === " " ? "\u00A0" : char}
+              </motion.span>
+            </span>
+          ))}
+        </motion.span>
+      </Tag>
+    );
+  }
 
   if (splitBy === "word") {
     const words =
