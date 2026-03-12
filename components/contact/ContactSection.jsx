@@ -30,7 +30,7 @@ export function ContactSection() {
           {/* Left: Contact Form */}
           <div className="lg:col-span-7 order-2 lg:order-1">
             <ScrollReveal>
-              <div className="bg-white p-8 md:p-10 rounded-2xl shadow-sm border border-stone-200">
+              <div className="bg-white p-8 md:p-10 rounded-[2px] shadow-sm border border-stone-200">
                 <h2 className="font-heading text-3xl font-bold text-stone-900 mb-2">
                   Send a Message
                 </h2>
@@ -66,7 +66,7 @@ export function ContactSection() {
                     <select
                       id="subject"
                       name="subject"
-                      className="w-full px-4 py-3 bg-white border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-200 focus:border-stone-400 transition-shadow duration-200 font-body"
+                      className="w-full px-4 py-3 bg-white border border-stone-300 rounded-[2px] focus:outline-none focus:ring-2 focus:ring-stone-200 focus:border-stone-400 transition-shadow duration-200 font-body"
                     >
                       <option value="general">General Inquiry</option>
                       <option value="press">Press / Media Interview</option>
@@ -95,7 +95,11 @@ export function ContactSection() {
                   </Button>
 
                   {status === "success" && (
-                    <p className="text-olive-600 text-sm mt-4 font-medium">
+                    <p
+                      role="status"
+                      aria-live="polite"
+                      className="text-olive-600 text-sm mt-4 font-medium"
+                    >
                       Thank you. Your message has been securely forwarded to CGG
                       International.
                     </p>
@@ -178,7 +182,7 @@ export function ContactSection() {
                       <a
                         key={i}
                         href={link.href}
-                        className="flex items-center justify-center w-12 h-12 rounded-full bg-stone-200 text-stone-700 hover:bg-crimson-600 hover:text-white transition-colors duration-200"
+                        className="flex items-center justify-center w-12 h-12 rounded-full bg-stone-200 text-stone-700 hover:bg-crimson-600 hover:text-white transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-crimson-500"
                         aria-label={link.label}
                       >
                         {/* Placeholder generic social icon */}

@@ -50,17 +50,25 @@ function PhotoStack({ initials, accent }) {
       <motion.div
         ref={tilt.ref}
         style={tilt.style}
-        onMouseMove={tilt.handleMouseMove}
-        onMouseLeave={tilt.handleMouseLeave}
+        {...tilt.handlers}
         className="relative aspect-4/5 w-full max-w-md mx-auto preserve-3d"
       >
-        <div className="absolute inset-0 rounded-[2px] bg-white border border-stone-200 shadow-[0_18px_60px_rgba(28,26,23,0.14)] rotate-[-6deg] translate-x-3 translate-y-3" />
+        <div className="absolute inset-0 rounded-[2px] bg-white border border-stone-200 shadow-[0_18px_60px_rgba(28,26,23,0.14)] -rotate-6 translate-x-3 translate-y-3" />
         <div className="absolute inset-0 rounded-[2px] bg-stone-50 border border-stone-200 shadow-[0_16px_50px_rgba(28,26,23,0.12)] rotate-[4deg] translate-x-1.5 translate-y-1.5" />
 
         <div className="relative h-full w-full rounded-[2px] bg-white border border-stone-200 overflow-hidden shadow-[0_28px_90px_rgba(28,26,23,0.16)]">
-          <div aria-hidden="true" className="absolute inset-0 grid-overlay-light opacity-45" />
-          <div aria-hidden="true" className="absolute inset-0 grain-overlay pointer-events-none opacity-55" />
-          <div aria-hidden="true" className={cn("absolute left-0 top-0 bottom-0 w-1", accent.line)} />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 grid-overlay-light opacity-45"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 grain-overlay pointer-events-none opacity-55"
+          />
+          <div
+            aria-hidden="true"
+            className={cn("absolute left-0 top-0 bottom-0 w-1", accent.line)}
+          />
           <div
             aria-hidden="true"
             className="absolute inset-0 bg-linear-to-br from-white via-transparent to-stone-200/60"
@@ -90,13 +98,30 @@ function PhotoStack({ initials, accent }) {
 
 function QuoteCallout({ quote, accent }) {
   return (
-    <div className={cn("relative rounded-[2px] border border-stone-200 bg-stone-50 overflow-hidden", accent.soft)}>
-      <div aria-hidden="true" className="absolute inset-0 grid-overlay-light opacity-35" />
-      <div aria-hidden="true" className="absolute inset-0 grain-overlay pointer-events-none opacity-55" />
-      <div aria-hidden="true" className={cn("absolute left-0 top-0 bottom-0 w-1", accent.line)} />
+    <div
+      className={cn(
+        "relative rounded-[2px] border border-stone-200 bg-stone-50 overflow-hidden",
+        accent.soft,
+      )}
+    >
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 grid-overlay-light opacity-35"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 grain-overlay pointer-events-none opacity-55"
+      />
+      <div
+        aria-hidden="true"
+        className={cn("absolute left-0 top-0 bottom-0 w-1", accent.line)}
+      />
 
-      <div className="relative p-6 md:p-7">
-        <div aria-hidden="true" className="font-heading font-black leading-none text-[72px] text-stone-200/80 -mt-6">
+      <div className="relative p-6 md:p-8">
+        <div
+          aria-hidden="true"
+          className="font-heading font-black leading-none text-[72px] text-stone-200/80 -mt-6"
+        >
           &ldquo;
         </div>
         <p className="font-heading text-xl md:text-2xl font-medium italic leading-snug text-stone-900 text-pretty -mt-6">
@@ -125,8 +150,14 @@ function AuthorSection({ author, index }) {
         index > 0 && "clip-diagonal-top -mt-1",
       )}
     >
-      <div aria-hidden="true" className="absolute inset-0 grid-overlay-light opacity-45" />
-      <div aria-hidden="true" className="absolute inset-0 grain-overlay pointer-events-none opacity-50" />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 grid-overlay-light opacity-45"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 grain-overlay pointer-events-none opacity-50"
+      />
 
       <div
         aria-hidden="true"
@@ -145,7 +176,9 @@ function AuthorSection({ author, index }) {
           <div
             className={cn(
               "relative lg:col-span-5",
-              isEven ? "lg:order-2 lg:col-start-8" : "lg:order-1 lg:col-start-1",
+              isEven
+                ? "lg:order-2 lg:col-start-8"
+                : "lg:order-1 lg:col-start-1",
             )}
           >
             <ScrollReveal variant="rotate-in">
@@ -159,7 +192,9 @@ function AuthorSection({ author, index }) {
           <div
             className={cn(
               "relative lg:col-span-7",
-              isEven ? "lg:order-1 lg:col-start-1" : "lg:order-2 lg:col-start-6",
+              isEven
+                ? "lg:order-1 lg:col-start-1"
+                : "lg:order-2 lg:col-start-6",
             )}
           >
             <ScrollReveal variant="clip-left">
@@ -169,9 +204,21 @@ function AuthorSection({ author, index }) {
                   isEven ? "lg:-mr-8" : "lg:-ml-8",
                 )}
               >
-                <div aria-hidden="true" className="absolute inset-0 grid-overlay-light opacity-35" />
-                <div aria-hidden="true" className="absolute inset-0 grain-overlay pointer-events-none opacity-55" />
-                <div aria-hidden="true" className={cn("absolute left-0 top-0 bottom-0 w-1", accent.line)} />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 grid-overlay-light opacity-35"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 grain-overlay pointer-events-none opacity-55"
+                />
+                <div
+                  aria-hidden="true"
+                  className={cn(
+                    "absolute left-0 top-0 bottom-0 w-1",
+                    accent.line,
+                  )}
+                />
 
                 <div className="relative p-8 md:p-10">
                   <div className="flex items-start justify-between gap-10">
@@ -201,7 +248,7 @@ function AuthorSection({ author, index }) {
                     {author.name}
                   </h2>
 
-                  <div className="mt-7 font-body text-stone-700 text-lg leading-relaxed">
+                  <div className="mt-8 font-body text-stone-700 text-lg leading-relaxed">
                     <p>
                       <span className="font-heading text-6xl font-black text-crimson-600 float-left mr-3 mt-1 leading-none">
                         {author.bio[0]}
@@ -220,7 +267,9 @@ function AuthorSection({ author, index }) {
                       Archive verified
                     </div>
                     <div className="hidden md:flex items-center gap-3 text-xs uppercase tracking-[0.28em] text-stone-400">
-                      <span className="tabular-nums">{anchorId.toUpperCase()}</span>
+                      <span className="tabular-nums">
+                        {anchorId.toUpperCase()}
+                      </span>
                       <span className="text-stone-300">/</span>
                       <span className="tabular-nums">OS-3.0</span>
                     </div>

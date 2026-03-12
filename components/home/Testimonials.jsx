@@ -169,7 +169,7 @@ export function Testimonials() {
                         type="button"
                         onClick={() => select(activeIndex - 1)}
                         aria-label="Previous testimonial"
-                        className="group inline-flex items-center justify-center h-10 w-10 rounded-[2px] border border-stone-800 bg-stone-950/40 hover:bg-stone-900 transition-colors"
+                        className="group inline-flex items-center justify-center h-10 w-10 rounded-[2px] border border-stone-800 bg-stone-950/40 hover:bg-stone-900 transition-colors focus-visible:ring-2 focus-visible:ring-crimson-500"
                       >
                         <svg
                           viewBox="0 0 24 24"
@@ -187,7 +187,7 @@ export function Testimonials() {
                         type="button"
                         onClick={() => select(activeIndex + 1)}
                         aria-label="Next testimonial"
-                        className="group inline-flex items-center justify-center h-10 w-10 rounded-[2px] border border-stone-800 bg-stone-950/40 hover:bg-stone-900 transition-colors"
+                        className="group inline-flex items-center justify-center h-10 w-10 rounded-[2px] border border-stone-800 bg-stone-950/40 hover:bg-stone-900 transition-colors focus-visible:ring-2 focus-visible:ring-crimson-500"
                       >
                         <svg
                           viewBox="0 0 24 24"
@@ -215,7 +215,7 @@ export function Testimonials() {
                           type="button"
                           onClick={() => select(i)}
                           className={cn(
-                            "group relative w-full overflow-hidden rounded-[2px] border text-left transition-colors",
+                            "group relative w-full overflow-hidden rounded-[2px] border text-left transition-colors focus-visible:ring-2 focus-visible:ring-crimson-500",
                             isActive
                               ? "border-stone-700 bg-stone-950/70"
                               : "border-stone-800 bg-stone-950/30 hover:bg-stone-950/55",
@@ -294,7 +294,7 @@ export function Testimonials() {
                   )}
                 </AnimatePresence>
 
-                <div className="relative px-6 md:px-5 py-14 md:pt-13.5 md:pb-16">
+                <div className="relative px-6 md:px-6 py-14 md:pt-14 md:pb-16">
                   <div className="absolute inset-6 md:inset-y-10 md:inset-x-2 rounded-[2px] border border-stone-800/70 pointer-events-none" />
 
                   <AnimatePresence

@@ -14,8 +14,14 @@ export function AuthorsCTA() {
         aria-hidden="true"
         className="absolute inset-0 bg-linear-to-br from-white via-stone-50 to-white"
       />
-      <div aria-hidden="true" className="absolute inset-0 grid-overlay-light opacity-45" />
-      <div aria-hidden="true" className="absolute inset-0 grain-overlay pointer-events-none opacity-50" />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 grid-overlay-light opacity-45"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 grain-overlay pointer-events-none opacity-50"
+      />
 
       {/* Diagonal accent wash */}
       <div
@@ -44,7 +50,7 @@ export function AuthorsCTA() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
           <div className="lg:col-span-7">
             <ScrollReveal variant="clip-left">
-              <p className="font-body text-sm uppercase tracking-[0.28em] text-stone-500 mb-5 flex items-center gap-4">
+              <p className="font-body text-sm uppercase tracking-[0.28em] text-stone-500 mb-6 flex items-center gap-4">
                 <span className="crosshair-marker scale-75 opacity-60" />
                 <span>The Authors</span>
                 <span aria-hidden="true" className="h-px flex-1 bg-stone-200" />
@@ -52,12 +58,11 @@ export function AuthorsCTA() {
               <h2 className="font-heading font-black text-4xl md:text-6xl leading-[0.95] text-balance text-stone-950">
                 Their story,
                 <br />
-                their{" "}
-                <span className="text-crimson-600">words</span>.
+                their <span className="text-crimson-600">words</span>.
               </h2>
               <p className="mt-6 font-body text-stone-600 text-lg md:text-xl font-light leading-relaxed max-w-2xl">
-                A verified narrative assembled from testimony, time, and
-                the discipline of documentary record.
+                A verified narrative assembled from testimony, time, and the
+                discipline of documentary record.
               </p>
             </ScrollReveal>
           </div>
@@ -65,11 +70,20 @@ export function AuthorsCTA() {
           <div className="lg:col-span-5 flex lg:justify-end">
             <ScrollReveal delay={0.15} variant="clip-up">
               <div className="relative w-full max-w-md rounded-[2px] border border-stone-200 bg-white ring-1 ring-stone-900/5 shadow-[0_28px_90px_rgba(28,26,23,0.10)] overflow-hidden">
-                <div aria-hidden="true" className="absolute inset-0 grid-overlay-light opacity-40" />
-                <div aria-hidden="true" className="absolute inset-0 grain-overlay pointer-events-none opacity-50" />
-                <div aria-hidden="true" className="absolute left-0 top-0 bottom-0 w-1 bg-crimson-600" />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 grid-overlay-light opacity-40"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 grain-overlay pointer-events-none opacity-50"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute left-0 top-0 bottom-0 w-1 bg-crimson-600"
+                />
 
-                <div className="relative p-7">
+                <div className="relative p-8">
                   <div className="flex items-start justify-between gap-10">
                     <div>
                       <div className="font-body text-[11px] uppercase tracking-[0.32em] text-stone-500">

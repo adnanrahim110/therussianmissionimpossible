@@ -49,7 +49,7 @@ function LogRow({ label, value }) {
 }
 
 function MissionLog({ progress, prefersReducedMotion }) {
-  const { ref, style, handleMouseMove, handleMouseLeave } = useTilt3D({
+  const { ref, style, handlers } = useTilt3D({
     maxTilt: 8,
     scale: 1.01,
   });
@@ -73,15 +73,14 @@ function MissionLog({ progress, prefersReducedMotion }) {
       <motion.div
         ref={ref}
         style={style}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
+        {...handlers}
         className="relative rounded-[2px] border border-stone-800 bg-stone-950/70 overflow-hidden shadow-[0_30px_90px_rgba(0,0,0,0.35)] will-change-transform"
       >
         <div className="absolute inset-0 grid-overlay-dark opacity-60" />
         <div className="absolute inset-0 grain-overlay pointer-events-none" />
         <div className="absolute -top-20 -right-20 h-56 w-56 rounded-full bg-crimson-900/20 blur-[120px]" />
 
-        <div className="relative p-6 md:p-7">
+        <div className="relative p-6 md:p-8">
           <div className="flex items-center justify-between gap-6">
             <div className="flex items-center gap-3">
               <span className="crosshair-marker scale-75 opacity-80" />
@@ -102,7 +101,7 @@ function MissionLog({ progress, prefersReducedMotion }) {
             />
           </div>
 
-          <div className="mt-7 space-y-5">
+          <div className="mt-8 space-y-6">
             <LogRow
               label="Duration"
               value={`${STATS[2].value}${STATS[2].suffix}`}
@@ -158,7 +157,7 @@ export function HomeHero() {
   return (
     <section
       ref={ref}
-      className="relative min-h-vh flex items-stretch overflow-hidden bg-stone-950 pt-20 border-b border-stone-800 md:pl-12"
+      className="relative min-h-screen-safe flex items-stretch overflow-hidden bg-stone-950 pt-20 border-b border-stone-800 md:pl-12"
     >
       <FilmEdge />
 

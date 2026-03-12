@@ -76,8 +76,14 @@ export function AuthorsHero() {
         aria-hidden="true"
         className="absolute inset-0 bg-linear-to-br from-stone-950 via-stone-950 to-stone-900"
       />
-      <div aria-hidden="true" className="absolute inset-0 grid-overlay-dark opacity-60" />
-      <div aria-hidden="true" className="absolute inset-0 grain-overlay pointer-events-none" />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 grid-overlay-dark opacity-60"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 grain-overlay pointer-events-none"
+      />
       <div
         aria-hidden="true"
         className="absolute left-[61.8%] top-1/2 size-130 -translate-x-1/2 -translate-y-1/2 rounded-full bg-crimson-900/14 blur-[150px]"
@@ -110,11 +116,20 @@ export function AuthorsHero() {
 
           <div className="lg:col-span-5">
             <div className="relative rounded-[2px] border border-stone-800/80 bg-stone-950/55 ring-1 ring-white/5 shadow-[0_24px_80px_rgba(0,0,0,0.45)] overflow-hidden backdrop-blur-md">
-              <div aria-hidden="true" className="absolute inset-0 grid-overlay-dark opacity-45" />
-              <div aria-hidden="true" className="absolute inset-0 grain-overlay pointer-events-none opacity-55" />
-              <div aria-hidden="true" className="absolute left-0 top-0 bottom-0 w-1 bg-crimson-600/80" />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 grid-overlay-dark opacity-45"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 grain-overlay pointer-events-none opacity-55"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute left-0 top-0 bottom-0 w-1 bg-crimson-600/80"
+              />
 
-              <div className="relative p-6 md:p-7">
+              <div className="relative p-6 md:p-8">
                 <div className="flex items-start justify-between gap-8">
                   <div>
                     <div className="font-body text-[11px] uppercase tracking-[0.32em] text-stone-400">
@@ -175,14 +190,14 @@ export function AuthorsHero() {
                   key={author.name}
                   className={cn(
                     "relative w-full md:flex-1 md:basis-0 overflow-hidden rounded-[2px] border border-stone-800/80 bg-stone-950/55 ring-1 ring-white/5 shadow-[0_30px_110px_rgba(0,0,0,0.55)] backdrop-blur-md",
-                    "min-h-[220px] md:min-h-[340px]",
+                    "min-h-56 md:min-h-84",
                   )}
                   {...panelProps}
                 >
                   <div
                     aria-hidden="true"
                     className={cn(
-                      "absolute inset-0 bg-gradient-to-br",
+                      "absolute inset-0 bg-linear-to-br",
                       author.panelBg,
                     )}
                   />
@@ -197,7 +212,10 @@ export function AuthorsHero() {
 
                   <div
                     aria-hidden="true"
-                    className={cn("absolute left-0 top-0 bottom-0 w-1", accent.line)}
+                    className={cn(
+                      "absolute left-0 top-0 bottom-0 w-1",
+                      accent.line,
+                    )}
                   />
                   <div
                     aria-hidden="true"
@@ -235,7 +253,7 @@ export function AuthorsHero() {
                     <span className="sr-only">{author.name}</span>
                   </Link>
 
-                  <div className="relative z-20 h-full p-6 md:p-7">
+                  <div className="relative z-20 h-full p-6 md:p-8">
                     <div className="flex items-start justify-between gap-10">
                       <div
                         className={cn(
@@ -253,7 +271,7 @@ export function AuthorsHero() {
                       </div>
                     </div>
 
-                    <div className="mt-7 md:mt-10">
+                    <div className="mt-8 md:mt-10">
                       <p className="font-heading text-2xl md:text-3xl font-semibold text-stone-50 leading-tight text-balance">
                         {author.name}
                       </p>

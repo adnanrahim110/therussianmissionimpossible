@@ -74,7 +74,11 @@ export function FormInput({
         />
       </div>
 
-      {error && <span className="text-crimson-600 text-sm mt-1">{error}</span>}
+      {error && (
+        <span role="alert" className="text-crimson-600 text-sm mt-1">
+          {error}
+        </span>
+      )}
     </div>
   );
 }

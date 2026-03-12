@@ -16,7 +16,11 @@ import { useRef } from "react";
 
 function TunnelFrame({ index, shift }) {
   const z = useTransform(shift, (latest) => latest - (index + 1) * 180);
-  const opacity = useTransform(z, [-1200, -800, -300, 200, 420], [0.06, 0.12, 0.28, 0.18, 0.06]);
+  const opacity = useTransform(
+    z,
+    [-1200, -800, -300, 200, 420],
+    [0.06, 0.12, 0.28, 0.18, 0.06],
+  );
   const transform = useMotionTemplate`translateZ(${z}px)`;
 
   const isAccent = index === 0 || index === 3;
@@ -43,8 +47,14 @@ function TunnelBackdrop({ scrollYProgress }) {
 
   return (
     <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-      <div className="perspective-container w-full max-w-5xl h-[56vh] min-h-96">
-        <motion.div className="relative h-full w-full preserve-3d" style={{ transform }}>
+      <div
+        className="perspective-container w-full max-w-5xl min-h-96"
+        style={{ height: "56dvh" }}
+      >
+        <motion.div
+          className="relative h-full w-full preserve-3d"
+          style={{ transform }}
+        >
           {Array.from({ length: 6 }).map((_, i) => (
             <TunnelFrame key={i} index={i} shift={shift} />
           ))}
@@ -68,27 +78,30 @@ export function BookHero() {
   return (
     <section
       ref={ref}
-      className="relative min-h-[86vh] flex items-center justify-center overflow-hidden bg-stone-950 pt-20 border-b border-stone-800"
+      className="relative flex items-center justify-center overflow-hidden bg-stone-950 pt-20 border-b border-stone-800"
+      style={{ minHeight: "86dvh" }}
     >
       {/* Background */}
       <motion.div
         className="absolute inset-0"
-        style={prefersReducedMotion ? {} : { scale: bgScale, opacity: bgOpacity }}
+        style={
+          prefersReducedMotion ? {} : { scale: bgScale, opacity: bgOpacity }
+        }
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-stone-950 via-stone-900 to-stone-950" />
+        <div className="absolute inset-0 bg-linear-to-br from-stone-950 via-stone-900 to-stone-950" />
         <div className="absolute inset-0 grid-overlay-dark opacity-70" />
-        <div className="absolute left-[61.8%] top-1/3 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-crimson-900/20 blur-[140px] opacity-70" />
+        <div className="absolute left-[61.8%] top-1/3 h-130 w-130 -translate-x-1/2 -translate-y-1/2 rounded-full bg-crimson-900/20 blur-[140px] opacity-70" />
       </motion.div>
 
       {/* Tunnel frames */}
       {!prefersReducedMotion && (
-        <div className="absolute inset-0 z-[1] opacity-80">
+        <div className="absolute inset-0 z-1 opacity-80">
           <TunnelBackdrop scrollYProgress={scrollYProgress} />
         </div>
       )}
 
       {/* Film grain */}
-      <div className="absolute inset-0 z-[2] grain-overlay pointer-events-none" />
+      <div className="absolute inset-0 z-5 grain-overlay pointer-events-none" />
 
       <Container className="relative z-10 text-center flex flex-col items-center">
         <motion.div
@@ -120,7 +133,12 @@ export function BookHero() {
               ? { duration: 0 }
               : {
                   opacity: { duration: 0.35, delay: 0.25 },
-                  y: { type: "spring", stiffness: 170, damping: 22, delay: 0.25 },
+                  y: {
+                    type: "spring",
+                    stiffness: 170,
+                    damping: 22,
+                    delay: 0.25,
+                  },
                 }
           }
           className="font-body text-xl md:text-2xl text-stone-400 font-light mb-10 max-w-2xl"
@@ -136,7 +154,12 @@ export function BookHero() {
               ? { duration: 0 }
               : {
                   opacity: { duration: 0.35, delay: 0.4 },
-                  y: { type: "spring", stiffness: 170, damping: 22, delay: 0.4 },
+                  y: {
+                    type: "spring",
+                    stiffness: 170,
+                    damping: 22,
+                    delay: 0.4,
+                  },
                 }
           }
         >

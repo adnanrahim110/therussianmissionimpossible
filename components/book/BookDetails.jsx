@@ -24,8 +24,14 @@ export function BookDetails() {
         aria-hidden="true"
         className="absolute inset-0 bg-linear-to-b from-stone-50 via-white to-stone-50"
       />
-      <div aria-hidden="true" className="absolute inset-0 grid-overlay-light opacity-45" />
-      <div aria-hidden="true" className="absolute inset-0 grain-overlay pointer-events-none opacity-50" />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 grid-overlay-light opacity-45"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 grain-overlay pointer-events-none opacity-50"
+      />
       <div
         aria-hidden="true"
         className="absolute left-[61.8%] top-1/2 size-130 -translate-x-1/2 -translate-y-1/2 rounded-full bg-crimson-600/6 blur-[140px]"
@@ -59,7 +65,7 @@ export function BookDetails() {
                 {BOOK.themes.map((theme) => (
                   <span
                     key={theme}
-                    className="inline-flex items-center gap-2 px-3 py-1 bg-white border border-stone-200 text-stone-700 text-xs font-semibold uppercase tracking-wider rounded-[2px] border-l-2 border-olive-600"
+                    className="inline-flex items-center gap-2 px-3 py-1 bg-white border border-stone-200 text-stone-700 text-xs font-semibold uppercase tracking-wider rounded-[2px] border-l-2 border-l-olive-600"
                   >
                     <span className="crosshair-marker scale-75 opacity-40" />
                     {theme}
@@ -115,7 +121,7 @@ export function BookDetails() {
 
                         <button
                           type="button"
-                          className="w-full flex items-start justify-between gap-6 p-6 md:p-7 text-left"
+                          className="w-full flex items-start justify-between gap-6 p-6 md:p-8 text-left focus-visible:ring-2 focus-visible:ring-crimson-500 focus-visible:ring-inset rounded-[2px]"
                           onClick={() => setOpenIndex(isOpen ? null : index)}
                           aria-expanded={isOpen}
                         >
@@ -134,7 +140,11 @@ export function BookDetails() {
                             transition={
                               prefersReducedMotion
                                 ? { duration: 0 }
-                                : { type: "spring", stiffness: 260, damping: 22 }
+                                : {
+                                    type: "spring",
+                                    stiffness: 260,
+                                    damping: 22,
+                                  }
                             }
                             className="shrink-0 mt-2 h-10 w-10 rounded-[2px] border border-stone-200 bg-stone-50 text-stone-700 grid place-items-center"
                           >
@@ -170,16 +180,20 @@ export function BookDetails() {
                               transition={
                                 prefersReducedMotion
                                   ? { duration: 0 }
-                                  : { type: "spring", stiffness: 220, damping: 28 }
+                                  : {
+                                      type: "spring",
+                                      stiffness: 220,
+                                      damping: 28,
+                                    }
                               }
                               className="overflow-hidden"
                             >
-                              <div className="px-6 md:px-7 pb-6 md:pb-7">
-                                <div className="h-px w-full bg-linear-to-r from-transparent via-stone-200 to-transparent mb-5" />
+                              <div className="px-6 md:px-8 pb-6 md:pb-8">
+                                <div className="h-px w-full bg-linear-to-r from-transparent via-stone-200 to-transparent mb-6" />
                                 <p className="font-body text-sm text-stone-600 leading-relaxed">
                                   {synopsisLead}
                                 </p>
-                                <div className="mt-5 flex items-center justify-between gap-6">
+                                <div className="mt-6 flex items-center justify-between gap-6">
                                   <div className="flex items-center gap-3 text-xs uppercase tracking-[0.25em] text-stone-500">
                                     <span className="crosshair-marker scale-75 opacity-50" />
                                     {BOOK.publisher} - {BOOK.year}

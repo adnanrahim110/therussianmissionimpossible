@@ -8,8 +8,14 @@ import { CTA_LINKS } from "@/lib/constants";
 export function AuthorsContact() {
   return (
     <section className="relative section-padding bg-white text-stone-950 overflow-hidden border-t border-stone-200">
-      <div aria-hidden="true" className="absolute inset-0 grid-overlay-light opacity-50" />
-      <div aria-hidden="true" className="absolute inset-0 grain-overlay pointer-events-none opacity-60" />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 grid-overlay-light opacity-50"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 grain-overlay pointer-events-none opacity-60"
+      />
 
       <div
         aria-hidden="true"
@@ -22,7 +28,7 @@ export function AuthorsContact() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-end">
           <div className="lg:col-span-7">
             <ScrollReveal variant="clip-left">
-              <p className="font-body text-sm uppercase tracking-[0.28em] text-stone-500 mb-5">
+              <p className="font-body text-sm uppercase tracking-[0.28em] text-stone-500 mb-6">
                 Press &amp; Inquiries
               </p>
               <h2 className="font-heading font-black text-4xl md:text-6xl leading-[0.95] text-balance">
@@ -38,7 +44,11 @@ export function AuthorsContact() {
           <div className="lg:col-span-5 flex lg:justify-end">
             <ScrollReveal delay={0.15} variant="clip-up">
               <div className="flex flex-col gap-4 items-start lg:items-end">
-                <Button variant="primary" size="lg" href={CTA_LINKS.contact.href}>
+                <Button
+                  variant="primary"
+                  size="lg"
+                  href={CTA_LINKS.contact.href}
+                >
                   Get in Touch
                 </Button>
                 <div className="flex items-center gap-3 text-xs uppercase tracking-[0.28em] text-stone-500">

@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
 
 export function AuthorCard({ name, role, bio, quote, className }) {
-  const { ref, style, handleMouseMove, handleMouseLeave } = useTilt3D({ maxTilt: 6, scale: 1.02 });
+  const { ref, style, handlers } = useTilt3D({ maxTilt: 6, scale: 1.02 });
 
   const initials = name
     ? name
@@ -20,8 +20,7 @@ export function AuthorCard({ name, role, bio, quote, className }) {
       <motion.div
         ref={ref}
         style={style}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
+        {...handlers}
         className={cn(
           "group relative flex flex-col h-full bg-white rounded-[2px] overflow-hidden border border-stone-200 will-change-transform transition-shadow duration-300 hover:shadow-xl",
           className,

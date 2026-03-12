@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
 
 export function TestimonialCard({ quote, author, role, className }) {
-  const { ref, style, handleMouseMove, handleMouseLeave } = useTilt3D({
+  const { ref, style, handlers } = useTilt3D({
     maxTilt: 6,
   });
 
@@ -14,8 +14,7 @@ export function TestimonialCard({ quote, author, role, className }) {
       <motion.div
         ref={ref}
         style={style}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
+        {...handlers}
         className={cn(
           "group relative h-full bg-white rounded-[2px] p-8 border border-stone-200 flex flex-col will-change-transform",
           className,

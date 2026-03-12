@@ -23,17 +23,14 @@ function KineticWord({ word, index, total, progress }) {
   const mid = start + (end - start) * 0.55;
 
   const opacity = useTransform(progress, [start, end], [0.25, 1]);
-  const color = useTransform(progress, [start, mid, end], [
-    COLORS.upcoming,
-    COLORS.current,
-    COLORS.revealed,
-  ]);
+  const color = useTransform(
+    progress,
+    [start, mid, end],
+    [COLORS.upcoming, COLORS.current, COLORS.revealed],
+  );
 
   return (
-    <motion.span
-      className="inline-block"
-      style={{ opacity, color }}
-    >
+    <motion.span className="inline-block" style={{ opacity, color }}>
       {word}
     </motion.span>
   );
@@ -66,14 +63,23 @@ export function BookExcerpt() {
           aria-hidden="true"
           className="absolute inset-0 bg-linear-to-br from-white via-stone-50 to-white"
         />
-        <div aria-hidden="true" className="absolute inset-0 grid-overlay-light opacity-55" />
-        <div aria-hidden="true" className="absolute inset-0 grain-overlay pointer-events-none opacity-45" />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 grid-overlay-light opacity-55"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 grain-overlay pointer-events-none opacity-45"
+        />
         <div
           aria-hidden="true"
           className="absolute left-[61.8%] top-1/2 size-130 -translate-x-1/2 -translate-y-1/2 rounded-full bg-crimson-600/8 blur-[160px]"
         />
 
-        <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 overflow-hidden pointer-events-none"
+        >
           <div className="absolute -left-20 top-10 text-[220px] md:text-[300px] leading-none font-heading font-black text-stone-200/80 select-none">
             &ldquo;
           </div>
@@ -111,15 +117,24 @@ export function BookExcerpt() {
         aria-hidden="true"
         className="absolute inset-0 bg-linear-to-br from-white via-stone-50 to-white"
       />
-      <div aria-hidden="true" className="absolute inset-0 grid-overlay-light opacity-55" />
-      <div aria-hidden="true" className="absolute inset-0 grain-overlay pointer-events-none opacity-45" />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 grid-overlay-light opacity-55"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 grain-overlay pointer-events-none opacity-45"
+      />
       <div
         aria-hidden="true"
         className="absolute left-[61.8%] top-1/2 size-130 -translate-x-1/2 -translate-y-1/2 rounded-full bg-crimson-600/8 blur-[160px]"
       />
 
       {/* Massive quote marks bleeding off-screen */}
-      <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 overflow-hidden pointer-events-none"
+      >
         <div className="absolute -left-24 top-10 text-[220px] md:text-[300px] leading-none font-heading font-black text-stone-200/80 select-none">
           &ldquo;
         </div>
@@ -129,8 +144,11 @@ export function BookExcerpt() {
         <div className="absolute inset-0 shadow-[inset_0_0_140px_rgba(28,26,23,0.10)]" />
       </div>
 
-      <div className="relative min-h-[180vh] lg:min-h-[240vh] z-10">
-        <div className="lg:sticky lg:top-24 lg:h-[calc(100vh-6rem)] flex items-center section-padding">
+      <div className="relative z-10" style={{ minHeight: "180dvh" }}>
+        <div
+          className="lg:sticky lg:top-24 flex items-center section-padding"
+          style={{ height: "calc(100dvh - 6rem)" }}
+        >
           <Container size="narrow">
             <p className="font-body text-sm uppercase tracking-[0.28em] text-stone-600 mb-6">
               Excerpt

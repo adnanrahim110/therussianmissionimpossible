@@ -1,5 +1,11 @@
 import { cn } from "@/lib/utils";
 
+const sizes = {
+  default: "mx-auto max-w-[80rem] px-4 sm:px-6 lg:px-8",
+  narrow: "mx-auto max-w-[48rem] px-4 sm:px-6",
+  wide: "mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-8",
+};
+
 export function Container({
   size = "default",
   as: Component = "div",
@@ -7,12 +13,6 @@ export function Container({
   children,
   ...props
 }) {
-  const sizes = {
-    default: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
-    narrow: "max-w-3xl mx-auto px-4 sm:px-6",
-    wide: "max-w-360 mx-auto px-4 sm:px-6 lg:px-8",
-  };
-
   return (
     <Component className={cn(sizes[size], className)} {...props}>
       {children}

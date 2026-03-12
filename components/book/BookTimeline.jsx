@@ -75,7 +75,7 @@ function TimelineCard({ item, index, total, className }) {
         {String(index + 1).padStart(2, "0")}
       </div>
 
-      <div className="relative p-6 md:p-7">
+      <div className="relative p-6 md:p-8">
         <div className="flex items-center justify-between gap-6">
           <div className="inline-flex items-center gap-3">
             <span className={cn("h-1.5 w-1.5 rounded-full", styles.dot)} />
@@ -239,7 +239,7 @@ export function BookTimeline() {
             height: pinnedHeight ? `${pinnedHeight}px` : undefined,
           }}
         >
-          <div className="sticky top-0 h-screen flex flex-col z-10">
+          <div className="sticky top-0 flex flex-col z-10 h-screen-safe">
             <Container className="pt-24 pb-10">
               <div className="grid grid-cols-12 gap-8 items-end">
                 <div className="col-span-7">

@@ -1,21 +1,46 @@
 "use client";
 
-import { useMotionValue, useSpring } from "motion/react";
+import { useMotionValue, useReducedMotion, useSpring } from "motion/react";
+import { useCallback } from "react";
 
 export function useSpotlight() {
+  const prefersReducedMotion = useReducedMotion();
+
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  // Smooth out the mouse movement for the spotlight effect
-  const springX = useSpring(mouseX, { stiffness: 500, damping: 50 });
-  const springY = useSpring(mouseY, { stiffness: 500, damping: 50 });
+  const springConfig = { stiffness: 500, damping: 50 };
+  const springX = useSpring(mouseX, springConfig);
+  const springY = useSpring(mouseY, springConfig);
 
-  const handleMouseMove = (event) => {
-    const { currentTarget, clientX, clientY } = event;
-    const { left, top } = currentTarget.getBoundingClientRect();
-    mouseX.set(clientX - left);
-    mouseY.set(clientY - top);
+  const handleMouseMove = useCallback(
+    (e) => {
+      if (prefersReducedMotion) return;
+      const { left, top } = e.currentTarget.getBoundingClientRect();
+      mouseX.set(e.clientX - left);
+      mouseY.set(e.clientY - top);
+    },
+    [prefersReducedMotion, mouseX, mouseY],
+  );
+
+  const handleTouchMove = useCallback(
+    (e) => {
+      if (prefersReducedMotion) return;
+      const touch = e.touches[0];
+      if (!touch) return;
+      const { left, top } = e.currentTarget.getBoundingClientRect();
+      mouseX.set(touch.clientX - left);
+      mouseY.set(touch.clientY - top);
+    },
+    [prefersReducedMotion, mouseX, mouseY],
+  );
+
+  return {
+    springX,
+    springY,
+    handlers: {
+      onMouseMove: handleMouseMove,
+      onTouchMove: handleTouchMove,
+    },
   };
-
-  return { handleMouseMove, springX, springY };
 }

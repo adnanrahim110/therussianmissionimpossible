@@ -109,7 +109,10 @@ export function StatsBar() {
             height: pinnedHeight ? `${pinnedHeight}px` : undefined,
           }}
         >
-          <div className="sticky top-0 h-screen overflow-hidden">
+          <div
+            className="sticky top-0 h-dvh overflow-hidden"
+            style={{ height: "100dvh" }}
+          >
             <div
               aria-hidden="true"
               className="absolute inset-x-0 top-0 h-12 border-b border-stone-800/70 opacity-90"
@@ -128,7 +131,7 @@ export function StatsBar() {
                   Key Figures
                 </span>
               </div>
-              <div className="flex items-center gap-5 font-body text-[11px] uppercase tracking-[0.32em] text-stone-500 tabular-nums">
+              <div className="flex items-center gap-4 font-body text-[11px] uppercase tracking-[0.32em] text-stone-500 tabular-nums">
                 <motion.span>{indexLabel}</motion.span>
                 <span className="text-stone-700">/</span>
                 <motion.span>{timecode}</motion.span>

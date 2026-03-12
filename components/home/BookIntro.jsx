@@ -9,7 +9,7 @@ import { BOOK } from "@/lib/content";
 import { motion } from "motion/react";
 
 function BookCover3D() {
-  const { ref, style, handleMouseMove, handleMouseLeave } = useTilt3D({
+  const { ref, style, handlers } = useTilt3D({
     maxTilt: 10,
   });
 
@@ -18,8 +18,7 @@ function BookCover3D() {
       <motion.div
         ref={ref}
         style={style}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
+        {...handlers}
         className="relative aspect-1067/1600 w-full max-w-md mx-auto will-change-transform"
       >
         <div className="absolute inset-4 bg-stone-400/20 rounded-[2px] translate-x-3 translate-y-3 blur-md" />
