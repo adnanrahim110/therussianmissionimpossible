@@ -1,6 +1,7 @@
 import { SiteShell } from "@/components/layouts/SiteShell";
 import { siteMeta } from "@/lib/content";
 import { Bebas_Neue, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
+import "leaflet/dist/leaflet.css";
 import "./globals.css";
 
 const bebasNeue = Bebas_Neue({
@@ -25,13 +26,13 @@ export const metadata = {
   title: siteMeta.title,
   description: siteMeta.description,
   keywords: [
-    "Russian Mission Impossible",
-    "Cold War",
-    "Berlin Wall",
-    "Tunnel 29",
-    "espionage",
-    "non-fiction",
-    "true story",
+    "Operation Stream 3.0",
+    "The Russian Mission Impossible",
+    "Kursk",
+    "Sudzha",
+    "gas pipeline",
+    "documentary narrative",
+    "modern warfare",
     "CGG International",
   ],
   openGraph: {
@@ -62,7 +63,7 @@ export default function RootLayout({ children }) {
       name: siteMeta.publisher,
     },
     inLanguage: "en",
-    genre: "Documentary Nonfiction",
+    genre: "Documentary narrative",
     bookFormat: "https://schema.org/Hardcover",
   };
 

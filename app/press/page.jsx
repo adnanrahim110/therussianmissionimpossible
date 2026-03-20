@@ -17,7 +17,7 @@ export const metadata = {
 export default function PressPage() {
   return (
     <>
-      <section className="relative overflow-hidden border-b border-stone-800 pt-32 md:pt-40">
+      <section className="relative overflow-hidden border-b border-stone-800 pt-28 md:pt-36 lg:pt-40">
         <div
           aria-hidden="true"
           className="absolute inset-0 archive-map opacity-80"
@@ -34,7 +34,7 @@ export default function PressPage() {
                 Media operations
               </span>
             </div>
-            <h1 className="mt-6 font-heading text-[clamp(4.5rem,11vw,8rem)] leading-[0.82] text-stone-50">
+            <h1 className="mt-6 font-heading text-[clamp(2.5rem,6vw,5rem)] leading-[0.88] text-stone-50">
               Press Desk
             </h1>
             <p className="mt-6 max-w-3xl text-lg leading-relaxed text-stone-200 md:text-xl">
@@ -52,7 +52,7 @@ export default function PressPage() {
           className="absolute inset-0 grid-overlay-dark opacity-30"
         />
         <Container className="relative z-10 grid gap-6 lg:grid-cols-12">
-          <div className="archive-shell p-6 md:p-8 lg:col-span-5">
+          <div className="archive-shell rounded-2xl p-6 md:p-8 lg:col-span-5">
             <div
               aria-hidden="true"
               className="absolute inset-0 grid-overlay-dark opacity-30"
@@ -61,7 +61,7 @@ export default function PressPage() {
               <p className="font-ui text-[11px] uppercase tracking-[0.32em] text-stone-500">
                 Downloadable mission file
               </p>
-              <h2 className="mt-4 font-heading text-5xl leading-[0.9] text-stone-50">
+              <h2 className="mt-4 font-heading text-3xl leading-[0.9] text-stone-50 sm:text-4xl md:text-5xl">
                 {missionFileDownload.title}
               </h2>
               <p className="mt-4 text-sm leading-relaxed text-stone-300">
@@ -77,7 +77,7 @@ export default function PressPage() {
             {pressAssets.map((asset) => {
               const href = assetLinks[asset.id];
               return (
-                <div key={asset.id} className="archive-shell p-6">
+                <div key={asset.id} className="archive-shell rounded-2xl p-6">
                   <div
                     aria-hidden="true"
                     className="absolute inset-0 grid-overlay-dark opacity-30"
@@ -97,7 +97,7 @@ export default function PressPage() {
                         {asset.status}
                       </span>
                     </div>
-                    <h2 className="mt-6 font-heading text-4xl leading-none text-stone-50">
+                    <h2 className="mt-5 font-heading text-2xl leading-none text-stone-50 md:text-3xl">
                       {asset.title}
                     </h2>
                     <p className="mt-3 text-sm leading-relaxed text-stone-300">
@@ -107,7 +107,7 @@ export default function PressPage() {
                       {href ? (
                         <Button href={href}>Open Asset Route</Button>
                       ) : (
-                        <span className="inline-flex rounded-[2px] border border-stone-700 px-4 py-2 font-ui text-[11px] uppercase tracking-[0.28em] text-stone-400">
+                        <span className="inline-flex rounded-lg border border-stone-700 px-4 py-2 font-ui text-[11px] uppercase tracking-[0.28em] text-stone-400">
                           Awaiting client file
                         </span>
                       )}

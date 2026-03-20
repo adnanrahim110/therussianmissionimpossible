@@ -13,7 +13,7 @@ function FooterLink({ href, children }) {
         href={href}
         className="group inline-flex items-center text-sm text-stone-400 transition-all duration-200 hover:translate-x-1 hover:text-stone-50"
       >
-        <span className="mr-2 opacity-0 text-crimson-500 transition-opacity group-hover:opacity-100">
+        <span className="mr-2 opacity-0 text-accent transition-opacity group-hover:opacity-100">
           &rarr;
         </span>
         {children}
@@ -31,58 +31,38 @@ export function Footer() {
   }));
 
   return (
-    <footer className="relative overflow-hidden border-t border-stone-800 bg-stone-950 py-16 text-stone-400 lg:py-24">
-      <div
-        className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none select-none"
-        aria-hidden="true"
-      >
-        <span className="font-heading text-mega font-black whitespace-nowrap text-stone-900/45">
-          ARCHIVE
-        </span>
-      </div>
+    <footer className="relative overflow-hidden border-t border-white/6 bg-stone-950 py-12 text-stone-300 lg:py-20">
       <div
         aria-hidden="true"
-        className="absolute inset-0 grid-overlay-dark opacity-35"
-      />
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 grain-overlay pointer-events-none opacity-70"
+        className="absolute inset-0 grid-overlay-dark opacity-16"
       />
 
       <div
         ref={lineRef}
         className="absolute inset-x-0 top-0 flex justify-center"
-      >
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={isLineInView ? { scaleX: 1 } : { scaleX: 0 }}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="h-1 w-full origin-center bg-crimson-600"
-        />
-      </div>
+      ></div>
 
       <div className="container-default relative z-10">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <p className="mb-4 font-ui text-[11px] uppercase tracking-[0.34em] text-stone-500">
+            <p className="mb-3 font-ui text-[11px] uppercase tracking-[0.34em] text-stone-500">
               {siteMeta.tagline}
             </p>
-            <h3 className="mb-4 font-heading text-4xl tracking-[0.08em] text-stone-50">
+            <h3 className="mb-3 font-body text-xl font-semibold tracking-[-0.04em] text-stone-50 sm:text-2xl md:text-3xl">
               {siteMeta.title}
             </h3>
-            <p className="mb-6 max-w-md text-sm leading-relaxed text-stone-300">
-              An immersive mission-file campaign built around evidence, route,
-              and controversy rather than a conventional promotional layout.
+            <p className="mb-5 max-w-md text-sm leading-relaxed text-stone-400">
+              {siteMeta.description}
             </p>
             <p className="font-ui text-xs uppercase tracking-[0.24em] text-stone-600">
               &copy; {new Date().getFullYear()} {siteMeta.publisher}
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-8">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:col-span-8">
             <div>
-              <h4 className="mb-4 font-ui text-xs uppercase tracking-[0.28em] text-stone-50">
-                Archive Files
+              <h4 className="mb-4 font-ui text-xs uppercase tracking-[0.28em] text-stone-200">
+                Archive files
               </h4>
               <ul className="space-y-3">
                 {archiveLinks.map((link) => (
@@ -94,8 +74,8 @@ export function Footer() {
             </div>
 
             <div>
-              <h4 className="mb-4 font-ui text-xs uppercase tracking-[0.28em] text-stone-50">
-                Support Routes
+              <h4 className="mb-4 font-ui text-xs uppercase tracking-[0.28em] text-stone-200">
+                Support routes
               </h4>
               <ul className="space-y-3">
                 {supportLinks.map((link) => (
@@ -107,7 +87,7 @@ export function Footer() {
             </div>
 
             <div>
-              <h4 className="mb-4 font-ui text-xs uppercase tracking-[0.28em] text-stone-50">
+              <h4 className="mb-4 font-ui text-xs uppercase tracking-[0.28em] text-stone-200">
                 Contact
               </h4>
               <ul className="space-y-3">
@@ -117,7 +97,7 @@ export function Footer() {
                   </FooterLink>
                 ))}
               </ul>
-              <p className="mt-6 text-sm leading-relaxed text-stone-500">
+              <p className="mt-5 text-sm leading-relaxed text-stone-500">
                 {siteMeta.contactAddress.join(", ")}
               </p>
             </div>

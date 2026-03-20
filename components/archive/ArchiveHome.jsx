@@ -18,14 +18,14 @@ export function ArchiveHome() {
       <ArchiveIntroGate />
       <MissionSection />
       <OperationTimelineSection />
+      <AuthorsTeaserSection />
+      <AccessCTASection />
       <MythOrOperationSection />
       <EvidenceBoardSection />
+      <MissionMapSection />
       <TunnelJourneySection />
       <MissionBriefingSection />
-      <MissionMapSection />
-      <AuthorsTeaserSection />
       <PressTeaserSection />
-      <AccessCTASection />
     </>
   );
 }

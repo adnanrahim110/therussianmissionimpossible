@@ -12,7 +12,7 @@ export const metadata = {
 export default function ContactPage() {
   return (
     <>
-      <section className="relative overflow-hidden border-b border-stone-800 pt-32 md:pt-40">
+      <section className="relative overflow-hidden border-b border-stone-800 pt-28 md:pt-36 lg:pt-40">
         <div aria-hidden="true" className="absolute inset-0 archive-map opacity-80" />
         <div aria-hidden="true" className="absolute inset-0 grid-overlay-dark opacity-35" />
         <Container className="relative z-10 pb-16 md:pb-24">
@@ -23,7 +23,7 @@ export default function ContactPage() {
                 Direct contact route
               </span>
             </div>
-            <h1 className="mt-6 font-heading text-[clamp(4.5rem,11vw,8rem)] leading-[0.82] text-stone-50">
+            <h1 className="mt-6 font-heading text-[clamp(2.5rem,6vw,5rem)] leading-[0.88] text-stone-50">
               {contactDesk.title}
             </h1>
             <p className="mt-6 max-w-3xl text-lg leading-relaxed text-stone-200 md:text-xl">
@@ -46,7 +46,7 @@ export default function ContactPage() {
       <section className="section-padding relative">
         <div aria-hidden="true" className="absolute inset-0 grid-overlay-dark opacity-30" />
         <Container className="relative z-10 grid gap-6 lg:grid-cols-12">
-          <div className="archive-shell p-6 md:p-8 lg:col-span-7">
+          <div className="archive-shell rounded-2xl p-6 md:p-8 lg:col-span-7">
             <div aria-hidden="true" className="absolute inset-0 grid-overlay-dark opacity-30" />
             <div className="relative">
               <p className="font-ui text-[11px] uppercase tracking-[0.32em] text-stone-500">
@@ -56,7 +56,7 @@ export default function ContactPage() {
                 {contactDesk.channels.map((channel) => (
                   <div
                     key={channel.label}
-                    className="rounded-[2px] border border-stone-800 bg-stone-950/60 p-4"
+                    className="rounded-xl border border-stone-800 bg-stone-950/60 p-4"
                   >
                     <p className="font-ui text-[11px] uppercase tracking-[0.32em] text-crimson-300">
                       {channel.label}
@@ -71,7 +71,7 @@ export default function ContactPage() {
           </div>
 
           <div className="grid gap-6 lg:col-span-5">
-            <div className="archive-shell p-6 md:p-8">
+            <div className="archive-shell rounded-2xl p-6 md:p-8">
               <div aria-hidden="true" className="absolute inset-0 grid-overlay-dark opacity-30" />
               <div className="relative">
                 <p className="font-ui text-[11px] uppercase tracking-[0.32em] text-stone-500">
@@ -79,14 +79,14 @@ export default function ContactPage() {
                 </p>
                 <a
                   href={`mailto:${siteMeta.contactEmail}`}
-                  className="mt-4 block font-heading text-4xl leading-none text-stone-50 transition-colors hover:text-crimson-300"
+                  className="mt-4 block font-heading text-2xl leading-none text-stone-50 transition-colors hover:text-crimson-300 md:text-3xl"
                 >
                   {siteMeta.contactEmail}
                 </a>
               </div>
             </div>
 
-            <div className="archive-shell p-6 md:p-8">
+            <div className="archive-shell rounded-2xl p-6 md:p-8">
               <div aria-hidden="true" className="absolute inset-0 grid-overlay-dark opacity-30" />
               <div className="relative">
                 <p className="font-ui text-[11px] uppercase tracking-[0.32em] text-stone-500">
@@ -100,7 +100,7 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="archive-shell p-6 md:p-8">
+            <div className="archive-shell rounded-2xl p-6 md:p-8">
               <div aria-hidden="true" className="absolute inset-0 grid-overlay-dark opacity-30" />
               <div className="relative">
                 <p className="font-ui text-[11px] uppercase tracking-[0.32em] text-crimson-300">

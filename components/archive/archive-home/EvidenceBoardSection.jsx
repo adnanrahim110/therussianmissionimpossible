@@ -1,120 +1,88 @@
 "use client";
 
 import { Container } from "@/components/ui/Container";
-import { evidenceItems } from "@/lib/content";
-import { cn } from "@/lib/utils";
-import { useState } from "react";
-
-import { DossierHeader } from "./DossierHeader";
+import { SectionIntro } from "@/components/ui/SectionIntro";
+import { evidenceItems, evidenceSection } from "@/lib/content";
 
 export function EvidenceBoardSection() {
-  const [selectedId, setSelectedId] = useState(evidenceItems[0]?.id ?? null);
-  const selectedItem =
-    evidenceItems.find((item) => item.id === selectedId) ?? evidenceItems[0];
-
   return (
     <section
       id="the-evidence"
-      className="section-padding relative border-b border-stone-800"
+      className="section-tone-paper relative overflow-hidden"
     >
       <div
         aria-hidden="true"
-        className="absolute inset-0 grid-overlay-dark opacity-30"
+        className="absolute inset-0 bg-[radial-gradient(circle_at_14%_15%,rgba(145,92,72,0.15),transparent_36%),radial-gradient(circle_at_88%_20%,rgba(188,29,71,0.14),transparent_30%),radial-gradient(circle_at_60%_82%,rgba(34,197,94,0.12),transparent_30%)]"
       />
-      <Container className="relative z-10">
-        <DossierHeader
-          code="File 04"
-          title="The Evidence"
-          subtitle="A war-room board of maps, documents, photographs, quotes, and diagrams. Each tile is clickable and reveals a detail panel instead of flattening everything into one static collage."
-        />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 grid-overlay-light opacity-30"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 paper-rules opacity-18"
+      />
 
-        <div className="mt-14 grid gap-6 lg:grid-cols-12">
-          <div className="grid gap-4 sm:grid-cols-2 lg:col-span-7">
-            {evidenceItems.map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => setSelectedId(item.id)}
-                className={cn(
-                  "archive-shell min-h-48 p-6 text-left transition-transform hover:-translate-y-1 focus-visible:ring-2 focus-visible:ring-crimson-500",
-                  selectedId === item.id && "border-crimson-700",
-                )}
-              >
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 grid-overlay-dark opacity-30"
-                />
-                <div className="relative">
-                  <div className="flex items-center justify-between gap-4">
-                    <span className="font-ui text-[11px] uppercase tracking-[0.32em] text-crimson-300">
-                      {item.type}
-                    </span>
-                    <span
-                      className={cn(
-                        "rounded-full border px-2 py-1 font-ui text-[10px] uppercase tracking-[0.24em]",
-                        item.status === "ready"
-                          ? "border-olive-700 text-olive-200"
-                          : "border-stone-700 text-stone-400",
-                      )}
-                    >
-                      {item.status}
-                    </span>
-                  </div>
-                  <h3 className="mt-6 font-heading text-4xl leading-none text-stone-50">
-                    {item.title}
-                  </h3>
-                  <p className="mt-4 text-sm leading-relaxed text-stone-300">
-                    {item.summary}
-                  </p>
-                  <div className="mt-6 flex gap-2">
-                    <span className="redacted-line w-18" />
-                    <span className="redacted-line w-10" />
-                    <span className="redacted-line w-24" />
-                  </div>
-                </div>
-              </button>
-            ))}
-          </div>
+      <Container className="section-padding relative z-10">
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
+          <div className="intel-panel rounded-3xl p-5 sm:p-7">
+            <SectionIntro
+              title={evidenceSection.title}
+              body={evidenceSection.intro}
+              theme="editorial"
+              tone="dark"
+            />
 
-          <div className="lg:col-span-5">
-            <div
-              className="archive-shell sticky top-24 p-6 md:p-8"
-              style={{ top: "calc(var(--header-h) + 16px)" }}
-            >
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 grid-overlay-dark opacity-35"
-              />
-              <div className="relative">
-                <div className="flex items-center justify-between gap-4">
-                  <span className="font-ui text-[11px] uppercase tracking-[0.32em] text-stone-400">
-                    Selected evidence
-                  </span>
-                  <span className="font-ui text-[11px] uppercase tracking-[0.32em] text-stone-500">
-                    {selectedItem.status}
-                  </span>
-                </div>
-                <h3 className="mt-6 font-heading text-5xl leading-[0.9] text-stone-50">
-                  {selectedItem.title}
-                </h3>
-                <p className="mt-4 font-ui text-[11px] uppercase tracking-[0.32em] text-crimson-300">
-                  {selectedItem.type}
-                </p>
-                <p className="mt-6 text-base leading-relaxed text-stone-200">
-                  {selectedItem.detail}
-                </p>
-                <div className="mt-8 rounded-[2px] border border-stone-800 bg-stone-950/60 p-4">
-                  <p className="font-ui text-[11px] uppercase tracking-[0.32em] text-stone-500">
-                    Why it matters
+            <div className="mt-8 rounded-3xl border border-white/12 bg-white/5 p-5">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
+                <div>
+                  <p className="font-ui text-[10px] uppercase tracking-[0.28em] text-stone-400">
+                    {evidenceSection.featuredLabel}
                   </p>
-                  <p className="mt-3 text-sm leading-relaxed text-stone-300">
-                    The evidence board is meant to increase time-on-site by
-                    inviting curiosity and comparison. The detail panel keeps
-                    that interaction structured and readable.
+                  <p className="mt-1 font-ui text-[10px] uppercase tracking-[0.24em] text-accent">
+                    {evidenceSection.featuredType}
                   </p>
                 </div>
+                <span className="rounded-full border border-white/10 px-3 py-1 font-ui text-[10px] uppercase tracking-[0.24em] text-stone-300">
+                  {evidenceSection.featuredTitle}
+                </span>
+              </div>
+
+              <h3 className="mt-5 text-[clamp(1.5rem,3vw,2.75rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-stone-100">
+                {evidenceSection.featuredTitle}
+              </h3>
+              <p className="mt-5 max-w-3xl text-base leading-relaxed text-stone-300 sm:text-lg">
+                {evidenceSection.featuredBody}
+              </p>
+
+              <div className="mt-7 rounded-3xl border border-white/15 bg-stone-950/75 p-5">
+                <p className="font-ui text-[10px] uppercase tracking-[0.28em] text-stone-500">
+                  {evidenceSection.featuredNoteTitle}
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-stone-200">
+                  {evidenceSection.featuredNote}
+                </p>
               </div>
             </div>
+          </div>
+
+          <div className="grid gap-4">
+            {evidenceItems.map((item) => (
+              <article
+                key={item.id}
+                className="rounded-3xl border border-stone-300 bg-white/88 p-5 shadow-[0_12px_30px_rgba(52,46,38,0.08)]"
+              >
+                <p className="font-ui text-[10px] uppercase tracking-[0.28em] text-crimson-700">
+                  {item.type}
+                </p>
+                <h3 className="mt-3 text-xl font-semibold leading-tight tracking-[-0.03em] text-stone-950">
+                  {item.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-stone-700">
+                  {item.body}
+                </p>
+              </article>
+            ))}
           </div>
         </div>
       </Container>

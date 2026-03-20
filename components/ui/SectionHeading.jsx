@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ScrollReveal } from "./ScrollReveal";
+import { SectionIntro } from "./SectionIntro";
 
 export function SectionHeading({
   title,
@@ -12,21 +12,12 @@ export function SectionHeading({
   index,
   className,
 }) {
-  const alignment = {
-    left: "text-left",
-    center: "text-center mx-auto",
-  };
-
   return (
-    <ScrollReveal
-      variant="clip-up"
-      className={cn("mb-12 md:mb-16 relative", alignment[align], className)}
-    >
-      {/* Giant index number behind heading */}
+    <div className={cn("relative mb-12 md:mb-16", className)}>
       {index && (
         <span
           className={cn(
-            "absolute -top-8 font-heading font-black text-[120px] md:text-[160px] leading-none text-stone-200/50 select-none pointer-events-none z-0",
+            "pointer-events-none absolute -top-8 z-0 select-none font-heading text-[120px] leading-none text-stone-200/50 md:text-[160px]",
             align === "center" ? "left-1/2 -translate-x-1/2" : "left-0",
           )}
           aria-hidden="true"
@@ -35,23 +26,22 @@ export function SectionHeading({
         </span>
       )}
 
-      {/* Eyebrow subtitle */}
-      {subtitle && (
-        <p className="font-body text-sm uppercase tracking-[0.2em] text-stone-500 mb-4 relative z-10">
-          {subtitle}
-        </p>
-      )}
+      <SectionIntro
+        eyebrow={subtitle}
+        title={title}
+        theme="chapter"
+        tone="light"
+        align={align}
+        as={Tag}
+        showDivider={false}
+        className="relative z-10"
+      />
 
-      <Tag className="font-heading font-semibold text-4xl md:text-5xl lg:text-6xl text-stone-950 mb-4 text-balance relative z-10">
-        {title}
-      </Tag>
-
-      {/* Ornament → crosshair marker */}
       {ornament && (
         <div
           className={cn(
-            "flex items-center gap-3 mt-6 relative z-10",
-            align === "center" ? "justify-center" : "",
+            "relative z-10 mt-6 flex items-center gap-3",
+            align === "center" && "justify-center",
           )}
         >
           <div className="h-px w-8 bg-stone-300" />
@@ -59,6 +49,6 @@ export function SectionHeading({
           <div className="h-px w-8 bg-stone-300" />
         </div>
       )}
-    </ScrollReveal>
+    </div>
   );
 }

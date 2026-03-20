@@ -8,7 +8,7 @@ import { forwardRef } from "react";
 const MotionLink = motion.create(Link);
 
 const baseStyles =
-  "group inline-flex items-center justify-center rounded-[2px] font-ui uppercase tracking-[0.28em] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crimson-500 focus-visible:ring-offset-2";
+  "group inline-flex items-center justify-center rounded-[4px] font-ui uppercase tracking-[0.28em] transition-[transform,color,background-color,border-color,box-shadow] duration-250 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-stone-950 disabled:pointer-events-none";
 
 const sizeStyles = {
   sm: "px-4 py-2 text-[11px]",
@@ -16,10 +16,34 @@ const sizeStyles = {
   lg: "px-8 py-4 text-xs",
 };
 
+const variantMap = {
+  primary: "signal",
+  secondary: "quiet",
+};
+
+const variants = {
+  signal:
+    "relative overflow-hidden border border-accent bg-accent text-white shadow-[0_18px_45px_rgba(242,13,13,0.3)] hover:border-accent-hover hover:bg-accent",
+  quiet:
+    "relative overflow-hidden border border-stone-700/90 bg-stone-900/78 text-stone-100 shadow-[0_20px_55px_rgba(0,0,0,0.22)] hover:border-stone-500 hover:bg-stone-800/88",
+  light:
+    "relative overflow-hidden border border-stone-200 bg-white text-stone-950 shadow-[0_20px_55px_rgba(31,41,55,0.12)] hover:border-stone-300 hover:bg-stone-100",
+  outline:
+    "border border-stone-500/90 bg-transparent text-stone-50 hover:border-stone-300 hover:bg-white/8",
+  ghost:
+    "relative text-stone-200 hover:text-accent",
+};
+
+const sweepStyles = {
+  signal: "bg-white/14",
+  quiet: "bg-white/8",
+  light: "bg-crimson-100/70",
+};
+
 export const Button = forwardRef(
   (
     {
-      variant = "primary",
+      variant = "signal",
       size = "md",
       href,
       type,
@@ -38,18 +62,19 @@ export const Button = forwardRef(
     const prefersReducedMotion = useReducedMotion();
     const isDisabled = disabled || loading;
     const isLink = Boolean(href);
-
+    const resolvedVariant = variantMap[variant] ?? variant;
     const Component = isLink ? MotionLink : motion.button;
 
     const motionProps = prefersReducedMotion
       ? {}
       : {
-          whileTap: { scale: 0.98 },
+          whileTap: { scale: 0.985 },
+          whileHover: resolvedVariant === "ghost" ? undefined : { y: -1 },
           transition: {
             type: "spring",
-            stiffness: 150,
-            damping: 15,
-            mass: 0.1,
+            stiffness: 200,
+            damping: 20,
+            mass: 0.18,
           },
         };
 
@@ -89,79 +114,47 @@ export const Button = forwardRef(
       </span>
     );
 
-    // Primary - wipe-fill from left (transparent -> crimson)
-    if (variant === "primary") {
+    if (resolvedVariant === "ghost") {
       return (
         <Component
           {...sharedProps}
           className={cn(
             baseStyles,
             sizeStyles[size],
-            "relative overflow-hidden border border-crimson-600 text-crimson-400 hover:text-white",
-            fullWidth && "w-full",
-            isDisabled && "opacity-50 cursor-not-allowed pointer-events-none",
-            className,
-          )}
-        >
-          <span className="absolute inset-0 bg-crimson-600 -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out" />
-          {content}
-        </Component>
-      );
-    }
-
-    // Secondary - wipe-fill stone-900
-    if (variant === "secondary") {
-      return (
-        <Component
-          {...sharedProps}
-          className={cn(
-            baseStyles,
-            sizeStyles[size],
-            "relative overflow-hidden border border-stone-800 bg-stone-900 text-stone-300 hover:text-stone-50",
-            fullWidth && "w-full",
-            isDisabled && "opacity-50 cursor-not-allowed pointer-events-none",
-            className,
-          )}
-        >
-          <span className="absolute inset-0 bg-stone-800 -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out" />
-          {content}
-        </Component>
-      );
-    }
-
-    // Outline
-    if (variant === "outline") {
-      return (
-        <Component
-          {...sharedProps}
-          className={cn(
-            baseStyles,
-            sizeStyles[size],
-            "border-2 border-stone-700 text-stone-50 hover:bg-stone-800",
-            fullWidth && "w-full",
-            isDisabled && "opacity-50 cursor-not-allowed pointer-events-none",
+            variants.ghost,
+            fullWidth && "w-full justify-center",
+            isDisabled && "cursor-not-allowed opacity-50",
             className,
           )}
         >
           {content}
+          <span className="absolute bottom-1 left-3 right-3 h-px origin-left scale-x-0 bg-accent transition-transform duration-300 group-hover:scale-x-100" />
         </Component>
       );
     }
 
-    // Ghost - animated underline draws from left
     return (
       <Component
         {...sharedProps}
         className={cn(
-          "group relative inline-flex items-center rounded-[2px] font-ui uppercase tracking-[0.28em] text-stone-200 hover:text-crimson-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crimson-500",
+          baseStyles,
           sizeStyles[size],
-          fullWidth && "w-full justify-center",
-          isDisabled && "opacity-50 cursor-not-allowed pointer-events-none",
+          variants[resolvedVariant] ?? variants.signal,
+          fullWidth && "w-full",
+          isDisabled && "cursor-not-allowed opacity-50",
           className,
         )}
       >
+        {resolvedVariant !== "outline" && (
+          <span
+            aria-hidden="true"
+            className={cn(
+              "absolute inset-0 -translate-x-full transition-transform duration-300 ease-out group-hover:translate-x-0",
+              sweepStyles[resolvedVariant],
+            )}
+          />
+        )}
         {content}
-        <span className="absolute bottom-1 left-3 right-3 h-px bg-crimson-600 origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100" />
       </Component>
     );
   },

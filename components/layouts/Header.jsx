@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/Button";
 import {
   contactLinks,
   missionNav,
@@ -25,14 +26,16 @@ function NavLink({ href, children, onClick, active = false }) {
       href={href}
       onClick={onClick}
       className={cn(
-        "group relative py-1 font-ui text-[11px] uppercase tracking-[0.28em] transition-colors whitespace-nowrap",
-        active ? "text-stone-50" : "text-stone-300 hover:text-stone-50",
+        "group relative rounded-full px-4 py-2 font-ui text-[11px] uppercase tracking-[0.28em] transition-colors whitespace-nowrap",
+        active
+          ? "bg-white/10 text-stone-50"
+          : "text-stone-300 hover:bg-white/6 hover:text-stone-50",
       )}
     >
       {children}
       <span
         className={cn(
-          "absolute bottom-0 left-0 h-px w-full bg-crimson-600 transition-[clip-path] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          "absolute inset-x-4 bottom-1 h-px bg-accent transition-[clip-path] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
           active
             ? "[clip-path:inset(0_0%_0_0)]"
             : "[clip-path:inset(0_100%_0_0)] group-hover:[clip-path:inset(0_0%_0_0)]",
@@ -79,7 +82,6 @@ export function Header() {
     setMobileOpen(false);
   }, [pathname]);
 
-  /* Lock body scroll when mobile menu is open */
   useEffect(() => {
     if (mobileOpen) {
       document.body.style.overflow = "hidden";
@@ -91,7 +93,6 @@ export function Header() {
     };
   }, [mobileOpen]);
 
-  /* Close mobile menu on Escape key */
   useEffect(() => {
     if (!mobileOpen) return;
     const handleKey = (e) => {
@@ -103,7 +104,7 @@ export function Header() {
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() || 0;
-    if (latest > previous && latest > 150) {
+    if (latest > previous && latest > 170) {
       setHidden(true);
     } else {
       setHidden(false);
@@ -116,165 +117,168 @@ export function Header() {
       <motion.header
         variants={{
           visible: { y: 0 },
-          hidden: { y: "-100%" },
+          hidden: { y: "-120%" },
         }}
         animate={hidden ? "hidden" : "visible"}
         transition={{ duration: 0.35, ease: "easeInOut" }}
-        className={cn(
-          "fixed inset-x-0 top-0 z-40 transition-all duration-300",
-          isScrolled
-            ? "border-b border-stone-800/70 bg-stone-950/90 backdrop-blur-xl"
-            : "bg-stone-950/40 backdrop-blur-md",
-        )}
+        className="fixed inset-x-0 top-0 z-40 px-3 pt-3 md:px-4"
       >
-        <div className="container-default flex h-20 items-center justify-between gap-6">
-          <Link href="/" className="group flex min-w-0 items-center gap-3">
-            <div className="min-w-0">
-              <div className="truncate font-heading text-2xl leading-none text-stone-50">
-                {siteMeta.shortTitle}
+        <div
+          className={cn(
+            "mx-auto max-w-368 rounded-full border transition-all duration-300",
+            isScrolled
+              ? "border-white/10 bg-stone-950/88 shadow-[0_18px_60px_rgba(0,0,0,0.32)] backdrop-blur-xl"
+              : "border-white/8 bg-stone-950/58 backdrop-blur-lg",
+          )}
+        >
+          <div className="container-wide flex h-17 items-center justify-between gap-4">
+            <Link href="/" className="group flex min-w-0 items-center gap-3">
+              <div className="min-w-0">
+                <div className="truncate font-heading text-2xl leading-none text-stone-50">
+                  {siteMeta.shortTitle}
+                </div>
+                <div className="mt-1 hidden font-ui text-[9px] uppercase tracking-[0.28em] text-stone-500 md:block">
+                  {siteMeta.tagline}
+                </div>
               </div>
-            </div>
-          </Link>
-
-          <nav className="hidden lg:flex items-center gap-8">
-            {navItems.map((item) => (
-              <NavLink
-                key={item.href}
-                href={item.href}
-                active={item.href === "/book" && pathname === "/book"}
-              >
-                {item.label}
-              </NavLink>
-            ))}
-          </nav>
-
-          <div className="hidden md:block">
-            <Link
-              href={purchaseCtas.archive.href}
-              className="group relative inline-flex items-center justify-center overflow-hidden rounded-[2px] border border-crimson-700 px-6 py-2.5 font-ui text-xs uppercase tracking-[0.28em] text-crimson-300 transition-colors duration-300 hover:text-white focus-visible:ring-2 focus-visible:ring-crimson-500"
-            >
-              <span className="absolute inset-0 -translate-x-full bg-crimson-600 transition-transform duration-300 ease-out group-hover:translate-x-0" />
-              <span className="relative z-10">
-                {purchaseCtas.archive.label}
-              </span>
             </Link>
-          </div>
 
-          <button
-            className="p-2 text-stone-200 lg:hidden focus-visible:ring-2 focus-visible:ring-crimson-500 rounded-[2px]"
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
-            aria-expanded={mobileOpen}
-            onClick={() => setMobileOpen(!mobileOpen)}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+            <nav className="hidden lg:flex items-center gap-2">
+              {navItems.map((item) => (
+                <NavLink
+                  key={item.href}
+                  href={item.href}
+                  active={item.href === "/book" && pathname === "/book"}
+                >
+                  {item.label}
+                </NavLink>
+              ))}
+            </nav>
+
+            <div className="hidden md:block">
+              <Button
+                size="sm"
+                variant="signal"
+                href={purchaseCtas.archive.href}
+              >
+                {purchaseCtas.archive.label}
+              </Button>
+            </div>
+
+            <button
+              className="rounded-full border border-white/10 bg-white/6 p-2 text-stone-200 lg:hidden focus-visible:ring-2 focus-visible:ring-accent"
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileOpen}
+              onClick={() => setMobileOpen(!mobileOpen)}
             >
-              {mobileOpen ? (
-                <>
-                  <line x1="18" x2="6" y1="6" y2="18" />
-                  <line x1="6" x2="18" y1="6" y2="18" />
-                </>
-              ) : (
-                <>
-                  <line x1="4" x2="20" y1="12" y2="12" />
-                  <line x1="4" x2="20" y1="6" y2="6" />
-                  <line x1="4" x2="20" y1="18" y2="18" />
-                </>
-              )}
-            </svg>
-          </button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                {mobileOpen ? (
+                  <>
+                    <line x1="18" x2="6" y1="6" y2="18" />
+                    <line x1="6" x2="18" y1="6" y2="18" />
+                  </>
+                ) : (
+                  <>
+                    <line x1="4" x2="20" y1="12" y2="12" />
+                    <line x1="4" x2="20" y1="6" y2="6" />
+                    <line x1="4" x2="20" y1="18" y2="18" />
+                  </>
+                )}
+              </svg>
+            </button>
+          </div>
         </div>
-
-        <motion.div
-          className="absolute bottom-0 left-0 h-0.5 origin-left bg-crimson-600"
-          style={{ scaleX }}
-        />
       </motion.header>
 
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ clipPath: "inset(0 0 100% 0)" }}
-            animate={{ clipPath: "inset(0 0 0% 0)" }}
-            exit={{ clipPath: "inset(0 0 100% 0)" }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-stone-950 grid-overlay-dark"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.28 }}
+            className="fixed inset-0 z-50 bg-stone-950/96 backdrop-blur-xl"
           >
-            <div className="absolute inset-0 scanline-overlay opacity-25" />
-            <nav className="relative z-10 flex flex-col items-center gap-6 px-6 text-center">
-              {navItems.map((item, i) => (
-                <motion.div
-                  key={item.href}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 200,
-                    damping: 24,
-                    delay: 0.1 + i * 0.08,
-                  }}
-                >
-                  <Link
-                    href={item.href}
-                    className="font-heading text-4xl text-stone-200 transition-colors hover:text-crimson-400"
-                    onClick={() => setMobileOpen(false)}
+            <div className="absolute inset-0 grid-overlay-dark opacity-16" />
+            <div className="container-default relative z-10 flex min-h-screen-safe flex-col justify-center py-24">
+              <nav className="flex flex-col gap-3">
+                {navItems.map((item, i) => (
+                  <motion.div
+                    key={item.href}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 200,
+                      damping: 24,
+                      delay: 0.08 + i * 0.06,
+                    }}
                   >
-                    {item.label}
-                  </Link>
-                </motion.div>
-              ))}
+                    <Link
+                      href={item.href}
+                      className="block rounded-3xl border border-white/8 bg-white/3 px-6 py-5 font-heading text-4xl text-stone-100 transition-colors hover:border-white/16 hover:text-accent-hover"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  </motion.div>
+                ))}
+              </nav>
 
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
                   type: "spring",
                   stiffness: 200,
                   damping: 24,
-                  delay: 0.1 + navItems.length * 0.08,
+                  delay: 0.16 + navItems.length * 0.06,
                 }}
-                className="mt-4"
+                className="mt-8"
               >
-                <Link
+                <Button
+                  size="lg"
+                  variant="signal"
                   href={purchaseCtas.archive.href}
-                  className="inline-flex items-center justify-center rounded-[2px] border border-crimson-700 bg-crimson-600 px-8 py-3 font-ui text-xs uppercase tracking-[0.28em] text-white"
                   onClick={() => setMobileOpen(false)}
                 >
                   {purchaseCtas.archive.label}
-                </Link>
+                </Button>
               </motion.div>
 
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
                   type: "spring",
                   stiffness: 200,
                   damping: 24,
-                  delay: 0.1 + (navItems.length + 1) * 0.08,
+                  delay: 0.22 + navItems.length * 0.06,
                 }}
-                className="mt-8 flex flex-wrap items-center justify-center gap-3"
+                className="mt-8 flex flex-wrap gap-3"
               >
                 {mobileSupportLinks.map((link) => (
                   <Link
                     key={`${link.href}-${link.label}`}
                     href={link.href}
-                    className="rounded-[2px] border border-stone-800 px-4 py-2 font-ui text-[11px] uppercase tracking-[0.28em] text-stone-300 hover:border-stone-600 hover:text-stone-50"
+                    className="rounded-full border border-white/10 px-4 py-2 font-ui text-[11px] uppercase tracking-[0.28em] text-stone-300 hover:border-white/20 hover:text-stone-50"
                     onClick={() => setMobileOpen(false)}
                   >
                     {link.label}
                   </Link>
                 ))}
               </motion.div>
-            </nav>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

@@ -2,11 +2,9 @@
 
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { purchaseCtas } from "@/lib/constants";
-import { missionFileDownload, pressAssets } from "@/lib/content";
+import { SectionIntro } from "@/components/ui/SectionIntro";
+import { pressAssets, missionFileDownload } from "@/lib/content";
 import { cn } from "@/lib/utils";
-
-import { DossierHeader } from "./DossierHeader";
 
 export function PressTeaserSection() {
   const readyCount = pressAssets.filter(
@@ -16,30 +14,31 @@ export function PressTeaserSection() {
   return (
     <section
       id="the-press"
-      className="section-padding relative border-b border-stone-800"
+      className="section-tone-command relative"
     >
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 archive-map opacity-35"
-      />
-      <Container className="relative z-10 grid gap-8 lg:grid-cols-12">
+      <div aria-hidden="true" className="absolute inset-0 blueprint-grid opacity-14" />
+
+      <Container className="section-padding relative z-10 grid gap-8 lg:grid-cols-12">
         <div className="lg:col-span-5">
-          <DossierHeader
-            code="File 09"
+          <SectionIntro
+            eyebrow="File 09"
             title="Press and Downloads"
-            subtitle="The client wants a dedicated media area with downloadable material, bios, summary, and contact information. This teaser drives into the future `/press` route."
+            body="This teaser now behaves like a media shelf: cleaner, lighter in density, and easier to scan for status."
+            theme="command"
+            tone="dark"
           />
-          <div className="mt-8 rounded-[2px] border border-stone-800 bg-stone-900/70 p-6">
-            <p className="font-ui text-[11px] uppercase tracking-[0.32em] text-stone-500">
+
+          <div className="glass-panel mt-6 rounded-3xl p-5">
+            <p className="font-ui text-[11px] uppercase tracking-[0.32em] text-stone-400">
               Mission file download
             </p>
-            <h3 className="mt-3 font-heading text-4xl leading-none text-stone-50">
+            <h3 className="mt-4 font-body text-xl font-semibold tracking-[-0.03em] text-stone-50 md:text-2xl lg:text-3xl">
               {missionFileDownload.title}
             </h3>
             <p className="mt-4 text-sm leading-relaxed text-stone-300">
               {missionFileDownload.summary}
             </p>
-            <p className="mt-4 font-ui text-[11px] uppercase tracking-[0.32em] text-crimson-300">
+            <p className="mt-5 font-ui text-[11px] uppercase tracking-[0.32em] text-crimson-300">
               Status: {missionFileDownload.status}
             </p>
           </div>
@@ -48,11 +47,7 @@ export function PressTeaserSection() {
         <div className="lg:col-span-7">
           <div className="grid gap-4 md:grid-cols-2">
             {pressAssets.map((asset) => (
-              <div key={asset.id} className="archive-shell p-6">
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 grid-overlay-dark opacity-30"
-                />
+              <div key={asset.id} className="intel-panel rounded-2xl p-4">
                 <div className="relative">
                   <div className="flex items-center justify-between gap-4">
                     <span className="font-ui text-[11px] uppercase tracking-[0.32em] text-crimson-300">
@@ -63,13 +58,13 @@ export function PressTeaserSection() {
                         "rounded-full border px-2 py-1 font-ui text-[10px] uppercase tracking-[0.24em]",
                         asset.status === "ready"
                           ? "border-olive-700 text-olive-200"
-                          : "border-stone-700 text-stone-400",
+                          : "border-stone-600 text-stone-400",
                       )}
                     >
                       {asset.status}
                     </span>
                   </div>
-                  <h3 className="mt-6 font-heading text-4xl leading-none text-stone-50">
+                  <h3 className="mt-4 font-body text-lg font-semibold tracking-[-0.03em] text-stone-50 md:text-xl lg:text-2xl">
                     {asset.title}
                   </h3>
                   <p className="mt-3 text-sm leading-relaxed text-stone-300">
@@ -79,13 +74,16 @@ export function PressTeaserSection() {
               </div>
             ))}
           </div>
-          <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-[2px] border border-stone-800 bg-stone-900/70 p-6">
-            <p className="text-sm leading-relaxed text-stone-300">
+
+          <div className="glass-panel mt-5 flex flex-wrap items-center justify-between gap-4 rounded-3xl p-5">
+            <p className="max-w-xl text-sm leading-relaxed text-stone-300">
               {readyCount} of {pressAssets.length} press assets are already
               modeled in the archive and can be surfaced cleanly without broken
               links.
             </p>
-            <Button href="/press">{purchaseCtas.press.label}</Button>
+            <Button variant="signal" href="/press">
+              Open press desk
+            </Button>
           </div>
         </div>
       </Container>
