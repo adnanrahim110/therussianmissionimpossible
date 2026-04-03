@@ -6,6 +6,7 @@ import { motion, useInView } from "motion/react";
 import Link from "next/link";
 import { useRef } from "react";
 import { Container } from "../ui/Container";
+import Image from "next/image";
 
 function FooterLink({ href, children }) {
   return (
@@ -46,12 +47,13 @@ export function Footer() {
       <Container className="relative z-10">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <p className="mb-3 font-ui text-[11px] uppercase tracking-[0.34em] text-stone-500">
-              {siteMeta.tagline}
-            </p>
-            <h3 className="mb-3 font-body text-xl font-semibold tracking-[-0.04em] text-stone-50 sm:text-2xl md:text-3xl">
-              {siteMeta.title}
-            </h3>
+            <Image
+              src="/imgs/logo-f.png"
+              alt="Logo"
+              width={400}
+              height={400}
+              className="h-18 w-auto"
+            />
             <p className="mb-5 max-w-md text-sm leading-relaxed text-stone-400">
               {siteMeta.description}
             </p>

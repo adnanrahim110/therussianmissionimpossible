@@ -16,6 +16,7 @@ import {
   useScroll,
   useSpring,
 } from "motion/react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
@@ -125,23 +126,33 @@ export function Header() {
         className="fixed inset-x-0 top-0 z-40 px-3 pt-3 md:px-4"
       >
         <Container className="relative">
-          <div
-            className={cn(
-              "rounded-full border transition-all duration-300",
-              isScrolled
-                ? "border-white/10 bg-stone-950/88 shadow-[0_18px_60px_rgba(0,0,0,0.32)] backdrop-blur-xl"
-                : "border-white/8 bg-stone-950/58 backdrop-blur-lg",
-            )}
-          >
-            <div className="w-full px-8 flex h-17 items-center justify-between gap-4">
+          <div className="flex items-center justify-center">
+            <div
+              className={cn(
+                "flex size-20 items-center justify-center gap-4 rounded-full border transition-all duration-300",
+                isScrolled
+                  ? "border-white/10 bg-stone-950/88 shadow-[0_18px_60px_rgba(0,0,0,0.32)] backdrop-blur-xl"
+                  : "border-white/8 bg-stone-950/58 backdrop-blur-lg",
+              )}
+            >
               <Link href="/" className="group flex min-w-0 items-center gap-3">
-                <div className="min-w-0">
-                  <div className="truncate font-heading text-2xl leading-none text-stone-50">
-                    OS
-                  </div>
-                </div>
+                <Image
+                  src="/imgs/logo.png"
+                  alt="Logo"
+                  width={200}
+                  height={200}
+                  className="h-18 w-auto"
+                />
               </Link>
-
+            </div>
+            <div
+              className={cn(
+                " pl-3 pr-6 flex h-17 items-center justify-between gap-4 rounded-full border transition-all duration-300",
+                isScrolled
+                  ? "border-white/10 bg-stone-950/88 shadow-[0_18px_60px_rgba(0,0,0,0.32)] backdrop-blur-xl"
+                  : "border-white/8 bg-stone-950/58 backdrop-blur-lg",
+              )}
+            >
               <nav className="hidden lg:flex items-center gap-px">
                 {navItems.map((item) => (
                   <NavLink
