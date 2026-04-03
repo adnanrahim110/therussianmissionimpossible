@@ -3,6 +3,7 @@
 import { Container } from "@/components/ui/Container";
 import { SectionIntro } from "@/components/ui/SectionIntro";
 import { operationOverview, timelinePhases } from "@/lib/content";
+import { cn } from "@/lib/utils";
 
 export function OperationTimelineSection() {
   return (
@@ -23,13 +24,20 @@ export function OperationTimelineSection() {
           body={operationOverview.body}
           theme="editorial"
           tone="dark"
+          className="max-w-7xl"
+          bodyClassName="max-w-7xl"
         />
 
-        <div className="mt-10 grid gap-5 lg:grid-cols-2">
-          {timelinePhases.map((phase) => (
+        <div className="mt-10 grid gap-4 xl:grid-cols-6">
+          {timelinePhases.map((phase, phaseIndex) => (
             <article
               key={phase.code}
-              className="intel-panel relative overflow-hidden rounded-3xl p-5 sm:p-7"
+              className={cn(
+                "intel-panel relative overflow-hidden rounded-3xl p-6 sm:p-8",
+                phaseIndex === 0 && "xl:col-span-3",
+                phaseIndex === 1 && "xl:col-span-3",
+                phaseIndex >= 2 && "xl:col-span-2",
+              )}
             >
               <div
                 aria-hidden="true"
@@ -64,7 +72,7 @@ export function OperationTimelineSection() {
                   </p>
                 </div>
 
-                <div className="mt-6 grid gap-3">
+                <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-1">
                   {phase.details.map((detail, detailIndex) => (
                     <div
                       key={detail}

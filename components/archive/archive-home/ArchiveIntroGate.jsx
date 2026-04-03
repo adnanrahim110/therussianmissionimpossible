@@ -35,7 +35,8 @@ export function ArchiveIntroGate() {
     : FINAL_HOLD_MS;
   const progress = `${Math.round(((index + 1) / stepCount) * 100)}%`;
   const estimatedDuration = (
-    (((stepCount - 1) * stepDuration + finalHold) / 1000)
+    ((stepCount - 1) * stepDuration + finalHold) /
+    1000
   ).toFixed(1);
   const activeSignal = archiveIntro.sequence[index] ?? archiveIntro.sequence[0];
 
@@ -159,8 +160,14 @@ export function ArchiveIntroGate() {
         className="relative z-10 flex min-h-[calc(100dvh-1.5rem)] items-center sm:min-h-[calc(100dvh-2rem)]"
       >
         <motion.div
-          initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20, scale: 0.985 }}
-          animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
+          initial={
+            prefersReducedMotion
+              ? undefined
+              : { opacity: 0, y: 20, scale: 0.985 }
+          }
+          animate={
+            prefersReducedMotion ? undefined : { opacity: 1, y: 0, scale: 1 }
+          }
           transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
           className="glass-panel mx-auto flex w-full max-w-6xl flex-col overflow-hidden rounded-[1.75rem] border border-white/12 shadow-[0_30px_120px_rgba(0,0,0,0.42)]"
         >
@@ -260,7 +267,7 @@ export function ArchiveIntroGate() {
                           isActive
                             ? "border-accent/40 bg-accent/12 shadow-[0_18px_45px_rgba(242,13,13,0.18)]"
                             : isPast
-                              ? "border-white/10 bg-white/[0.04]"
+                              ? "border-white/10 bg-white/4"
                               : "border-white/6 bg-black/10",
                         )}
                       >

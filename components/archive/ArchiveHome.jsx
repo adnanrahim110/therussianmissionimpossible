@@ -5,6 +5,7 @@ import { ArchiveIntroGate } from "./archive-home/ArchiveIntroGate";
 import { AuthorsTeaserSection } from "./archive-home/AuthorsTeaserSection";
 import { EvidenceBoardSection } from "./archive-home/EvidenceBoardSection";
 import { MissionBriefingSection } from "./archive-home/MissionBriefingSection";
+import { MissionHeroSection } from "./archive-home/MissionHeroSection";
 import { MissionMapSection } from "./archive-home/MissionMapSection";
 import { MissionSection } from "./archive-home/MissionSection";
 import { MythOrOperationSection } from "./archive-home/MythOrOperationSection";
@@ -16,6 +17,7 @@ export function ArchiveHome() {
   return (
     <>
       <ArchiveIntroGate />
+      <MissionHeroSection />
       <MissionSection />
       <OperationTimelineSection />
       <AuthorsTeaserSection />

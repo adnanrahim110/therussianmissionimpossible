@@ -12,19 +12,22 @@ export function MissionBriefingSection() {
   const [showNotes, setShowNotes] = useState(false);
 
   return (
-    <section
-      id="the-briefing"
-      className="section-tone-paper relative"
-    >
-      <div aria-hidden="true" className="absolute inset-0 grid-overlay-light opacity-32" />
-      <div aria-hidden="true" className="absolute inset-0 paper-rules opacity-18" />
+    <section id="the-briefing" className="section-tone-paper relative">
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 grid-overlay-light opacity-32"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 paper-rules opacity-18"
+      />
 
       <Container className="section-padding relative z-10 grid gap-8 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <SectionIntro
             eyebrow={briefingVideo.label}
             title={briefingVideo.title}
-            body="The client wants a briefing reel, so this chapter now reads like a blueprint-and-film interface rather than another generic shell."
+            body="A dedicated intelligence-reel module keeps this chapter clear, cinematic, and structured while media assets are finalized."
             theme="command"
             tone="dark"
           />
@@ -36,7 +39,10 @@ export function MissionBriefingSection() {
         <div className="lg:col-span-7">
           <div className="intel-panel overflow-hidden rounded-3xl">
             <div className="relative aspect-video">
-              <div aria-hidden="true" className="absolute inset-0 blueprint-grid opacity-25" />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 blueprint-grid opacity-25"
+              />
               <div
                 aria-hidden="true"
                 className="absolute inset-y-0 left-7 hidden w-10 rounded-full border border-white/10 bg-black/18 md:block"
@@ -46,7 +52,7 @@ export function MissionBriefingSection() {
                 className="absolute inset-y-0 right-7 hidden w-10 rounded-full border border-white/10 bg-black/18 md:block"
               />
               <div className="absolute inset-0 bg-linear-to-tr from-stone-950 via-stone-950/78 to-crimson-950/28" />
-              <div className="relative flex h-full flex-col justify-between p-6 md:p-8">
+              <div className="relative flex h-full flex-col justify-between p-6 md:p-8 lg:p-10">
                 <div className="flex items-center justify-between gap-4">
                   <span className="font-ui text-[11px] uppercase tracking-[0.32em] text-crimson-300">
                     Incoming briefing reel
@@ -60,8 +66,8 @@ export function MissionBriefingSection() {
                     Intelligence cut
                   </p>
                   <p className="mt-4 text-sm leading-relaxed text-stone-200 md:text-base">
-                    Styled as a locked reel deck, ready to swap in final media
-                    when the client delivers assets.
+                    Built as a locked reel deck so final footage can be dropped
+                    in without changing layout, spacing, or metadata structure.
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-3">
@@ -70,7 +76,9 @@ export function MissionBriefingSection() {
                     variant="quiet"
                     onClick={() => setShowNotes((value) => !value)}
                   >
-                    {showNotes ? "Hide briefing notes" : "Preview briefing notes"}
+                    {showNotes
+                      ? "Hide briefing notes"
+                      : "Preview briefing notes"}
                   </Button>
                   <Button variant="signal" href={purchaseCtas.press.href}>
                     {purchaseCtas.press.label}
@@ -87,16 +95,16 @@ export function MissionBriefingSection() {
               }}
               className="overflow-hidden border-t border-white/8"
             >
-              <div className="grid gap-4 p-6 md:grid-cols-2">
+              <div className="grid gap-4 p-6 md:grid-cols-2 md:p-8">
                 {briefingVideo.beats.map((beat, index) => (
                   <div
                     key={beat}
-                    className="rounded-xl border border-white/10 bg-black/18 p-4"
+                    className="rounded-2xl border border-white/10 bg-black/18 p-4"
                   >
                     <p className="font-ui text-[11px] uppercase tracking-[0.32em] text-stone-400">
                       Reel beat {String(index + 1).padStart(2, "0")}
                     </p>
-                    <p className="mt-3 text-sm leading-relaxed text-stone-200">
+                    <p className="mt-3 text-sm leading-relaxed text-stone-200 md:text-base">
                       {beat}
                     </p>
                   </div>

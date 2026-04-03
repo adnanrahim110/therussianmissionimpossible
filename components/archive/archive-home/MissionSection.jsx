@@ -3,12 +3,13 @@
 import { Container } from "@/components/ui/Container";
 import { CursorGlowField } from "@/components/ui/CursorGlowField";
 import { missionOverview, operationOverview } from "@/lib/content";
+import { cn } from "@/lib/utils";
 
 export function MissionSection() {
   return (
     <section
       id="the-mission"
-      className="section-tone-obsidian relative overflow-hidden pt-28 pb-14 md:pt-36 md:pb-20 lg:pt-40 lg:pb-24"
+      className="section-tone-obsidian relative overflow-hidden pt-32 pb-16 md:pt-40 md:pb-24 lg:pt-48 lg:pb-32"
     >
       <CursorGlowField
         className="opacity-80"
@@ -42,24 +43,27 @@ export function MissionSection() {
               {missionOverview.summary}
             </p>
 
-            <div className="mt-8 max-w-3xl space-y-4 text-base leading-relaxed text-stone-300">
+            <div className="mt-8 max-w-3xl space-y-6 text-base md:text-lg leading-relaxed text-stone-300">
               {missionOverview.body.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
             </div>
           </div>
 
-          <div className="glass-panel rounded-3xl p-5 md:p-7">
+          <div className="glass-panel rounded-3xl p-6 md:p-8">
             <div className="relative">
               <p className="font-ui text-[11px] uppercase tracking-[0.34em] text-accent">
                 MISSION POINTS
               </p>
 
-              <div className="mt-6 space-y-4">
+              <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-1">
                 {missionOverview.points.map((point, index) => (
                   <div
                     key={point}
-                    className="rounded-2xl border border-white/10 bg-black/18 p-4"
+                    className={cn(
+                      "rounded-2xl border border-white/10 bg-black/18 p-4",
+                      index === 0 && "md:col-span-2 lg:col-span-1",
+                    )}
                   >
                     <p className="font-ui text-[10px] uppercase tracking-[0.34em] text-stone-500">
                       {String(index + 1).padStart(2, "0")}
@@ -71,7 +75,7 @@ export function MissionSection() {
                 ))}
               </div>
 
-              <div className="mt-6 rounded-2xl border border-white/10 bg-black/18 p-4">
+              <div className="mt-6 rounded-2xl border border-white/10 bg-black/18 p-5">
                 <p className="font-ui text-[10px] uppercase tracking-[0.34em] text-stone-500">
                   {operationOverview.eyebrow}
                 </p>

@@ -16,7 +16,7 @@ export function MissionMapSection() {
         className="absolute right-[8%] top-[16%] h-72 w-72 rounded-full bg-medal-300/10 blur-[140px]"
       />
 
-      <Container className="section-padding relative z-10 grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+      <Container className="section-padding relative z-10 grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
         <div>
           <SectionIntro
             title={mapSection.title}
@@ -26,8 +26,8 @@ export function MissionMapSection() {
           />
         </div>
 
-        <div className="intel-panel rounded-3xl p-5 md:p-7">
-          <div className="rounded-3xl border border-white/10 bg-black/28 p-5">
+        <div className="intel-panel rounded-3xl p-6 md:p-8">
+          <div className="rounded-3xl border border-white/10 bg-black/28 p-6">
             <p className="font-ui text-[10px] uppercase tracking-[0.32em] text-medal-200">
               MAP FRAGMENT
             </p>
@@ -36,7 +36,7 @@ export function MissionMapSection() {
             </p>
           </div>
 
-          <div className="mt-5 rounded-3xl border border-white/10 bg-white/[0.04] p-5">
+          <div className="mt-6 rounded-3xl border border-white/10 bg-white/4 p-6">
             <p className="font-ui text-[10px] uppercase tracking-[0.32em] text-stone-500">
               WHY IT MATTERS
             </p>

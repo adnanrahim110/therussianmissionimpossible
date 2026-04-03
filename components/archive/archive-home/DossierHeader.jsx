@@ -9,11 +9,11 @@ export function DossierHeader({ code, title, subtitle }) {
           {code}
         </span>
       </div>
-      <h2 className="mt-6 font-heading text-5xl leading-[0.9] text-stone-50 md:text-6xl">
+      <h2 className="mt-6 font-heading text-5xl leading-[0.88] tracking-[0.02em] text-stone-50 md:text-6xl">
         {title}
       </h2>
       {subtitle && (
-        <p className="mt-4 max-w-2xl text-base leading-relaxed text-stone-300 md:text-lg">
+        <p className="mt-6 max-w-[68ch] text-base leading-7 text-stone-300 text-pretty md:text-lg md:leading-8">
           {subtitle}
         </p>
       )}

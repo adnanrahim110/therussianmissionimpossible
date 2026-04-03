@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img"
+  aria-labelledby="title desc">
+  <title id="title">Mission Placeholder 02</title>
+  <desc id="desc">Temporary placeholder image for mission hero slider.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#131a21" />
+      <stop offset="100%" stop-color="#222a32" />
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#bg)" />
+  <g fill="none" stroke="#edf0f2" stroke-opacity="0.18" stroke-width="2">
+    <circle cx="280" cy="180" r="120" />
+    <circle cx="1320" cy="820" r="160" />
+  </g>
+  <text x="50%" y="50%" text-anchor="middle" fill="#edf0f2" font-family="monospace" font-size="56"
+    letter-spacing="12">PLACEHOLDER 02</text>
+</svg>

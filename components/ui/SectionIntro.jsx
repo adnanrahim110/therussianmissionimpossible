@@ -27,22 +27,23 @@ const tones = {
 
 const themes = {
   chapter: {
-    title: "font-heading text-3xl leading-[0.92] uppercase sm:text-4xl md:text-5xl lg:text-6xl",
-    eyebrow: "font-ui text-[11px] uppercase tracking-[0.34em]",
+    title:
+      "font-heading text-3xl leading-[0.9] tracking-[0.02em] uppercase sm:text-4xl md:text-5xl lg:text-6xl",
+    eyebrow: "font-ui text-[11px] uppercase tracking-[0.32em]",
   },
   command: {
     title:
-      "font-heading text-2xl leading-[0.92] uppercase sm:text-3xl md:text-4xl lg:text-5xl",
-    eyebrow: "font-ui text-[11px] uppercase tracking-[0.34em]",
+      "font-heading text-2xl leading-[0.9] tracking-[0.02em] uppercase sm:text-3xl md:text-4xl lg:text-5xl",
+    eyebrow: "font-ui text-[11px] uppercase tracking-[0.32em]",
   },
   editorial: {
     title:
-      "font-body text-2xl font-semibold leading-[1.05] tracking-[-0.03em] sm:text-3xl md:text-4xl lg:text-5xl",
+      "font-body text-2xl font-semibold leading-[1.04] tracking-[-0.028em] sm:text-3xl md:text-4xl lg:text-5xl",
     eyebrow: "font-ui text-[11px] uppercase tracking-[0.3em]",
   },
   minimal: {
     title:
-      "font-body text-xl font-semibold leading-[1.06] tracking-[-0.03em] sm:text-2xl md:text-3xl lg:text-4xl",
+      "font-body text-xl font-semibold leading-[1.04] tracking-[-0.028em] sm:text-2xl md:text-3xl lg:text-4xl",
     eyebrow: "font-ui text-[11px] uppercase tracking-[0.28em]",
   },
 };
@@ -88,7 +89,7 @@ export function SectionIntro({
       {body && (
         <p
           className={cn(
-            "mt-5 max-w-2xl text-base leading-relaxed md:text-lg",
+            "mt-6 max-w-[68ch] text-base leading-7 text-pretty md:text-lg md:leading-8",
             align === "center" && "mx-auto",
             palette.body,
             bodyClassName,
@@ -101,7 +102,7 @@ export function SectionIntro({
       {showDivider && (
         <div
           className={cn(
-            "mt-7 flex items-center gap-4",
+            "mt-8 flex items-center gap-4",
             align === "center" && "justify-center",
           )}
         >

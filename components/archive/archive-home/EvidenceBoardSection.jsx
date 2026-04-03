@@ -3,6 +3,7 @@
 import { Container } from "@/components/ui/Container";
 import { SectionIntro } from "@/components/ui/SectionIntro";
 import { evidenceItems, evidenceSection } from "@/lib/content";
+import { cn } from "@/lib/utils";
 
 export function EvidenceBoardSection() {
   return (
@@ -24,8 +25,8 @@ export function EvidenceBoardSection() {
       />
 
       <Container className="section-padding relative z-10">
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
-          <div className="intel-panel rounded-3xl p-5 sm:p-7">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
+          <div className="intel-panel rounded-3xl p-6 sm:p-8">
             <SectionIntro
               title={evidenceSection.title}
               body={evidenceSection.intro}
@@ -33,7 +34,7 @@ export function EvidenceBoardSection() {
               tone="dark"
             />
 
-            <div className="mt-8 rounded-3xl border border-white/12 bg-white/5 p-5">
+            <div className="mt-8 rounded-3xl border border-stone-700/80 bg-black/24 p-6 ring-1 ring-inset ring-white/6">
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
                 <div>
                   <p className="font-ui text-[10px] uppercase tracking-[0.28em] text-stone-400">
@@ -55,7 +56,7 @@ export function EvidenceBoardSection() {
                 {evidenceSection.featuredBody}
               </p>
 
-              <div className="mt-7 rounded-3xl border border-white/15 bg-stone-950/75 p-5">
+              <div className="mt-8 rounded-3xl border border-white/15 bg-stone-950/75 p-6">
                 <p className="font-ui text-[10px] uppercase tracking-[0.28em] text-stone-500">
                   {evidenceSection.featuredNoteTitle}
                 </p>
@@ -66,19 +67,22 @@ export function EvidenceBoardSection() {
             </div>
           </div>
 
-          <div className="grid gap-4">
-            {evidenceItems.map((item) => (
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
+            {evidenceItems.map((item, index) => (
               <article
                 key={item.id}
-                className="rounded-3xl border border-stone-300 bg-white/88 p-5 shadow-[0_12px_30px_rgba(52,46,38,0.08)]"
+                className={cn(
+                  "relative overflow-hidden rounded-3xl border border-stone-700/85 bg-linear-to-br from-stone-900/92 via-stone-900/88 to-stone-950/94 p-5 shadow-[0_20px_50px_rgba(0,0,0,0.36)] ring-1 ring-inset ring-white/6",
+                  index === 0 && "md:col-span-2 lg:col-span-1",
+                )}
               >
-                <p className="font-ui text-[10px] uppercase tracking-[0.28em] text-crimson-700">
+                <p className="font-ui text-[10px] uppercase tracking-[0.28em] text-crimson-300">
                   {item.type}
                 </p>
-                <h3 className="mt-3 text-xl font-semibold leading-tight tracking-[-0.03em] text-stone-950">
+                <h3 className="mt-3 text-xl font-semibold leading-tight tracking-[-0.03em] text-stone-50">
                   {item.title}
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-stone-700">
+                <p className="mt-3 text-sm leading-relaxed text-stone-200">
                   {item.body}
                 </p>
               </article>

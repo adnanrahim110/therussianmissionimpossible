@@ -19,6 +19,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import { Container } from "../ui/Container";
 
 function NavLink({ href, children, onClick, active = false }) {
   return (
@@ -26,7 +27,7 @@ function NavLink({ href, children, onClick, active = false }) {
       href={href}
       onClick={onClick}
       className={cn(
-        "group relative rounded-full px-4 py-2 font-ui text-[11px] uppercase tracking-[0.28em] transition-colors whitespace-nowrap",
+        "group relative rounded-full px-3 py-2 font-ui text-[11px] uppercase tracking-[0.28em] transition-colors whitespace-nowrap",
         active
           ? "bg-white/10 text-stone-50"
           : "text-stone-300 hover:bg-white/6 hover:text-stone-50",
@@ -123,81 +124,80 @@ export function Header() {
         transition={{ duration: 0.35, ease: "easeInOut" }}
         className="fixed inset-x-0 top-0 z-40 px-3 pt-3 md:px-4"
       >
-        <div
-          className={cn(
-            "mx-auto max-w-368 rounded-full border transition-all duration-300",
-            isScrolled
-              ? "border-white/10 bg-stone-950/88 shadow-[0_18px_60px_rgba(0,0,0,0.32)] backdrop-blur-xl"
-              : "border-white/8 bg-stone-950/58 backdrop-blur-lg",
-          )}
-        >
-          <div className="container-wide flex h-17 items-center justify-between gap-4">
-            <Link href="/" className="group flex min-w-0 items-center gap-3">
-              <div className="min-w-0">
-                <div className="truncate font-heading text-2xl leading-none text-stone-50">
-                  {siteMeta.shortTitle}
+        <Container className="relative">
+          <div
+            className={cn(
+              "rounded-full border transition-all duration-300",
+              isScrolled
+                ? "border-white/10 bg-stone-950/88 shadow-[0_18px_60px_rgba(0,0,0,0.32)] backdrop-blur-xl"
+                : "border-white/8 bg-stone-950/58 backdrop-blur-lg",
+            )}
+          >
+            <div className="w-full px-8 flex h-17 items-center justify-between gap-4">
+              <Link href="/" className="group flex min-w-0 items-center gap-3">
+                <div className="min-w-0">
+                  <div className="truncate font-heading text-2xl leading-none text-stone-50">
+                    OS
+                  </div>
                 </div>
-                <div className="mt-1 hidden font-ui text-[9px] uppercase tracking-[0.28em] text-stone-500 md:block">
-                  {siteMeta.tagline}
-                </div>
-              </div>
-            </Link>
+              </Link>
 
-            <nav className="hidden lg:flex items-center gap-2">
-              {navItems.map((item) => (
-                <NavLink
-                  key={item.href}
-                  href={item.href}
-                  active={item.href === "/book" && pathname === "/book"}
+              <nav className="hidden lg:flex items-center gap-px">
+                {navItems.map((item) => (
+                  <NavLink
+                    key={item.href}
+                    href={item.href}
+                    active={item.href === "/book" && pathname === "/book"}
+                  >
+                    {item.label}
+                  </NavLink>
+                ))}
+              </nav>
+
+              <div className="hidden md:block">
+                <Button
+                  size="sm"
+                  variant="signal"
+                  href={purchaseCtas.archive.href}
                 >
-                  {item.label}
-                </NavLink>
-              ))}
-            </nav>
+                  {purchaseCtas.archive.label}
+                </Button>
+              </div>
 
-            <div className="hidden md:block">
-              <Button
-                size="sm"
-                variant="signal"
-                href={purchaseCtas.archive.href}
+              <button
+                className="rounded-full border border-white/10 bg-white/6 p-2 text-stone-200 lg:hidden focus-visible:ring-2 focus-visible:ring-accent"
+                aria-label={mobileOpen ? "Close menu" : "Open menu"}
+                aria-expanded={mobileOpen}
+                onClick={() => setMobileOpen(!mobileOpen)}
               >
-                {purchaseCtas.archive.label}
-              </Button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  {mobileOpen ? (
+                    <>
+                      <line x1="18" x2="6" y1="6" y2="18" />
+                      <line x1="6" x2="18" y1="6" y2="18" />
+                    </>
+                  ) : (
+                    <>
+                      <line x1="4" x2="20" y1="12" y2="12" />
+                      <line x1="4" x2="20" y1="6" y2="6" />
+                      <line x1="4" x2="20" y1="18" y2="18" />
+                    </>
+                  )}
+                </svg>
+              </button>
             </div>
-
-            <button
-              className="rounded-full border border-white/10 bg-white/6 p-2 text-stone-200 lg:hidden focus-visible:ring-2 focus-visible:ring-accent"
-              aria-label={mobileOpen ? "Close menu" : "Open menu"}
-              aria-expanded={mobileOpen}
-              onClick={() => setMobileOpen(!mobileOpen)}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                {mobileOpen ? (
-                  <>
-                    <line x1="18" x2="6" y1="6" y2="18" />
-                    <line x1="6" x2="18" y1="6" y2="18" />
-                  </>
-                ) : (
-                  <>
-                    <line x1="4" x2="20" y1="12" y2="12" />
-                    <line x1="4" x2="20" y1="6" y2="6" />
-                    <line x1="4" x2="20" y1="18" y2="18" />
-                  </>
-                )}
-              </svg>
-            </button>
           </div>
-        </div>
+        </Container>
       </motion.header>
 
       <AnimatePresence>

@@ -5,6 +5,7 @@ import { siteMeta } from "@/lib/content";
 import { motion, useInView } from "motion/react";
 import Link from "next/link";
 import { useRef } from "react";
+import { Container } from "../ui/Container";
 
 function FooterLink({ href, children }) {
   return (
@@ -42,7 +43,7 @@ export function Footer() {
         className="absolute inset-x-0 top-0 flex justify-center"
       ></div>
 
-      <div className="container-default relative z-10">
+      <Container className="relative z-10">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <p className="mb-3 font-ui text-[11px] uppercase tracking-[0.34em] text-stone-500">
@@ -55,7 +56,10 @@ export function Footer() {
               {siteMeta.description}
             </p>
             <p className="font-ui text-xs uppercase tracking-[0.24em] text-stone-600">
-              &copy; {new Date().getFullYear()} {siteMeta.publisher}
+              {siteMeta.publisher}
+            </p>
+            <p className="font-ui text-xs uppercase tracking-[0.24em] text-stone-600">
+              &copy; {new Date().getFullYear()} All Rights Reserved
             </p>
           </div>
 
@@ -103,7 +107,7 @@ export function Footer() {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 }
