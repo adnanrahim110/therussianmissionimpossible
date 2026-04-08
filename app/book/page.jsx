@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { purchaseCtas } from "@/lib/constants";
 import { missionFileDownload, siteMeta } from "@/lib/content";
+import Image from "next/image";
 
 const bookBlocks = [
   {
@@ -23,9 +24,31 @@ const bookBlocks = [
 ];
 
 export const metadata = {
-  title: `Operation Stream 3.0: The Russian Mission Impossible | ${siteMeta.title}`,
+  title: `Book: Operation Stream 3.0 | ${siteMeta.title}`,
   description:
-    "Operation Stream 3.0: The Russian Mission Impossible is a documentary narrative that reconstructs one of the most unusual military operations of the modern era.",
+    "Read about the Operation Stream 3.0 book, a documentary narrative detailing mission strategy, frontline endurance, and the human cost behind modern conflict.",
+  alternates: {
+    canonical: "/book",
+  },
+  openGraph: {
+    title: `Book: Operation Stream 3.0 | ${siteMeta.title}`,
+    description:
+      "Read about the Operation Stream 3.0 book, a documentary narrative detailing mission strategy, frontline endurance, and the human cost behind modern conflict.",
+    type: "article",
+    images: [
+      {
+        url: "/imgs/bookcover.jpg",
+        alt: "Operation Stream 3.0 book cover",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Book: Operation Stream 3.0 | ${siteMeta.title}`,
+    description:
+      "Read about the Operation Stream 3.0 book, a documentary narrative detailing mission strategy, frontline endurance, and the human cost behind modern conflict.",
+    images: ["/imgs/bookcover.jpg"],
+  },
 };
 
 export default function BookPage() {
@@ -37,49 +60,64 @@ export default function BookPage() {
           aria-hidden="true"
           className="absolute inset-0 grid-overlay-dark opacity-40"
         />
-        <Container className="relative z-10 pb-16 md:pb-24">
-          <div className="max-w-4xl">
-            <div className="flex items-center gap-3">
-              <span className="crosshair-marker scale-75 opacity-70" />
-              <span className="font-ui text-[11px] uppercase tracking-[0.32em] text-stone-400">
-                Book: https://therussianmissionimpossible.vercel.app/book
-              </span>
+        <Container className="relative z-10 pb-16 md:pb-24 container-default">
+          <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-10">
+            <div className="lg:col-span-7">
+              <div className="flex items-center gap-3">
+                <span className="font-ui text-[11px] uppercase tracking-[0.32em] text-stone-400">
+                  Book
+                </span>
+              </div>
+              <h1 className="mt-6 font-heading text-[clamp(2.5rem,5vw,4rem)] leading-none text-stone-50">
+                Operation Stream 3.0 <br /> The Russian Mission Impossible
+              </h1>
+              <p className="mt-6 text-lg leading-relaxed text-stone-200 md:text-xl">
+                Operation Stream 3.0: The Russian Mission Impossible is a
+                documentary narrative that reconstructs one of the most unusual
+                military operations of the modern era.
+              </p>
+              <p className="mt-6 text-base leading-relaxed text-stone-300 md:text-lg">
+                The book explores the events surrounding a mission carried out
+                during the conflict in the Kursk border region and the dramatic
+                circumstances that led to its execution. Through interviews,
+                personal testimonies, and historical research, the authors
+                present a vivid account of courage and endurance in extreme
+                situations. The narrative blends factual documentation with
+                deeply human stories, allowing readers to understand both the
+                strategic and emotional dimensions of the events.
+              </p>
+              <p className="mt-6 text-sm uppercase tracking-[0.28em] text-stone-500">
+                Operation Stream 3.0 The Russian Mission Impossible A
+                documentary narrative exploring courage, sacrifice, and the
+                human experience of modern warfare.
+              </p>
+              <div className="mt-10 flex flex-wrap gap-4">
+                <Button size="lg" href={purchaseCtas.instructions.href}>
+                  {purchaseCtas.instructions.label}
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  href={purchaseCtas.press.href}
+                  className="border-stone-700 text-stone-100 hover:bg-stone-800 hover:text-stone-50"
+                >
+                  {purchaseCtas.press.label}
+                </Button>
+              </div>
             </div>
-            <h1 className="mt-6 font-heading text-[clamp(2.5rem,6vw,5rem)] leading-[0.88] text-stone-50">
-              Operation Stream 3.0: The Russian Mission Impossible
-            </h1>
-            <p className="mt-6 max-w-3xl text-lg leading-relaxed text-stone-200 md:text-xl">
-              Operation Stream 3.0: The Russian Mission Impossible is a
-              documentary narrative that reconstructs one of the most unusual
-              military operations of the modern era.
-            </p>
-            <p className="mt-6 max-w-3xl text-base leading-relaxed text-stone-300 md:text-lg">
-              The book explores the events surrounding a mission carried out
-              during the conflict in the Kursk border region and the dramatic
-              circumstances that led to its execution. Through interviews,
-              personal testimonies, and historical research, the authors
-              present a vivid account of courage and endurance in extreme
-              situations. The narrative blends factual documentation with
-              deeply human stories, allowing readers to understand both the
-              strategic and emotional dimensions of the events.
-            </p>
-            <p className="mt-6 max-w-3xl text-sm uppercase tracking-[0.28em] text-stone-500">
-              Operation Stream 3.0 The Russian Mission Impossible A
-              documentary narrative exploring courage, sacrifice, and the human
-              experience of modern warfare.
-            </p>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Button size="lg" href={purchaseCtas.instructions.href}>
-                {purchaseCtas.instructions.label}
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                href={purchaseCtas.press.href}
-                className="border-stone-700 text-stone-100 hover:bg-stone-800 hover:text-stone-50"
-              >
-                {purchaseCtas.press.label}
-              </Button>
+
+            <div className="lg:col-span-5">
+              <div className="archive-shell rounded-2xl">
+                <div className="relative">
+                  <Image
+                    src="/imgs/bookcover.jpg"
+                    alt="Operation Stream 3.0 book cover"
+                    width={720}
+                    height={1080}
+                    className="w-full h-auto"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </Container>
@@ -99,7 +137,10 @@ export default function BookPage() {
             <div className="relative">
               <div className="space-y-6">
                 {bookBlocks.map((block) => (
-                  <div key={block.title} className="rounded-xl border border-stone-800 bg-stone-950/60 p-6">
+                  <div
+                    key={block.title}
+                    className="rounded-xl border border-stone-800 bg-stone-950/60 p-6"
+                  >
                     <p className="font-ui text-[11px] uppercase tracking-[0.32em] text-accent">
                       {block.title}
                     </p>
@@ -129,11 +170,15 @@ export default function BookPage() {
                   </li>
                   <li className="flex gap-3 text-sm leading-relaxed text-stone-300">
                     <span className="crosshair-marker mt-1 scale-75 opacity-50" />
-                    <span>The final storefront URL has not been supplied yet.</span>
+                    <span>
+                      The final storefront URL has not been supplied yet.
+                    </span>
                   </li>
                   <li className="flex gap-3 text-sm leading-relaxed text-stone-300">
                     <span className="crosshair-marker mt-1 scale-75 opacity-50" />
-                    <span>Purchase inquiries continue through the contact desk.</span>
+                    <span>
+                      Purchase inquiries continue through the contact desk.
+                    </span>
                   </li>
                 </ul>
               </div>

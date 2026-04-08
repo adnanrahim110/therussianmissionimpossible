@@ -9,6 +9,7 @@ import {
 } from "@/lib/constants";
 import { siteMeta } from "@/lib/content";
 import { cn } from "@/lib/utils";
+import { X } from "lucide-react";
 import {
   AnimatePresence,
   motion,
@@ -126,7 +127,7 @@ export function Header() {
         className="fixed inset-x-0 top-0 z-40 px-3 pt-3 md:px-4"
       >
         <Container className="relative">
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-between lg:justify-center">
             <div
               className={cn(
                 "flex size-20 items-center justify-center gap-4 rounded-full border transition-all duration-300",
@@ -147,7 +148,7 @@ export function Header() {
             </div>
             <div
               className={cn(
-                " pl-3 pr-6 flex h-17 items-center justify-between gap-4 rounded-full border transition-all duration-300",
+                "lg:pl-3 lg:pr-6 flex lg:h-17 items-center justify-between gap-4 rounded-full border transition-all duration-300",
                 isScrolled
                   ? "border-white/10 bg-stone-950/88 shadow-[0_18px_60px_rgba(0,0,0,0.32)] backdrop-blur-xl"
                   : "border-white/8 bg-stone-950/58 backdrop-blur-lg",
@@ -220,9 +221,27 @@ export function Header() {
             transition={{ duration: 0.28 }}
             className="fixed inset-0 z-50 bg-stone-950/96 backdrop-blur-xl"
           >
-            <div className="absolute inset-0 grid-overlay-dark opacity-16" />
-            <div className="container-default relative z-10 flex min-h-screen-safe flex-col justify-center py-24">
-              <nav className="flex flex-col gap-3">
+            <div className="relative z-10 flex min-h-screen-safe flex-col justify-start gap-5 py-10 px-5">
+              <div className="flex justify-between items-start border-b border-b-white/20 pb-5">
+                <Link href="/" className="w-full block">
+                  <Image
+                    src="/imgs/logo.png"
+                    alt="Operation Stream 3.0 - Logo"
+                    width={500}
+                    height={500}
+                    className="w-auto h-20"
+                  />
+                </Link>
+                <button
+                  type="button"
+                  aria-label="Close mobile menu"
+                  onClick={() => setMobileOpen(false)}
+                  className="border-accent/20 border p-2 hover:border-accent/30 hover:bg-accent/20 hover:text-white transition-all duration-300 ease-in-out"
+                >
+                  <X size={32} />
+                </button>
+              </div>
+              <nav className="flex flex-col">
                 {navItems.map((item, i) => (
                   <motion.div
                     key={item.href}
@@ -237,7 +256,7 @@ export function Header() {
                   >
                     <Link
                       href={item.href}
-                      className="block rounded-3xl border border-white/8 bg-white/3 px-6 py-5 font-heading text-4xl text-stone-100 transition-colors hover:border-white/16 hover:text-accent-hover"
+                      className="block py-4 px-3 border-b border-b-white/10 font-heading text-xl text-stone-100 transition-colors duration-300 ease-in-out hover:bg-white/5 hover:border-white/16 hover:text-accent"
                       onClick={() => setMobileOpen(false)}
                     >
                       {item.label}
@@ -277,18 +296,7 @@ export function Header() {
                   delay: 0.22 + navItems.length * 0.06,
                 }}
                 className="mt-8 flex flex-wrap gap-3"
-              >
-                {mobileSupportLinks.map((link) => (
-                  <Link
-                    key={`${link.href}-${link.label}`}
-                    href={link.href}
-                    className="rounded-full border border-white/10 px-4 py-2 font-ui text-[11px] uppercase tracking-[0.28em] text-stone-300 hover:border-white/20 hover:text-stone-50"
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </motion.div>
+              ></motion.div>
             </div>
           </motion.div>
         )}

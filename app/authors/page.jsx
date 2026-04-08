@@ -4,8 +4,31 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { authors, authorsIntro, siteMeta } from "@/lib/content";
 
 export const metadata = {
-  title: `${authorsIntro.title} | ${siteMeta.title}`,
-  description: authorsIntro.body,
+  title: `Authors and Witnesses | ${siteMeta.title}`,
+  description:
+    "Meet the authors and frontline voices behind Operation Stream 3.0, with profiles, testimonies, and narrative context from the documentary project.",
+  alternates: {
+    canonical: "/authors",
+  },
+  openGraph: {
+    title: `Authors and Witnesses | ${siteMeta.title}`,
+    description:
+      "Meet the authors and frontline voices behind Operation Stream 3.0, with profiles, testimonies, and narrative context from the documentary project.",
+    type: "website",
+    images: [
+      {
+        url: "/imgs/logo-f.png",
+        alt: authorsIntro.title,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Authors and Witnesses | ${siteMeta.title}`,
+    description:
+      "Meet the authors and frontline voices behind Operation Stream 3.0, with profiles, testimonies, and narrative context from the documentary project.",
+    images: ["/imgs/logo-f.png"],
+  },
 };
 
 export default function AuthorsPage() {

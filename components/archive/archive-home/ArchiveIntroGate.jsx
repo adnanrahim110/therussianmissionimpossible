@@ -132,32 +132,24 @@ export function ArchiveIntroGate() {
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0 grid-overlay-dark opacity-35"
+        className="absolute inset-0 grid-overlay-dark opacity-24"
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0 grain-overlay pointer-events-none opacity-60"
+        className="absolute inset-0 grain-overlay pointer-events-none opacity-40"
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0 scanline-overlay opacity-20"
+        className="absolute inset-0 scanline-overlay opacity-12"
       />
       <div
         aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-black via-black/30 to-transparent"
-      />
-      <div
-        aria-hidden="true"
-        className="absolute left-[10%] top-[12%] h-48 w-48 rounded-full bg-white/6 blur-[110px]"
-      />
-      <div
-        aria-hidden="true"
-        className="absolute right-[8%] top-[14%] h-64 w-64 rounded-full bg-accent/14 blur-[140px]"
+        className="absolute left-1/2 top-1/3 h-72 w-72 -translate-x-1/2 rounded-full bg-accent/14 blur-[140px]"
       />
 
       <Container
         size="wide"
-        className="relative z-10 flex min-h-[calc(100dvh-1.5rem)] items-center sm:min-h-[calc(100dvh-2rem)]"
+        className="relative z-10 flex min-h-[calc(100dvh-1.5rem)] items-center justify-center sm:min-h-[calc(100dvh-2rem)]"
       >
         <motion.div
           initial={
@@ -169,176 +161,80 @@ export function ArchiveIntroGate() {
             prefersReducedMotion ? undefined : { opacity: 1, y: 0, scale: 1 }
           }
           transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-          className="glass-panel mx-auto flex w-full max-w-6xl flex-col overflow-hidden rounded-[1.75rem] border border-white/12 shadow-[0_30px_120px_rgba(0,0,0,0.42)]"
+          className="glass-panel mx-auto flex max-h-[calc(100dvh-2rem)] w-full max-w-3xl flex-col overflow-y-auto rounded-3xl border border-white/12 shadow-[0_30px_100px_rgba(0,0,0,0.4)]"
         >
-          <div className="border-b border-white/10 px-4 py-4 sm:px-6 sm:py-5 lg:px-8">
-            <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-              <div className="min-w-0">
-                <div className="flex items-center gap-3">
-                  <span className="crosshair-marker scale-75 opacity-75" />
-                  <span className="font-ui text-[10px] uppercase tracking-[0.34em] text-stone-300 sm:text-[11px]">
-                    {archiveIntro.label}
-                  </span>
-                </div>
-                <p className="mt-3 text-sm leading-relaxed text-stone-400 sm:text-base">
+          <div className="px-4 py-4 sm:px-6 sm:py-5">
+            <div className="flex items-center justify-between gap-3">
+              <div className="min-w-0 flex items-center gap-3">
+                <span className="crosshair-marker scale-75 opacity-75" />
+                <span className="truncate font-ui text-[10px] uppercase tracking-[0.34em] text-stone-300 sm:text-[11px]">
+                  {archiveIntro.label}
+                </span>
+              </div>
+
+              <button
+                type="button"
+                className="rounded-full border border-white/12 bg-white/6 px-4 py-2 font-ui text-[10px] uppercase tracking-[0.28em] text-stone-200 transition-colors hover:border-white/25 hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-crimson-500 sm:text-[11px]"
+                onClick={() => markIntroComplete(setIsOpen)}
+              >
+                Skip
+              </button>
+            </div>
+
+            <div className="mt-4 grid gap-4 sm:gap-5">
+              <p className="font-ui text-[10px] uppercase tracking-[0.34em] text-accent sm:text-[11px]">
+                Archive handshake
+              </p>
+              <h1 className="font-heading text-[clamp(2rem,8vw,4rem)] leading-[0.9] text-stone-50">
+                {archiveIntro.title}
+              </h1>
+              <p className="max-w-2xl text-sm leading-relaxed text-stone-200 sm:text-base">
+                {archiveIntro.subtitle}
+              </p>
+
+              <div className="rounded-2xl border border-white/10 bg-black/20 p-4 sm:p-5">
+                <p className="font-ui text-[10px] uppercase tracking-[0.28em] text-stone-500">
+                  Live signal
+                </p>
+                <p className="mt-2 text-base font-semibold tracking-[-0.02em] text-stone-100 sm:text-lg">
                   {activeSignal}
                 </p>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-3">
-                <div className="rounded-full border border-white/10 bg-white/6 px-3 py-2 font-ui text-[10px] uppercase tracking-[0.28em] text-stone-200">
-                  Sequence {String(index + 1).padStart(2, "0")} /{" "}
-                  {String(stepCount).padStart(2, "0")}
+                <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-white/10">
+                  <motion.div
+                    className="h-full rounded-full bg-linear-to-r from-accent via-crimson-300 to-white"
+                    animate={{ width: progress }}
+                    transition={{
+                      duration: prefersReducedMotion
+                        ? 0.12
+                        : stepDuration / 1000,
+                      ease: "easeInOut",
+                    }}
+                  />
                 </div>
-                <div className="rounded-full border border-white/10 bg-black/18 px-3 py-2 font-ui text-[10px] uppercase tracking-[0.28em] text-stone-400">
-                  ~ {estimatedDuration}s
-                </div>
-                <button
-                  type="button"
-                  className="rounded-full border border-white/12 bg-white/6 px-4 py-2 font-ui text-[10px] uppercase tracking-[0.28em] text-stone-200 transition-colors hover:border-white/25 hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-crimson-500 sm:text-[11px]"
-                  onClick={() => markIntroComplete(setIsOpen)}
-                >
-                  Skip intro
-                </button>
-              </div>
-            </div>
-
-            <div className="mt-4 space-y-3">
-              <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
-                <motion.div
-                  className="h-full rounded-full bg-linear-to-r from-accent via-crimson-300 to-white"
-                  animate={{ width: progress }}
-                  transition={{
-                    duration: prefersReducedMotion ? 0.12 : stepDuration / 1000,
-                    ease: "easeInOut",
-                  }}
-                />
-              </div>
-              <div className="flex flex-wrap items-center justify-between gap-3 font-ui text-[10px] uppercase tracking-[0.28em] text-stone-500">
-                <span>Authentication sequence</span>
-                <span>{progress} synchronized</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid gap-6 px-4 py-5 sm:px-6 sm:py-6 lg:grid-cols-[minmax(300px,0.82fr)_minmax(0,1.18fr)] lg:gap-10 lg:px-8 lg:py-8">
-            <div className="order-2 space-y-4 lg:order-1">
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-                <div className="rounded-3xl border border-white/10 bg-black/18 p-4 sm:p-5">
-                  <p className="font-ui text-[10px] uppercase tracking-[0.32em] text-stone-500">
-                    Current relay
-                  </p>
-                  <p className="mt-3 text-lg font-semibold tracking-[-0.03em] text-stone-50 sm:text-xl">
-                    {activeSignal}
-                  </p>
-                </div>
-
-                <div className="rounded-3xl border border-white/10 bg-black/18 p-4 sm:p-5">
-                  <p className="font-ui text-[10px] uppercase tracking-[0.32em] text-stone-500">
-                    Archive note
-                  </p>
-                  <p className="mt-3 text-sm leading-relaxed text-stone-300">
-                    {archiveIntro.note}
-                  </p>
+                <div className="mt-3 flex flex-wrap items-center justify-between gap-2 font-ui text-[10px] uppercase tracking-[0.28em] text-stone-400">
+                  <span>
+                    {String(index + 1).padStart(2, "0")} /{" "}
+                    {String(stepCount).padStart(2, "0")}
+                  </span>
+                  <span>{progress}</span>
+                  <span>~ {estimatedDuration}s</span>
                 </div>
               </div>
-
-              <div className="rounded-3xl border border-white/10 bg-stone-950/70 p-3 sm:p-4">
-                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-                  {archiveIntro.sequence.map((line, lineIndex) => {
-                    const isPast = lineIndex < index;
-                    const isActive = lineIndex === index;
-
-                    return (
-                      <motion.div
-                        key={line}
-                        initial={false}
-                        animate={
-                          prefersReducedMotion
-                            ? undefined
-                            : {
-                                opacity: isActive || isPast ? 1 : 0.55,
-                                y: isActive ? 0 : 2,
-                              }
-                        }
-                        transition={{ duration: 0.28, ease: "easeOut" }}
-                        className={cn(
-                          "rounded-2xl border px-3 py-3 sm:px-4",
-                          isActive
-                            ? "border-accent/40 bg-accent/12 shadow-[0_18px_45px_rgba(242,13,13,0.18)]"
-                            : isPast
-                              ? "border-white/10 bg-white/4"
-                              : "border-white/6 bg-black/10",
-                        )}
-                      >
-                        <div className="flex items-center justify-between gap-3">
-                          <span
-                            className={cn(
-                              "font-ui text-[10px] uppercase tracking-[0.28em]",
-                              isActive
-                                ? "text-stone-50"
-                                : isPast
-                                  ? "text-stone-300"
-                                  : "text-stone-600",
-                            )}
-                          >
-                            {line}
-                          </span>
-                          <span
-                            className={cn(
-                              "font-ui text-[10px] uppercase tracking-[0.28em]",
-                              isActive
-                                ? "text-accent"
-                                : isPast
-                                  ? "text-stone-400"
-                                  : "text-stone-600",
-                            )}
-                          >
-                            {String(lineIndex + 1).padStart(2, "0")}
-                          </span>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-
-            <div className="order-1 flex flex-col justify-between gap-8 lg:order-2">
-              <div className="max-w-3xl">
-                <p className="font-ui text-[10px] uppercase tracking-[0.34em] text-accent sm:text-[11px]">
-                  A documentary narrative
+              <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-4">
+                <p className="text-xs leading-relaxed text-stone-400 sm:text-sm">
+                  {archiveIntro.note}
                 </p>
-                <h1 className="mt-4 font-heading text-[clamp(2.5rem,6vw,5.75rem)] leading-[0.86] text-stone-50">
-                  {archiveIntro.title}
-                </h1>
-                <p className="mt-5 max-w-2xl text-sm leading-relaxed text-stone-200 sm:text-base md:text-lg">
-                  {archiveIntro.subtitle}
-                </p>
-              </div>
-
-              <div className="grid gap-4 border-t border-white/10 pt-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
-                <div className="rounded-3xl border border-white/10 bg-black/16 p-4 sm:p-5">
-                  <p className="font-ui text-[10px] uppercase tracking-[0.32em] text-stone-500">
-                    System state
-                  </p>
-                  <p className="mt-3 text-sm leading-relaxed text-stone-300 sm:text-base">
-                    The gate remains open long enough for the relay sequence to
-                    complete before handing off to the archive.
-                  </p>
-                </div>
-
                 <button
                   type="button"
                   className={cn(
-                    "min-w-40 rounded-full border px-4 py-3 font-ui text-[10px] uppercase tracking-[0.28em] transition-colors focus-visible:ring-2 focus-visible:ring-crimson-500 sm:text-[11px]",
+                    "rounded-full border px-4 py-2 font-ui text-[10px] uppercase tracking-[0.28em] transition-colors focus-visible:ring-2 focus-visible:ring-crimson-500 sm:text-[11px]",
                     soundEnabled
                       ? "border-accent bg-accent text-white"
                       : "border-white/12 bg-white/6 text-stone-200 hover:border-white/22 hover:bg-white/10 hover:text-white",
                   )}
                   onClick={() => setSoundEnabled((value) => !value)}
                 >
-                  {soundEnabled ? "Audio enabled" : "Enable audio"}
+                  {soundEnabled ? "Audio on" : "Audio off"}
                 </button>
               </div>
             </div>

@@ -11,7 +11,29 @@ const assetLinks = {
 export const metadata = {
   title: `Press Desk | ${siteMeta.title}`,
   description:
-    "Media-facing archive route for press assets, author bios, summary material, and contact information.",
+    "Access official press materials for Operation Stream 3.0, including media assets, author references, mission summaries, and contact routes.",
+  alternates: {
+    canonical: "/press",
+  },
+  openGraph: {
+    title: `Press Desk | ${siteMeta.title}`,
+    description:
+      "Access official press materials for Operation Stream 3.0, including media assets, author references, mission summaries, and contact routes.",
+    type: "website",
+    images: [
+      {
+        url: "/imgs/logo-f.png",
+        alt: "Press Desk",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Press Desk | ${siteMeta.title}`,
+    description:
+      "Access official press materials for Operation Stream 3.0, including media assets, author references, mission summaries, and contact routes.",
+    images: ["/imgs/logo-f.png"],
+  },
 };
 
 export default function PressPage() {

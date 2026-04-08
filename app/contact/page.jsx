@@ -4,17 +4,45 @@ import { purchaseCtas } from "@/lib/constants";
 import { contactDesk, siteMeta } from "@/lib/content";
 
 export const metadata = {
-  title: `Support and Press Desk | ${siteMeta.title}`,
+  title: `Contact and Support Desk | ${siteMeta.title}`,
   description:
-    "Direct contact route for press, rights, purchase-link requests, and archive support.",
+    "Contact the Operation Stream 3.0 team for media inquiries, rights requests, distribution questions, and official project support.",
+  alternates: {
+    canonical: "/contact",
+  },
+  openGraph: {
+    title: `Contact and Support Desk | ${siteMeta.title}`,
+    description:
+      "Contact the Operation Stream 3.0 team for media inquiries, rights requests, distribution questions, and official project support.",
+    type: "website",
+    images: [
+      {
+        url: "/imgs/logo-f.png",
+        alt: "Support and Press Desk",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Contact and Support Desk | ${siteMeta.title}`,
+    description:
+      "Contact the Operation Stream 3.0 team for media inquiries, rights requests, distribution questions, and official project support.",
+    images: ["/imgs/logo-f.png"],
+  },
 };
 
 export default function ContactPage() {
   return (
     <>
       <section className="relative overflow-hidden border-b border-stone-800 pt-28 md:pt-36 lg:pt-40">
-        <div aria-hidden="true" className="absolute inset-0 archive-map opacity-80" />
-        <div aria-hidden="true" className="absolute inset-0 grid-overlay-dark opacity-35" />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 archive-map opacity-80"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 grid-overlay-dark opacity-35"
+        />
         <Container className="relative z-10 pb-16 md:pb-24">
           <div className="max-w-4xl">
             <div className="flex items-center gap-3">
@@ -30,7 +58,9 @@ export default function ContactPage() {
               {contactDesk.summary}
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
-              <Button href={`mailto:${siteMeta.contactEmail}`}>Email the Desk</Button>
+              <Button href={`mailto:${siteMeta.contactEmail}`}>
+                Email the Desk
+              </Button>
               <Button
                 href={purchaseCtas.press.href}
                 variant="outline"
@@ -44,10 +74,16 @@ export default function ContactPage() {
       </section>
 
       <section className="section-padding relative">
-        <div aria-hidden="true" className="absolute inset-0 grid-overlay-dark opacity-30" />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 grid-overlay-dark opacity-30"
+        />
         <Container className="relative z-10 grid gap-6 lg:grid-cols-12">
           <div className="archive-shell rounded-2xl p-6 md:p-8 lg:col-span-7">
-            <div aria-hidden="true" className="absolute inset-0 grid-overlay-dark opacity-30" />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 grid-overlay-dark opacity-30"
+            />
             <div className="relative">
               <p className="font-ui text-[11px] uppercase tracking-[0.32em] text-stone-500">
                 Request channels
@@ -72,7 +108,10 @@ export default function ContactPage() {
 
           <div className="grid gap-6 lg:col-span-5">
             <div className="archive-shell rounded-2xl p-6 md:p-8">
-              <div aria-hidden="true" className="absolute inset-0 grid-overlay-dark opacity-30" />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 grid-overlay-dark opacity-30"
+              />
               <div className="relative">
                 <p className="font-ui text-[11px] uppercase tracking-[0.32em] text-stone-500">
                   Email
@@ -87,7 +126,10 @@ export default function ContactPage() {
             </div>
 
             <div className="archive-shell rounded-2xl p-6 md:p-8">
-              <div aria-hidden="true" className="absolute inset-0 grid-overlay-dark opacity-30" />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 grid-overlay-dark opacity-30"
+              />
               <div className="relative">
                 <p className="font-ui text-[11px] uppercase tracking-[0.32em] text-stone-500">
                   Address
@@ -97,18 +139,6 @@ export default function ContactPage() {
                     <p key={line}>{line}</p>
                   ))}
                 </div>
-              </div>
-            </div>
-
-            <div className="archive-shell rounded-2xl p-6 md:p-8">
-              <div aria-hidden="true" className="absolute inset-0 grid-overlay-dark opacity-30" />
-              <div className="relative">
-                <p className="font-ui text-[11px] uppercase tracking-[0.32em] text-crimson-300">
-                  Submission policy
-                </p>
-                <p className="mt-4 text-sm leading-relaxed text-stone-300">
-                  The old simulated contact form has been removed. This route now points directly to real contact methods until a real submission endpoint is configured.
-                </p>
               </div>
             </div>
           </div>

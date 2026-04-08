@@ -49,7 +49,7 @@ export function MythOrOperationSection() {
                   index === 2 && "md:col-span-2 xl:col-span-6",
                 )}
               >
-                <p className="font-ui text-4xl tracking-wider font-semibold uppercase text-crimson-300">
+                <p className="font-ui text-xl lg:text-4xl tracking-wider font-semibold uppercase text-crimson-300">
                   {section.title}
                 </p>
                 <p className="mt-4 text-base leading-relaxed text-stone-200 md:text-lg">

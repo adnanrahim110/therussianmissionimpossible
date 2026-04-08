@@ -37,6 +37,7 @@ const sweepStyles = {
   signal: "bg-white/14",
   quiet: "bg-white/8",
   light: "bg-crimson-100/70",
+  outline: "bg-white/10",
 };
 
 const glowStyles = {
@@ -170,15 +171,13 @@ export const Button = forwardRef(
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 rounded-[inherit] ring-1 ring-inset ring-white/0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:ring-white/20"
         />
-        {resolvedVariant !== "outline" && (
-          <span
-            aria-hidden="true"
-            className={cn(
-              "pointer-events-none absolute inset-0 -translate-x-full transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0",
-              sweepStyles[resolvedVariant],
-            )}
-          />
-        )}
+        <span
+          aria-hidden="true"
+          className={cn(
+            "pointer-events-none absolute inset-0 -translate-x-full transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0",
+            sweepStyles[resolvedVariant],
+          )}
+        />
         <span
           aria-hidden="true"
           className="pointer-events-none absolute inset-y-0 -left-1/3 z-1 w-1/3 -translate-x-full skew-x-[-20deg] bg-linear-to-r from-transparent via-white/35 to-transparent opacity-0 transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-[360%] group-hover:opacity-100"

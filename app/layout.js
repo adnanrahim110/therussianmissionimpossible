@@ -1,7 +1,7 @@
 import { SiteShell } from "@/components/layouts/SiteShell";
 import { siteMeta } from "@/lib/content";
-import { Bebas_Neue, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import "leaflet/dist/leaflet.css";
+import { Bebas_Neue, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 
 const bebasNeue = Bebas_Neue({
@@ -22,9 +22,30 @@ const ibmPlexMono = IBM_Plex_Mono({
   weight: ["400", "500", "600"],
 });
 
+function resolveMetadataBase() {
+  const fallback = "https://operationpipe.com";
+  const value = process.env.NEXT_PUBLIC_SITE_URL;
+
+  if (!value) return new URL(fallback);
+
+  try {
+    return new URL(value.startsWith("http") ? value : `https://${value}`);
+  } catch {
+    return new URL(fallback);
+  }
+}
+
 export const metadata = {
-  title: siteMeta.title,
-  description: siteMeta.description,
+  metadataBase: resolveMetadataBase(),
+  title: {
+    default: "Operation Stream 3.0 | The Russian Mission Impossible",
+    template: "%s | Operation Stream 3.0",
+  },
+  description:
+    "Official documentary narrative site for Operation Stream 3.0, covering mission chronology, field testimonies, authors, press assets, and the book release.",
+  alternates: {
+    canonical: "/",
+  },
   keywords: [
     "Operation Stream 3.0",
     "The Russian Mission Impossible",
@@ -40,11 +61,18 @@ export const metadata = {
     description: siteMeta.description,
     type: "website",
     locale: "en_US",
+    images: [
+      {
+        url: "/imgs/logo-f.png",
+        alt: siteMeta.title,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: siteMeta.title,
     description: siteMeta.description,
+    images: ["/imgs/logo-f.png"],
   },
   robots: {
     index: true,
