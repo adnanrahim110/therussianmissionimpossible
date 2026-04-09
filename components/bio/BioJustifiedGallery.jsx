@@ -68,7 +68,11 @@ function buildRows(photos, dimensions, containerWidth) {
   return rows;
 }
 
-export function BioJustifiedGallery({ photos }) {
+export function BioJustifiedGallery({
+  photos,
+  showCardTitles = true,
+  showModalTitle = true,
+}) {
   const containerRef = useRef(null);
   const [containerWidth, setContainerWidth] = useState(0);
   const [dimensions, setDimensions] = useState({});
@@ -212,12 +216,16 @@ export function BioJustifiedGallery({ photos }) {
                 decoding="async"
                 className="h-full w-full object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
               />
-              <div className="absolute inset-0 bg-linear-to-t from-black/82 via-black/25 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4">
-                <h2 className="font-heading text-lg leading-[0.92] text-white sm:text-xl font-bold capitalize">
-                  {photo.name}
-                </h2>
-              </div>
+              {showCardTitles && (
+                <>
+                  <div className="absolute inset-0 bg-linear-to-t from-black/82 via-black/25 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4">
+                    <h2 className="font-heading text-lg leading-[0.92] text-white sm:text-xl font-bold capitalize">
+                      {photo.name}
+                    </h2>
+                  </div>
+                </>
+              )}
               {photo.tagline && (
                 <p className="absolute top-2 left-0 mx-2 p-1.5 rounded-md bg-black/30 border border-black/20 backdrop-blur-sm text-xs leading-tight text-white sm:text-sm">
                   {photo.tagline}
@@ -321,11 +329,15 @@ export function BioJustifiedGallery({ photos }) {
                   className="block max-h-[calc(100dvh-6.5rem)] max-w-full object-contain sm:max-h-[calc(100dvh-7.5rem)]"
                 />
                 <div className="mt-3 w-full rounded-lg border border-white/15 bg-black/55 px-4 py-3 backdrop-blur-sm">
-                  <p className="font-heading text-xl leading-none text-white sm:text-2xl">
-                    {photos[activeIndex].name}
-                  </p>
+                  {showModalTitle && (
+                    <p className="font-heading text-xl leading-none text-white sm:text-2xl">
+                      {photos[activeIndex].name}
+                    </p>
+                  )}
                   {photos[activeIndex].tagline && (
-                    <p className="mt-2 text-sm leading-relaxed text-stone-100 sm:text-base">
+                    <p
+                      className={`text-sm leading-relaxed text-stone-100 sm:text-base ${showModalTitle ? "mt-2" : "mt-0"}`}
+                    >
                       {photos[activeIndex].tagline}
                     </p>
                   )}
