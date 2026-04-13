@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c ':*)",
+      "Bash(python -c ':*)",
+      "Bash(node -e ':*)",
+      "Bash(npx next:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/bio)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/bio/hades)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/bio/box)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/bio/morpekh)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/bio/grey-spray-can)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/bio/imam-isa)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/bio/engineers-unit)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/bio/nonexistent)"
+    ]
+  }
+}

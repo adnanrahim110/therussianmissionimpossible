@@ -12,7 +12,12 @@ export function SiteShell({ children }) {
   return (
     <ReactLenis
       root
-      options={{ lerp: 0.14, duration: 1.0, smoothWheel: !prefersReducedMotion }}
+      options={{
+        lerp: 0.14,
+        duration: 1.0,
+        smoothWheel: !prefersReducedMotion,
+        allowNestedScroll: true,
+      }}
     >
       <div className="relative flex min-h-screen-safe flex-col grain-overlay">
         <a
