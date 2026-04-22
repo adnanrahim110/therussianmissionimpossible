@@ -1,116 +1,147 @@
-"use client";
-
-import { contactLinks, missionNav, supportLinks } from "@/lib/constants";
-import { siteMeta } from "@/lib/content";
-import { motion, useInView } from "motion/react";
+import {
+  ArchiveInlineIcon,
+  getRouteIconKey,
+} from "@/components/ui/archive/ArchiveIcons";
+import { archiveFiles, siteMeta, supportRoutes } from "@/lib/archive-data";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
 import { Container } from "../ui/Container";
 
-function FooterLink({ href, children }) {
+function FooterLink({ href, iconKey, children }) {
   return (
-    <li>
-      <Link
-        href={href}
-        className="group inline-flex items-center text-sm text-stone-400 transition-all duration-200 hover:translate-x-1 hover:text-stone-50"
-      >
-        <span className="mr-0 group-hover:mr-2 opacity-0 text-accent transition-all duration-300 ease-in-out group-hover:opacity-100 w-0 group-hover:w-auto">
-          &rarr;
+    <li className="list-none">
+      <Link href={href} className="footer-link-premium group">
+        <span className="inline-flex min-w-0 items-center gap-3">
+          {iconKey ? (
+            <ArchiveInlineIcon
+              iconKey={iconKey}
+              size={15}
+              className="footer-link-premium-icon"
+            />
+          ) : null}
+          <span className="truncate">{children}</span>
         </span>
-        {children}
+        <ArchiveInlineIcon
+          iconKey="next"
+          size={15}
+          className="footer-link-premium-arrow"
+        />
       </Link>
     </li>
   );
 }
 
 export function Footer() {
-  const lineRef = useRef(null);
-  const isLineInView = useInView(lineRef, { once: true, margin: "-20% 0px" });
-  const archiveLinks = missionNav.map((item) => ({
-    ...item,
-    href: item.href,
-  }));
-
   return (
-    <footer className="relative overflow-hidden border-t border-white/6 bg-stone-950 py-12 text-stone-300 lg:pt-20 lg:pb-5">
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 grid-overlay-dark opacity-16"
-      />
-
-      <div
-        ref={lineRef}
-        className="absolute inset-x-0 top-0 flex justify-center"
-      ></div>
-
-      <Container className="relative z-2">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <Image
-              src="/imgs/logo-f.png"
-              alt="Logo"
-              width={400}
-              height={400}
-              className="h-28 lg:h-32 w-auto mb-4"
-            />
-            <p className="lg:mb-5 max-w-md text-sm leading-relaxed text-stone-400">
+    <footer className="relative overflow-hidden border-t border-(--border-soft) bg-[linear-gradient(180deg,rgba(13,23,30,0.98),rgba(18,31,40,0.99))] py-12 text-(--text-primary) lg:py-16">
+      <div className="pointer-events-none absolute inset-0 archive-grid-overlay opacity-25" />
+      <div className="pointer-events-none absolute inset-x-[8%] top-0 h-40 bg-[radial-gradient(circle_at_center,rgba(242,13,13,0.09),transparent_72%)] blur-[100px]" />
+      <Container className="relative z-10">
+        <div className="grid gap-10 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)_minmax(0,0.78fr)]">
+          <div>
+            <Link href="/" className="flex items-end gap-3 mt-3">
+              <Image
+                src="/imgs/logo.png"
+                alt={siteMeta.shortTitle}
+                width={220}
+                height={220}
+                className="h-20 w-auto md:h-38"
+              />
+              <div className="hidden min-[1180px]:block pb-3">
+                <p className="font-ui text-sm uppercase tracking-[0.3em] text-(--text-muted)">
+                  Operation
+                </p>
+                <p className="archive-title-nav font-heading text-white text-5xl!">
+                  Stream 3.0
+                </p>
+              </div>
+            </Link>
+            <p className="mt-4 max-w-lg text-base leading-relaxed text-(--text-soft)">
               {siteMeta.description}
             </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <span className="rounded-full border border-(--border-soft) bg-(--surface-chip) px-4 py-2 font-ui text-[10px] uppercase tracking-[0.24em] text-(--text-muted)">
+                Declassified archive
+              </span>
+              <span className="rounded-full border border-accent/10 bg-(--surface-chip-accent) px-4 py-2 font-ui text-[10px] uppercase tracking-[0.24em] text-(--text-soft)">
+                Mission access
+              </span>
+            </div>
           </div>
 
-          <div className="grid gap-8 grid-cols-[40%_auto] md:grid-cols-3 lg:col-span-8">
+          <div className="grid gap-6 sm:grid-cols-2">
             <div>
-              <h4 className="mb-4 font-ui text-xs uppercase tracking-[0.28em] text-stone-200">
+              <p className="font-ui text-[11px] uppercase tracking-[0.3em] text-(--text-muted)">
                 Archive files
-              </h4>
-              <ul className="space-y-3">
-                {archiveLinks.slice(1).map((link) => (
-                  <FooterLink key={link.href} href={link.href}>
-                    {link.label}
-                  </FooterLink>
-                ))}
-              </ul>
-            </div>
-
-            <div className="max-md:border-s border-s-white/10 max-md:pl-5">
-              <h4 className="mb-4 font-ui text-xs uppercase tracking-[0.28em] text-stone-200">
-                Support routes
-              </h4>
-              <ul className="space-y-3">
-                {supportLinks.map((link) => (
-                  <FooterLink key={link.label} href={link.href}>
-                    {link.label}
-                  </FooterLink>
-                ))}
-              </ul>
-            </div>
-
-            <div className="max-md:col-span-2 max-md:border-t border-t-white/10 max-md:pt-5">
-              <h4 className="mb-4 font-ui text-xs uppercase tracking-[0.28em] text-stone-200">
-                Contact
-              </h4>
-              <ul className="space-y-3">
-                {contactLinks.map((link) => (
-                  <FooterLink key={link.href} href={link.href}>
-                    {link.label}
-                  </FooterLink>
-                ))}
-              </ul>
-              <p className="mt-5 text-sm leading-relaxed text-stone-500">
-                {siteMeta.contactAddress.join(", ")}
               </p>
+              <ul className="mt-4 space-y-2">
+                {archiveFiles.map((file) => (
+                  <FooterLink
+                    key={file.href}
+                    href={file.href}
+                    iconKey={file.iconKey ?? getRouteIconKey(file.href)}
+                  >
+                    {file.label}
+                  </FooterLink>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <p className="font-ui text-[11px] uppercase tracking-[0.3em] text-(--text-muted)">
+                Support routes
+              </p>
+              <ul className="mt-4 space-y-2">
+                {supportRoutes.map((route) => (
+                  <FooterLink
+                    key={route.href}
+                    href={route.href}
+                    iconKey={route.iconKey ?? getRouteIconKey(route.href)}
+                  >
+                    {route.label}
+                  </FooterLink>
+                ))}
+              </ul>
             </div>
           </div>
-          <div className="border-t border-t-white/10 pt-8 col-span-12 flex flex-col lg:flex-row gap-2 lg:gap-4 items-center">
-            <p className="font-ui text-xs uppercase tracking-[0.24em] text-stone-600">
-              &copy; {new Date().getFullYear()} All Rights Reserved
+
+          <div>
+            <p className="font-ui text-[11px] uppercase tracking-[0.3em] text-(--text-muted)">
+              Publisher
             </p>
-            <span className="hidden lg:block w-10 h-px bg-white/10" />
-            <p className="font-ui text-xs uppercase tracking-[0.24em] text-stone-600">
+            <p className="mt-4 inline-flex items-center gap-3 text-base leading-relaxed text-(--text-soft)">
+              <ArchiveInlineIcon
+                iconKey="publisher"
+                size={18}
+                className="text-(--text-muted)"
+              />
               {siteMeta.publisher}
             </p>
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-(--text-soft) md:text-base">
+              Rights, press, and archive correspondence are routed through the
+              contact desk rather than listed as a public office address.
+            </p>
+            <div className="mt-6 space-y-2">
+              <FooterLink
+                href={`mailto:${siteMeta.contactEmail}`}
+                iconKey="contact"
+              >
+                {siteMeta.contactEmail}
+              </FooterLink>
+              <FooterLink href="/contact" iconKey="contact">
+                Open Contact Desk
+              </FooterLink>
+            </div>
           </div>
+        </div>
+
+        <div className="mt-10 flex flex-col gap-3 border-t border-(--border-soft) pt-5 sm:flex-row sm:items-center sm:justify-between">
+          <p className="font-ui text-[11px] uppercase tracking-[0.28em] text-(--text-muted)">
+            &copy; {new Date().getFullYear()} {siteMeta.shortTitle}
+          </p>
+          <p className="font-ui text-[10px] uppercase tracking-[0.28em] text-(--text-faint)">
+            Declassified archive edition
+          </p>
         </div>
       </Container>
     </footer>

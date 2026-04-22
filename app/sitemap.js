@@ -1,3 +1,5 @@
+import { dossiers, routeCatalog } from "@/lib/archive-data";
+
 export const dynamic = "force-static";
 
 function resolveBaseUrl() {
@@ -16,19 +18,15 @@ function resolveBaseUrl() {
 
 const BASE_URL = resolveBaseUrl();
 
-const ROUTES = [
-  { path: "", priority: 1.0, changeFrequency: "weekly" },
-  { path: "/book", priority: 0.9, changeFrequency: "weekly" },
-  { path: "/authors", priority: 0.8, changeFrequency: "monthly" },
-  { path: "/bio", priority: 0.8, changeFrequency: "monthly" },
-  { path: "/press", priority: 0.7, changeFrequency: "monthly" },
-  { path: "/contact", priority: 0.7, changeFrequency: "monthly" },
-];
-
 export default function sitemap() {
   const lastModified = new Date();
+  const dossierRoutes = dossiers.map((dossier) => ({
+    path: `/personnel/dossiers/${dossier.slug}`,
+    priority: 0.65,
+    changeFrequency: "monthly",
+  }));
 
-  return ROUTES.map((route) => ({
+  return [...routeCatalog, ...dossierRoutes].map((route) => ({
     url: `${BASE_URL}${route.path}`,
     lastModified,
     changeFrequency: route.changeFrequency,

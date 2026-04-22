@@ -1,6 +1,5 @@
 import { SiteShell } from "@/components/layouts/SiteShell";
-import { siteMeta } from "@/lib/content";
-import "leaflet/dist/leaflet.css";
+import { siteMeta } from "@/lib/archive-data";
 import { Bebas_Neue, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 
@@ -38,11 +37,10 @@ function resolveMetadataBase() {
 export const metadata = {
   metadataBase: resolveMetadataBase(),
   title: {
-    default: "Operation Stream 3.0 | The Russian Mission Impossible",
-    template: "%s | Operation Stream 3.0",
+    default: `${siteMeta.shortTitle} | ${siteMeta.title}`,
+    template: "%s",
   },
-  description:
-    "Official documentary narrative site for Operation Stream 3.0, covering mission chronology, field testimonies, authors, press assets, and the book release.",
+  description: siteMeta.description,
   alternates: {
     canonical: "/",
   },
@@ -105,7 +103,7 @@ export default function RootLayout({ children }) {
       </head>
       <body
         suppressHydrationWarning
-        className={`${bebasNeue.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable} bg-stone-950 font-body text-stone-50 antialiased`}
+        className={`${bebasNeue.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable} font-body antialiased`}
       >
         <SiteShell>{children}</SiteShell>
       </body>

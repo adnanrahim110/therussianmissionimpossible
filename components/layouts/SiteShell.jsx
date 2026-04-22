@@ -1,10 +1,39 @@
 "use client";
 
 import { ReactLenis } from "lenis/react";
+import { useLenis } from "lenis/react";
+import { ScrollTrigger } from "@/lib/gsap";
 import { useReducedMotion } from "motion/react";
+import { useEffect } from "react";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { PageTransition } from "./PageTransition";
+
+function ScrollSync({ prefersReducedMotion }) {
+  const lenis = useLenis();
+
+  useEffect(() => {
+    if (!lenis || prefersReducedMotion) return;
+
+    const update = () => ScrollTrigger.update();
+    const refresh = () => lenis.resize();
+
+    lenis.on("scroll", update);
+    ScrollTrigger.addEventListener("refresh", refresh);
+
+    const frame = requestAnimationFrame(() => {
+      ScrollTrigger.refresh();
+    });
+
+    return () => {
+      cancelAnimationFrame(frame);
+      lenis.off("scroll", update);
+      ScrollTrigger.removeEventListener("refresh", refresh);
+    };
+  }, [lenis, prefersReducedMotion]);
+
+  return null;
+}
 
 export function SiteShell({ children }) {
   const prefersReducedMotion = useReducedMotion();
@@ -19,10 +48,11 @@ export function SiteShell({ children }) {
         allowNestedScroll: true,
       }}
     >
+      <ScrollSync prefersReducedMotion={prefersReducedMotion} />
       <div className="relative flex min-h-screen-safe flex-col grain-overlay">
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-70 focus:rounded-[2px] focus:bg-stone-50 focus:px-4 focus:py-2 focus:text-stone-950"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[70] focus:rounded-[2px] focus:bg-white focus:px-4 focus:py-2 focus:text-slate-950"
         >
           Skip to main content
         </a>

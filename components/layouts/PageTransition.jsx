@@ -25,7 +25,7 @@ export function PageTransition({ children }) {
 
         {/* Cinematic wipe overlay (doesn't clip page content → sticky works) */}
         <motion.div
-          className="fixed inset-0 z-45 pointer-events-none bg-stone-950"
+          className="fixed inset-0 z-[45] pointer-events-none bg-[color:var(--surface-canvas)]"
           initial={{ clipPath: "inset(0 0 0% 0)" }}
           animate={{ clipPath: "inset(0 0 100% 0)" }}
           exit={{ clipPath: "inset(0 0 0% 0)" }}
@@ -34,7 +34,7 @@ export function PageTransition({ children }) {
 
         {/* Crimson leading edge bar */}
         <motion.div
-          className="fixed left-0 right-0 top-0 h-1 bg-crimson-600 z-46 pointer-events-none"
+          className="fixed left-0 right-0 top-0 z-[46] h-1 pointer-events-none bg-[color:var(--color-accent)]"
           initial={{ opacity: 1 }}
           animate={{ opacity: 0 }}
           transition={{ duration: 0.3, delay: 0.35 }}

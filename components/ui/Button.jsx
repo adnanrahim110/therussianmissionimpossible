@@ -1,5 +1,6 @@
 "use client";
 
+import { getArchiveIcon } from "@/components/ui/archive/ArchiveIcons";
 import { cn } from "@/lib/utils";
 import { motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
@@ -8,7 +9,7 @@ import { forwardRef } from "react";
 const MotionLink = motion.create(Link);
 
 const baseStyles =
-  "group relative overflow-hidden isolate inline-flex items-center justify-center rounded-[4px] font-ui uppercase tracking-[0.28em] transition-[transform,color,background-color,border-color,box-shadow,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-stone-950 disabled:pointer-events-none";
+  "group relative overflow-hidden isolate inline-flex items-center justify-center rounded-[4px] font-ui uppercase tracking-[0.28em] transition-[transform,color,background-color,border-color,box-shadow,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--surface-canvas)] disabled:pointer-events-none";
 
 const sizeStyles = {
   sm: "px-4 py-2 text-[11px]",
@@ -25,12 +26,12 @@ const variants = {
   signal:
     "relative overflow-hidden border border-accent bg-accent text-white shadow-[0_18px_45px_rgba(242,13,13,0.3)] hover:border-accent-hover hover:bg-accent",
   quiet:
-    "relative overflow-hidden border border-stone-700/90 bg-stone-900/78 text-stone-100 shadow-[0_20px_55px_rgba(0,0,0,0.22)] hover:border-stone-500 hover:bg-stone-800/88",
+    "relative overflow-hidden border border-[color:var(--border-soft)] bg-[linear-gradient(180deg,var(--surface-panel-alt),var(--surface-panel-alt-strong))] text-[color:var(--text-strong)] shadow-[0_20px_55px_rgba(0,0,0,0.22)] hover:border-[color:var(--border-strong)] hover:bg-[linear-gradient(180deg,rgba(35,50,61,0.98),rgba(24,36,46,0.99))]",
   light:
     "relative overflow-hidden border border-stone-200 bg-white text-stone-950 shadow-[0_20px_55px_rgba(31,41,55,0.12)] hover:border-stone-300 hover:bg-stone-100",
   outline:
-    "border border-stone-500/90 bg-transparent text-stone-50 hover:border-stone-300 hover:bg-white/8",
-  ghost: "relative text-stone-200 hover:text-accent",
+    "border border-[color:var(--border-strong)] bg-transparent text-[color:var(--text-strong)] hover:border-[color:rgba(242,13,13,0.28)] hover:bg-[color:var(--surface-chip)]",
+  ghost: "relative text-[color:var(--text-soft)] hover:text-accent",
 };
 
 const sweepStyles = {
@@ -42,7 +43,7 @@ const sweepStyles = {
 
 const glowStyles = {
   signal: "bg-accent/35",
-  quiet: "bg-stone-300/15",
+  quiet: "bg-white/10",
   light: "bg-crimson-200/35",
   outline: "bg-white/12",
 };
@@ -56,6 +57,7 @@ export const Button = forwardRef(
       type,
       children,
       icon: Icon,
+      iconKey,
       iconPosition = "right",
       disabled = false,
       loading = false,
@@ -71,6 +73,7 @@ export const Button = forwardRef(
     const isLink = Boolean(href);
     const resolvedVariant = variantMap[variant] ?? variant;
     const Component = isLink ? MotionLink : motion.button;
+    const ResolvedIcon = Icon ?? getArchiveIcon(iconKey);
 
     const motionProps = prefersReducedMotion
       ? {}
@@ -119,12 +122,12 @@ export const Button = forwardRef(
             className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent"
           />
         )}
-        {!loading && Icon && iconPosition === "left" && (
-          <Icon className="h-5 w-5" />
+        {!loading && ResolvedIcon && iconPosition === "left" && (
+          <ResolvedIcon className="h-[1.05rem] w-[1.05rem] shrink-0" />
         )}
         {children}
-        {!loading && Icon && iconPosition === "right" && (
-          <Icon className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1" />
+        {!loading && ResolvedIcon && iconPosition === "right" && (
+          <ResolvedIcon className="h-[1.05rem] w-[1.05rem] shrink-0 transition-transform duration-200 group-hover:translate-x-1" />
         )}
       </span>
     );
@@ -180,7 +183,7 @@ export const Button = forwardRef(
         />
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 -left-1/3 z-1 w-1/3 -translate-x-full skew-x-[-20deg] bg-linear-to-r from-transparent via-white/35 to-transparent opacity-0 transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-[360%] group-hover:opacity-100"
+          className="pointer-events-none absolute inset-y-0 -left-1/3 z-[1] w-1/3 -translate-x-full skew-x-[-20deg] bg-linear-to-r from-transparent via-white/35 to-transparent opacity-0 transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-[360%] group-hover:opacity-100"
         />
         {content}
       </Component>
