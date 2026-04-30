@@ -1,8 +1,9 @@
+import Link from "next/link";
+
 import {
   ArchiveInlineIcon,
   getRouteIconKey,
 } from "@/components/ui/archive/ArchiveIcons";
-import Link from "next/link";
 
 export function ArchiveBreadcrumbs({ items = [] }) {
   if (!items.length) return null;
@@ -10,24 +11,27 @@ export function ArchiveBreadcrumbs({ items = [] }) {
   return (
     <nav
       aria-label="Breadcrumb"
-      className="mb-6 flex flex-wrap items-center gap-2 text-[11px] uppercase tracking-[0.28em] text-[color:var(--text-muted)]"
+      className="mb-4 flex flex-wrap items-center gap-2 font-ui text-[11px] uppercase tracking-[0.28em] text-stone-400"
     >
       {items.map((item, index) => {
         const isLast = index === items.length - 1;
         const iconKey = item.iconKey ?? getRouteIconKey(item.href);
 
         return (
-          <div key={`${item.label}-${index}`} className="flex items-center gap-2">
+          <div
+            key={`${item.label}-${index}`}
+            className="flex items-center gap-2"
+          >
             {item.href && !isLast ? (
               <Link
                 href={item.href}
-                className="inline-flex items-center gap-2 transition-colors hover:text-[color:var(--color-accent)]"
+                className="inline-flex items-center gap-2 text-stone-300 transition-colors hover:text-white"
               >
                 {iconKey ? (
                   <ArchiveInlineIcon
                     iconKey={iconKey}
                     size={14}
-                    className="text-[color:var(--text-soft)]"
+                    className="text-stone-400"
                   />
                 ) : null}
                 {item.label}
@@ -35,26 +39,26 @@ export function ArchiveBreadcrumbs({ items = [] }) {
             ) : (
               <span
                 className={`inline-flex items-center gap-2 ${
-                  isLast ? "text-[color:var(--text-soft)]" : ""
+                  isLast ? "text-white" : ""
                 }`}
               >
                 {iconKey && !isLast ? (
                   <ArchiveInlineIcon
                     iconKey={iconKey}
                     size={14}
-                    className="text-[color:var(--text-soft)]"
+                    className="text-stone-400"
                   />
                 ) : null}
                 {item.label}
               </span>
             )}
-            {!isLast && (
+            {!isLast ? (
               <ArchiveInlineIcon
                 iconKey="breadcrumb"
                 size={14}
-                className="text-[color:var(--border-strong)]"
+                className="text-stone-500"
               />
-            )}
+            ) : null}
           </div>
         );
       })}

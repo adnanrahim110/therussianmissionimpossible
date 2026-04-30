@@ -1,5 +1,11 @@
+import Image from "next/image";
+
 import { ArchivePageShell } from "@/components/ui/archive/ArchivePageShell";
-import { ArchivePanel } from "@/components/ui/archive/ArchivePanel";
+import {
+  TerminalBlock,
+  TerminalDivider,
+  TerminalRow,
+} from "@/components/ui/terminal/Terminal";
 import { authors, personnelAuthorsPage, siteMeta } from "@/lib/archive-data";
 import { buildMetadata } from "@/lib/seo";
 
@@ -23,19 +29,44 @@ export default function PersonnelAuthorsPage() {
       summary={personnelAuthorsPage.summary}
     >
       <div className="grid gap-5">
-        {authors.map((author, index) => (
-          <ArchivePanel
-            key={author.id}
-            tone={index % 2 === 0 ? "mist" : "steel"}
-            eyebrow={author.fileCode}
-            iconKey="authors"
-            title={author.name}
-            summary={author.bio}
-          >
-            <p className="border-l-2 border-[color:var(--color-accent)] pl-4 text-sm leading-relaxed text-[color:var(--text-soft)] md:text-base">
-              {author.quote}
-            </p>
-          </ArchivePanel>
+        {authors.map((author) => (
+          <TerminalBlock key={author.id}>
+            <div className="grid gap-6 md:grid-cols-[160px_minmax(0,1fr)] md:items-start">
+              {author.photo ? (
+                <div className="relative aspect-square w-40 overflow-hidden rounded-md border border-white/10 bg-black md:w-full">
+                  <Image
+                    src={author.photo}
+                    alt={author.name}
+                    fill
+                    sizes="(min-width: 768px) 160px, 160px"
+                    className="object-cover grayscale-15"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.6)_0_1px,transparent_1px_4px)] opacity-[0.06]"
+                  />
+                </div>
+              ) : null}
+
+              <div className="grid gap-3">
+                <TerminalRow variant="header">[{author.fileCode}]</TerminalRow>
+                <TerminalRow variant="title">{author.name}</TerminalRow>
+                <TerminalDivider />
+                {author.bio
+                  .split(/\n\s*\n/)
+                  .filter(Boolean)
+                  .map((para, idx) => (
+                    <TerminalRow key={idx} variant="note" caret="//">
+                      {para}
+                    </TerminalRow>
+                  ))}
+                <TerminalDivider />
+                <TerminalRow variant="status" caret='"'>
+                  {author.quote}
+                </TerminalRow>
+              </div>
+            </div>
+          </TerminalBlock>
         ))}
       </div>
     </ArchivePageShell>

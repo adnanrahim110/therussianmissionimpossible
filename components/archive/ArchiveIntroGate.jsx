@@ -1,24 +1,25 @@
 "use client";
 
-import { Button } from "@/components/ui/Button";
-import { Container } from "@/components/ui/Container";
-import { CursorGlowField } from "@/components/ui/CursorGlowField";
-import { archiveIntro } from "@/lib/content";
-import { cn } from "@/lib/utils";
 import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
+import { Button } from "@/components/ui/Button";
+import { Container } from "@/components/ui/Container";
+import { TerminalBlock, TerminalRow } from "@/components/ui/terminal/Terminal";
+import { archiveIntro } from "@/lib/content";
+import { cn } from "@/lib/utils";
+
 const INTRO_SESSION_KEY = "archive-intro-complete-v3";
-const INITIAL_HOLD_MS = 2400;
-const INITIAL_HOLD_REDUCED_MS = 1600;
-const STEP_DURATION_MS = 1800;
-const STEP_DURATION_REDUCED_MS = 1200;
-const READY_HOLD_MS = 4200;
-const READY_HOLD_REDUCED_MS = 2800;
-const AUTO_EXIT_MS = 9000;
-const AUTO_EXIT_REDUCED_MS = 6000;
-const EXIT_DURATION_MS = 920;
-const EXIT_DURATION_REDUCED_MS = 560;
+const INITIAL_HOLD_MS = 1600;
+const INITIAL_HOLD_REDUCED_MS = 1000;
+const STEP_DURATION_MS = 1200;
+const STEP_DURATION_REDUCED_MS = 800;
+const READY_HOLD_MS = 1100;
+const READY_HOLD_REDUCED_MS = 700;
+const AUTO_EXIT_MS = 700;
+const AUTO_EXIT_REDUCED_MS = 400;
+const EXIT_DURATION_MS = 720;
+const EXIT_DURATION_REDUCED_MS = 460;
 
 function persistIntroComplete() {
   if (typeof window !== "undefined") {
@@ -63,7 +64,6 @@ export function ArchiveIntroGate() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-
     if (window.sessionStorage.getItem(INTRO_SESSION_KEY) === "true") {
       setIsOpen(false);
     }
@@ -84,7 +84,6 @@ export function ArchiveIntroGate() {
         setIndex((value) => Math.min(value + 1, stepCount - 1));
         return;
       }
-
       setIsReadyToEnter(true);
     }, duration);
 
@@ -102,21 +101,17 @@ export function ArchiveIntroGate() {
 
   useEffect(() => {
     if (!isReadyToEnter || isClosing) return undefined;
-
     const timer = window.setTimeout(() => {
       triggerClose(setIsClosing);
     }, autoExitDelay);
-
     return () => window.clearTimeout(timer);
   }, [autoExitDelay, isClosing, isReadyToEnter]);
 
   useEffect(() => {
     if (!isClosing) return undefined;
-
     const timer = window.setTimeout(() => {
       setIsOpen(false);
     }, exitDuration);
-
     return () => window.clearTimeout(timer);
   }, [exitDuration, isClosing]);
 
@@ -169,35 +164,19 @@ export function ArchiveIntroGate() {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: isClosing ? 0 : 1 }}
-      transition={{ duration: (isClosing ? exitDuration : prefersReducedMotion ? 220 : 360) / 1000 }}
-      className="fixed inset-0 z-[70] overflow-hidden px-3 py-3 sm:px-4 sm:py-4"
+      transition={{
+        duration:
+          (isClosing ? exitDuration : prefersReducedMotion ? 220 : 360) / 1000,
+      }}
+      className="fixed inset-0 z-70 overflow-hidden bg-black/95 px-3 py-3 sm:px-4 sm:py-4"
     >
-      <div className="pointer-events-none absolute inset-0 archive-page-glow" />
-      <div className="pointer-events-none absolute inset-0 archive-grid-overlay opacity-55" />
-      <div className="pointer-events-none absolute inset-0 scanline-overlay opacity-10" />
-      <CursorGlowField
-        className="opacity-75"
-        size={740}
-        color="rgba(242, 13, 13, 0.12)"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-[14%] top-[10%] h-40 rounded-full bg-[radial-gradient(circle_at_center,rgba(228,238,244,0.12),transparent_72%)] blur-[120px]"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-[8%] left-1/2 h-52 w-[min(80vw,54rem)] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(242,13,13,0.11),transparent_72%)] blur-[150px]"
-      />
-
       <Container
         size="wide"
         className="relative z-10 flex h-full items-center justify-center"
       >
         <motion.section
           initial={
-            prefersReducedMotion
-              ? undefined
-              : { opacity: 0, y: 18, scale: 0.988 }
+            prefersReducedMotion ? undefined : { opacity: 0, y: 18, scale: 0.988 }
           }
           animate={
             prefersReducedMotion
@@ -210,25 +189,16 @@ export function ArchiveIntroGate() {
             duration: isClosing ? exitDuration / 1000 : 0.54,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="relative mx-auto flex h-full w-full max-w-5xl flex-col overflow-hidden rounded-[32px] border border-[color:var(--border-strong)] bg-[linear-gradient(180deg,rgba(16,27,35,0.98),rgba(9,18,24,0.99))] shadow-[0_36px_140px_rgba(6,12,18,0.52)]"
+          className="relative mx-auto flex h-full w-full max-w-5xl flex-col overflow-hidden rounded-md border border-white/10 bg-stone-950"
         >
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(255,255,255,0.08), transparent 26%), linear-gradient(180deg, rgba(242,13,13,0.06), transparent 48%)",
-            }}
-          />
-
-          <div className="relative flex items-center justify-between gap-3 border-b border-[color:var(--border-soft)] px-4 py-3 sm:px-6 sm:py-4">
-            <div className="min-w-0 flex items-center gap-3">
-              <span className="crosshair-marker scale-90 opacity-85" />
+          <header className="relative flex items-center justify-between gap-3 border-b border-white/10 px-4 py-3 sm:px-6 sm:py-4">
+            <div className="flex min-w-0 items-center gap-3">
+              <span aria-hidden="true" className="size-2 rounded-full bg-rose-500" />
               <div className="min-w-0">
-                <p className="truncate font-ui text-[10px] uppercase tracking-[0.34em] text-[color:var(--text-muted)]">
+                <p className="truncate font-ui text-[10px] font-medium uppercase tracking-[0.32em] text-stone-400">
                   {archiveIntro.label}
                 </p>
-                <p className="mt-1 font-ui text-[10px] uppercase tracking-[0.28em] text-[color:var(--color-accent)]">
+                <p className="mt-1 font-ui text-[10px] uppercase tracking-[0.28em] text-rose-300">
                   Declassified archive access
                 </p>
               </div>
@@ -243,33 +213,33 @@ export function ArchiveIntroGate() {
             >
               Skip
             </Button>
-          </div>
+          </header>
 
           <div className="relative grid min-h-0 flex-1 gap-4 p-4 sm:gap-5 sm:p-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.82fr)] lg:p-7">
-            <div className="flex min-h-0 flex-col justify-center rounded-[28px] border border-[color:var(--border-soft)] bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))] px-5 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-7">
-              <p className="font-ui text-[10px] uppercase tracking-[0.32em] text-[color:var(--text-muted)] sm:text-[11px]">
+            <div className="flex min-h-0 flex-col justify-center rounded-md border border-white/10 bg-black/40 p-5 sm:p-6 lg:p-8">
+              <p className="font-ui text-[10px] font-medium uppercase tracking-[0.32em] text-stone-400 sm:text-[11px]">
                 Mission file access
               </p>
-              <h1 className="mt-4 font-heading text-[clamp(2.7rem,8vw,5rem)] leading-[0.84] text-[color:var(--text-strong)]">
+              <h1 className="mt-4 font-heading text-[clamp(2.7rem,8vw,5rem)] font-bold leading-[0.84] text-white">
                 {archiveIntro.title}
               </h1>
-              <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[color:var(--text-soft)] sm:text-base lg:text-lg">
+              <p className="mt-5 max-w-2xl text-sm leading-relaxed text-stone-200 sm:text-base lg:text-lg">
                 {archiveIntro.subtitle}
               </p>
-              <div className="mt-6 flex flex-wrap gap-2">
-                <span className="rounded-full border border-[color:var(--border-soft)] bg-[color:var(--surface-chip)] px-3 py-2 font-ui text-[10px] uppercase tracking-[0.24em] text-[color:var(--text-muted)]">
+              <div className="mt-6 flex flex-wrap gap-2 font-ui text-[10px] uppercase tracking-[0.24em]">
+                <span className="rounded-md border border-white/10 bg-white/5 px-3 py-2 text-stone-300">
                   {progress} decrypted
                 </span>
-                <span className="rounded-full border border-[color:rgba(242,13,13,0.24)] bg-[color:var(--surface-chip-accent)] px-3 py-2 font-ui text-[10px] uppercase tracking-[0.24em] text-[color:var(--text-soft)]">
+                <span className="rounded-md border border-rose-500/30 bg-rose-500/10 px-3 py-2 text-rose-200">
                   Accent secured
                 </span>
               </div>
             </div>
 
-            <div className="flex min-h-0 flex-col rounded-[28px] border border-[color:var(--border-soft)] bg-[linear-gradient(180deg,var(--surface-panel-alt),var(--surface-panel-alt-strong))] p-5 sm:p-6">
+            <div className="flex min-h-0 flex-col gap-5 rounded-md border border-white/10 bg-black/40 p-5 sm:p-6">
               <div className="flex items-start justify-between gap-4">
-                <div>
-                  <p className="font-ui text-[10px] uppercase tracking-[0.3em] text-[color:var(--text-muted)]">
+                <div className="min-w-0">
+                  <p className="font-ui text-[10px] font-medium uppercase tracking-[0.3em] text-stone-400">
                     Current signal
                   </p>
                   <motion.p
@@ -280,25 +250,25 @@ export function ArchiveIntroGate() {
                       duration: prefersReducedMotion ? 0.16 : 0.45,
                       ease: [0.22, 1, 0.36, 1],
                     }}
-                    className="mt-3 text-[1.1rem] font-semibold uppercase tracking-[0.08em] text-[color:var(--text-strong)] sm:text-[1.28rem]"
+                    className="mt-3 truncate font-ui text-[1.1rem] font-bold uppercase tracking-wider text-white sm:text-[1.28rem]"
                   >
                     {activeSignal}
                   </motion.p>
                 </div>
 
-                <div className="rounded-[20px] border border-[color:var(--border-soft)] bg-[color:var(--surface-chip)] px-4 py-3 text-right">
-                  <p className="font-ui text-[10px] uppercase tracking-[0.24em] text-[color:var(--text-muted)]">
+                <div className="rounded-md border border-white/10 bg-white/5 px-4 py-3 text-right">
+                  <p className="font-ui text-[10px] font-medium uppercase tracking-[0.24em] text-stone-400">
                     Progress
                   </p>
-                  <p className="mt-2 text-2xl font-semibold text-[color:var(--text-strong)]">
+                  <p className="mt-2 font-ui text-2xl font-bold text-white">
                     {progress}
                   </p>
                 </div>
               </div>
 
-              <div className="mt-5 h-1.5 overflow-hidden rounded-full bg-white/10">
+              <div className="h-1 overflow-hidden rounded-full bg-white/10">
                 <motion.div
-                  className="h-full rounded-full bg-linear-to-r from-[color:var(--color-accent)] via-[#ff6b6b] to-[color:var(--text-strong)]"
+                  className="h-full rounded-full bg-rose-400"
                   animate={{ width: progress }}
                   transition={{
                     duration: prefersReducedMotion ? 0.18 : 0.7,
@@ -307,67 +277,49 @@ export function ArchiveIntroGate() {
                 />
               </div>
 
-              <div className="mt-5 grid gap-3">
+              <TerminalBlock compact>
                 {archiveIntro.sequence.map((step, stepIndex) => {
                   const isActive = stepIndex === index;
-                  const isComplete = stepIndex < index || isReadyToEnter;
+                  const isReady =
+                    stepIndex === stepCount - 1 && isReadyToEnter;
+                  const isHidden = stepIndex > index;
+                  const numberLabel = String(stepIndex + 1).padStart(2, "0");
 
                   return (
-                    <div
+                    <TerminalRow
                       key={step}
+                      variant={isReady ? "status" : "default"}
                       className={cn(
-                        "grid grid-cols-[auto_minmax(0,1fr)] items-center gap-3 rounded-[18px] border px-4 py-3 transition-all duration-300",
-                        isActive
-                          ? "border-[color:rgba(242,13,13,0.3)] bg-[linear-gradient(180deg,rgba(31,46,58,0.98),rgba(20,33,43,0.99))]"
-                          : isComplete
-                            ? "border-[color:var(--border-soft)] bg-[color:var(--surface-chip)]"
-                            : "border-[color:var(--border-soft)] bg-transparent",
+                        "transition-opacity duration-300",
+                        isHidden && "opacity-20",
+                        isActive && !isReady && "opacity-100",
                       )}
                     >
-                      <span
-                        className={cn(
-                          "flex h-8 w-8 items-center justify-center rounded-full border font-ui text-[10px] uppercase tracking-[0.18em]",
-                          isActive
-                            ? "border-[color:rgba(242,13,13,0.5)] bg-[color:var(--surface-chip-accent)] text-[color:var(--text-strong)]"
-                            : isComplete
-                              ? "border-[color:rgba(228,238,244,0.24)] bg-[color:var(--surface-chip)] text-[color:var(--text-soft)]"
-                              : "border-[color:var(--border-soft)] text-[color:var(--text-muted)]",
-                        )}
-                      >
-                        {stepIndex + 1}
-                      </span>
-                      <p className="font-ui text-[10px] uppercase tracking-[0.24em] text-[color:var(--text-soft)] sm:text-[11px]">
-                        {step}
-                      </p>
-                    </div>
+                      {numberLabel} {step}
+                    </TerminalRow>
                   );
                 })}
-              </div>
+              </TerminalBlock>
 
-              <div className="mt-auto pt-5">
-                <p className="text-xs leading-relaxed text-[color:var(--text-muted)] sm:text-sm">
-                  {archiveIntro.note}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-3">
-                  <Button
-                    type="button"
-                    variant={soundEnabled ? "signal" : "outline"}
-                    size="sm"
-                    iconKey={soundEnabled ? "soundOn" : "soundOff"}
-                    onClick={() => setSoundEnabled((value) => !value)}
-                  >
-                    {soundEnabled ? "Audio On" : "Audio Off"}
-                  </Button>
-                  <Button
-                    type="button"
-                    size="sm"
-                    iconKey="enter"
-                    onClick={() => triggerClose(setIsClosing)}
-                    disabled={!isReadyToEnter}
-                  >
-                    {isReadyToEnter ? "Enter Archive" : "Decrypting..."}
-                  </Button>
-                </div>
+              <div className="mt-auto flex flex-wrap gap-3">
+                <Button
+                  type="button"
+                  variant={soundEnabled ? "signal" : "outline"}
+                  size="sm"
+                  iconKey={soundEnabled ? "soundOn" : "soundOff"}
+                  onClick={() => setSoundEnabled((value) => !value)}
+                >
+                  {soundEnabled ? "Audio On" : "Audio Off"}
+                </Button>
+                <Button
+                  type="button"
+                  size="sm"
+                  iconKey="enter"
+                  onClick={() => triggerClose(setIsClosing)}
+                  disabled={!isReadyToEnter}
+                >
+                  {isReadyToEnter ? "Enter Archive" : "Decrypting..."}
+                </Button>
               </div>
             </div>
           </div>

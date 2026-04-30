@@ -20,8 +20,6 @@ export default function MissionPage() {
   return (
     <ArchivePageShell
       breadcrumbs={[{ label: "Archive", href: "/" }, { label: "Mission" }]}
-      iconKey="mission"
-      eyebrow={missionPage.eyebrow}
       title={missionPage.title}
       summary={missionPage.summary}
       detail={missionPage.detail}
@@ -45,7 +43,7 @@ export default function MissionPage() {
           title="Mission Record"
           summary={missionPage.body[0]}
         >
-          <div className="space-y-4 text-sm leading-relaxed text-(--text-soft) md:text-base">
+          <div className="space-y-4 text-sm leading-relaxed text-stone-200 md:text-base">
             {missionPage.body.slice(1).map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
@@ -58,11 +56,11 @@ export default function MissionPage() {
           iconKey="route"
           title="Mission Points"
         >
-          <ul className="space-y-3 text-sm leading-relaxed text-(--text-soft) md:text-base">
+          <ul className="space-y-3 text-sm leading-relaxed text-stone-200 md:text-base">
             {missionPage.points.map((point) => (
               <li
                 key={point}
-                className="archive-subcard rounded-[18px] px-4 py-4"
+                className="rounded-md border border-white/10 bg-white/5 px-4 py-4"
               >
                 {point}
               </li>
@@ -84,7 +82,7 @@ export default function MissionPage() {
           title={mythPoll.background.title}
           summary={mythPoll.background.body[0]}
         >
-          <div className="space-y-4 text-sm leading-relaxed text-(--text-soft) md:text-base">
+          <div className="space-y-4 text-sm leading-relaxed text-stone-200 md:text-base">
             {mythPoll.background.body.slice(1).map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
@@ -116,7 +114,11 @@ export default function MissionPage() {
           <Button href="/operation" iconKey={purchaseCtas.operation.iconKey}>
             {purchaseCtas.operation.label}
           </Button>
-          <Button href="/tunnel" variant="outline" iconKey={purchaseCtas.tunnel.iconKey}>
+          <Button
+            href="/tunnel"
+            variant="outline"
+            iconKey={purchaseCtas.tunnel.iconKey}
+          >
             {purchaseCtas.tunnel.label}
           </Button>
         </div>

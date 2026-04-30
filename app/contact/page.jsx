@@ -44,7 +44,7 @@ export default function ContactPage() {
       </div>
 
       <ArchivePanel eyebrow="Mailing Address" iconKey="location" title="Archive support office" summary={contactPage.summary}>
-        <div className="space-y-2 text-sm leading-relaxed text-[color:var(--text-soft)] md:text-base">
+        <div className="space-y-2 text-sm leading-relaxed text-stone-200 md:text-base">
           {siteMeta.contactAddress.map((line) => (
             <p key={line}>{line}</p>
           ))}

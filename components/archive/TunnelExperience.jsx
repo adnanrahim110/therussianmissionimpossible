@@ -189,7 +189,7 @@ export function TunnelExperience({ stops = [], prompt, hints = [] }) {
                 scale: dotIndex === clampedIndex ? 1.1 : 1,
                 backgroundColor:
                   dotIndex === clampedIndex
-                    ? "var(--color-accent)"
+                    ? "#fb7185"
                     : "rgba(229,239,245,0.18)",
                 borderColor:
                   dotIndex === clampedIndex
@@ -204,7 +204,7 @@ export function TunnelExperience({ stops = [], prompt, hints = [] }) {
           gsap.set(scenes, { autoAlpha: 0, scale: 0.82, y: 42 });
           gsap.set(scenes[0], { autoAlpha: 1, scale: 1, y: 0 });
           gsap.set(dots[0], {
-            backgroundColor: "var(--color-accent)",
+            backgroundColor: "#fb7185",
             borderColor: "rgba(242,13,13,0.46)",
           });
           desktopIndexRef.current = 0;
@@ -368,12 +368,12 @@ export function TunnelExperience({ stops = [], prompt, hints = [] }) {
             {controlHints.map((hint) => (
               <div
                 key={hint}
-                className="rounded-[20px] border border-white/10 bg-white/6 px-4 py-4 text-sm leading-relaxed text-[color:var(--text-soft)]"
+                className="rounded-md border border-white/10 bg-white/5 px-4 py-4 text-sm leading-relaxed text-stone-200"
               >
                 <div className="flex items-start gap-3">
                   <ArchiveIconBadge
                     iconKey="route"
-                    className="h-9 w-9 rounded-[12px]"
+                    className="size-9 rounded-md"
                     size={15}
                     tone="muted"
                   />
@@ -388,11 +388,7 @@ export function TunnelExperience({ stops = [], prompt, hints = [] }) {
       <div data-tunnel-desktop className="hidden xl:grid xl:grid-cols-[minmax(0,1.1fr)_minmax(360px,0.7fr)] xl:gap-6">
         <div
           data-tunnel-visual
-          className="relative min-h-[78svh] overflow-hidden rounded-[32px] border border-[color:rgba(229,239,245,0.1)] bg-[#041018]"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 50% 22%, rgba(242,13,13,0.12), transparent 18%), radial-gradient(circle at 50% 36%, rgba(229,239,245,0.12), transparent 24%), linear-gradient(180deg, rgba(7,15,22,0.98), rgba(4,9,14,0.98))",
-          }}
+          className="relative min-h-[78svh] overflow-hidden rounded-md border border-white/10 bg-stone-950"
         >
           <div className="absolute inset-0 opacity-50">
             <div className="absolute inset-y-0 left-[18%] w-px bg-white/10" />
@@ -426,7 +422,7 @@ export function TunnelExperience({ stops = [], prompt, hints = [] }) {
               data-tunnel-scene
               className="absolute left-1/2 top-1/2 w-[min(70%,480px)] -translate-x-1/2 -translate-y-1/2"
             >
-              <div className="overflow-hidden rounded-[28px] border border-white/12 bg-white/6 shadow-[0_40px_120px_rgba(0,0,0,0.35)] backdrop-blur-lg">
+              <div className="overflow-hidden rounded-md border border-white/10 bg-stone-950">
                 <div className="relative aspect-[4/5]">
                   <Image
                     src={stop.image}
@@ -435,21 +431,21 @@ export function TunnelExperience({ stops = [], prompt, hints = [] }) {
                     sizes="(min-width: 1280px) 420px, 80vw"
                     className="object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#041018] via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-transparent to-transparent" />
                 </div>
                 <div className="px-5 py-5">
                   <ArchiveInlineIcon
                     iconKey={getRouteIconKey(stop.targetHref)}
                     size={14}
-                    className="mb-3 text-[color:var(--text-muted)]"
+                    className="mb-3 text-stone-400"
                   />
-                  <p className="font-ui text-[10px] uppercase tracking-[0.3em] text-[color:var(--text-muted)]">
+                  <p className="font-ui text-[10px] uppercase tracking-[0.3em] text-stone-400">
                     {stop.eyebrow} · {stop.type}
                   </p>
-                  <h3 className="archive-title-card mt-3 font-heading text-[color:var(--text-strong)]">
+                  <h3 className="mt-3 font-heading text-2xl font-bold text-white md:text-3xl">
                     {stop.title}
                   </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-[color:var(--text-soft)]">
+                  <p className="mt-3 text-sm leading-relaxed text-stone-200">
                     {stop.caption}
                   </p>
                 </div>
@@ -473,7 +469,7 @@ export function TunnelExperience({ stops = [], prompt, hints = [] }) {
                   type="button"
                   data-tunnel-dot
                   onClick={() => goDesktop(index)}
-                  className="h-11 rounded-full border border-white/10 bg-white/10 font-ui text-[10px] uppercase tracking-[0.2em] text-[color:var(--text-primary)] transition-colors"
+                  className="h-11 rounded-md border border-white/10 bg-white/10 font-ui text-[10px] uppercase tracking-[0.2em] text-stone-100 transition-colors"
                   aria-label={`Jump to ${stop.title}`}
                 >
                   {index + 1}
@@ -490,7 +486,7 @@ export function TunnelExperience({ stops = [], prompt, hints = [] }) {
               summary={activeDesktopStop?.summary}
             >
               <div className="space-y-4">
-                <p className="text-sm leading-relaxed text-[color:var(--text-soft)]">
+                <p className="text-sm leading-relaxed text-stone-200">
                   {activeDesktopStop?.caption}
                 </p>
                 <div className="flex flex-wrap gap-3">
@@ -515,19 +511,19 @@ export function TunnelExperience({ stops = [], prompt, hints = [] }) {
                 type="button"
                 onClick={() => goDesktop(index)}
                 className={cn(
-                  "rounded-[24px] border px-4 py-4 text-left transition-all duration-300",
+                  "rounded-md border px-4 py-4 text-left transition-colors",
                   index === activeDesktopIndex
-                    ? "border-[color:rgba(242,13,13,0.32)] bg-[linear-gradient(180deg,rgba(34,49,61,0.96),rgba(24,34,44,0.98))]"
-                    : "border-[color:var(--border-soft)] bg-white/6 hover:bg-white/10",
+                    ? "border-rose-500/40 bg-stone-900"
+                    : "border-white/10 bg-white/5 hover:bg-white/10",
                 )}
               >
-                <p className="font-ui text-[10px] uppercase tracking-[0.28em] text-[color:var(--text-muted)]">
+                <p className="font-ui text-[10px] uppercase tracking-[0.28em] text-stone-400">
                   {stop.eyebrow}
                 </p>
-                <p className="archive-title-nav mt-2 font-heading text-[color:var(--text-strong)]">
+                <p className="mt-2 font-heading text-lg font-bold text-white">
                   {stop.title}
                 </p>
-                <div className="mt-2 inline-flex items-center gap-2 text-sm leading-relaxed text-[color:var(--text-soft)]">
+                <div className="mt-2 inline-flex items-center gap-2 text-sm leading-relaxed text-stone-200">
                   <ArchiveInlineIcon
                     iconKey={getRouteIconKey(stop.targetHref)}
                     size={14}
@@ -550,7 +546,7 @@ export function TunnelExperience({ stops = [], prompt, hints = [] }) {
             summary={activeMobileStop?.summary}
           >
             <div className="space-y-4">
-              <div className="archive-image-frame overflow-hidden rounded-[24px]">
+              <div className="overflow-hidden rounded-md border border-white/10 bg-black">
                 <Image
                   src={activeMobileStop?.image}
                   alt={activeMobileStop?.title ?? "Tunnel stop"}
@@ -559,7 +555,7 @@ export function TunnelExperience({ stops = [], prompt, hints = [] }) {
                   className="h-auto w-full object-cover"
                 />
               </div>
-              <p className="text-sm leading-relaxed text-[color:var(--text-soft)]">
+              <p className="text-sm leading-relaxed text-stone-200">
                 {activeMobileStop?.caption}
               </p>
               <div className="flex flex-wrap gap-3">
@@ -598,21 +594,21 @@ export function TunnelExperience({ stops = [], prompt, hints = [] }) {
               data-mobile-stop
               onClick={() => goMobile(index)}
               className={cn(
-                "rounded-[24px] border px-4 py-4 text-left transition-all duration-300",
+                "rounded-md border px-4 py-4 text-left transition-colors",
                 index === activeMobileIndex
-                  ? "border-[color:rgba(242,13,13,0.3)] bg-[linear-gradient(180deg,rgba(27,39,50,0.96),rgba(20,31,40,0.98))]"
-                  : "border-[color:var(--border-soft)] bg-white/6",
+                  ? "border-rose-500/40 bg-stone-900"
+                  : "border-white/10 bg-white/5",
               )}
             >
-              <p className="font-ui text-[10px] uppercase tracking-[0.26em] text-[color:var(--text-muted)]">
+              <p className="font-ui text-[10px] uppercase tracking-[0.26em] text-stone-400">
                 {stop.eyebrow}
               </p>
               <div className="mt-2 flex items-center justify-between gap-3">
                 <div>
-                  <p className="archive-title-nav font-heading text-[color:var(--text-strong)]">
+                  <p className="font-heading text-lg font-bold text-white">
                     {stop.title}
                   </p>
-                  <div className="mt-2 inline-flex items-center gap-2 text-sm leading-relaxed text-[color:var(--text-soft)]">
+                  <div className="mt-2 inline-flex items-center gap-2 text-sm leading-relaxed text-stone-200">
                     <ArchiveInlineIcon
                       iconKey={getRouteIconKey(stop.targetHref)}
                       size={14}
@@ -620,7 +616,7 @@ export function TunnelExperience({ stops = [], prompt, hints = [] }) {
                     <span>{stop.type}</span>
                   </div>
                 </div>
-                <span className="rounded-full border border-white/12 px-3 py-2 font-ui text-[10px] uppercase tracking-[0.2em] text-[color:var(--text-primary)]">
+                <span className="rounded-md border border-white/10 px-3 py-2 font-ui text-[10px] uppercase tracking-[0.2em] text-stone-100">
                   {index + 1}
                 </span>
               </div>

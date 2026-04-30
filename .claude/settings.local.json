@@ -12,7 +12,12 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/bio/grey-spray-can)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/bio/imam-isa)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/bio/engineers-unit)",
-      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/bio/nonexistent)"
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/bio/nonexistent)",
+      "Bash(taskkill //F //FI \"WINDOWTITLE eq baojupog5*\")",
+      "Bash(kill 4454)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3007/)",
+      "Bash(curl *)",
+      "Bash(tasklist)"
     ]
   }
 }

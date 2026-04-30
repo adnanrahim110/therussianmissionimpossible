@@ -1,4 +1,6 @@
-import { ArchiveIconBadge, ArchiveInlineIcon } from "@/components/ui/archive/ArchiveIcons";
+import Link from "next/link";
+
+import { ArchiveInlineIcon } from "@/components/ui/archive/ArchiveIcons";
 import { ArchivePageShell } from "@/components/ui/archive/ArchivePageShell";
 import { ArchivePanel } from "@/components/ui/archive/ArchivePanel";
 import { ArchiveSectionHeader } from "@/components/ui/archive/ArchiveSectionHeader";
@@ -10,7 +12,6 @@ import {
   siteMeta,
 } from "@/lib/archive-data";
 import { buildMetadata } from "@/lib/seo";
-import Link from "next/link";
 
 export const metadata = buildMetadata({
   title: `Personnel Registry | ${siteMeta.title}`,
@@ -31,26 +32,34 @@ export default function PersonnelPage() {
       summary={personnelIntro.summary}
       detail={personnelIntro.detail}
       aside={
-        <ArchivePanel eyebrow="Registry Map" iconKey="personnelBranch" title="Branch Access" summary={personnelIntro.detail}>
+        <ArchivePanel
+          eyebrow="Registry Map"
+          iconKey="personnelBranch"
+          title="Branch Access"
+          summary={personnelIntro.detail}
+        >
           <div className="space-y-3">
             {personnelIntro.branches.map((branch) => (
               <Link
                 key={branch.label}
                 href={branch.href}
-                className="block rounded-[18px] border border-white/10 bg-white/6 px-4 py-4 text-sm leading-relaxed text-[color:var(--text-soft)] transition-transform duration-300 hover:-translate-y-0.5"
+                className="group/branch flex items-center justify-between gap-4 rounded-md border border-white/10 bg-white/[0.02] px-4 py-3 text-sm leading-relaxed text-stone-200 transition-[border-color,background-color] duration-500 hover:border-white/30 hover:bg-white/[0.05]"
               >
-                <span className="inline-flex items-center gap-3">
-                  <ArchiveIconBadge
+                <span className="inline-flex min-w-0 items-center gap-3">
+                  <ArchiveInlineIcon
                     iconKey={branch.iconKey}
-                    className="h-10 w-10 rounded-[14px]"
                     size={16}
-                    tone="muted"
+                    className="text-stone-400 transition-colors group-hover/branch:text-rose-300"
                   />
-                  <span className="archive-title-nav font-heading text-[color:var(--text-strong)]">
+                  <span className="font-heading text-base font-bold tracking-wide text-white">
                     {branch.label}
                   </span>
                 </span>
-                <span className="mt-2 block">{branch.summary}</span>
+                <ArchiveInlineIcon
+                  iconKey="next"
+                  size={14}
+                  className="text-stone-500 transition-[transform,color] group-hover/branch:translate-x-1 group-hover/branch:text-rose-300"
+                />
               </Link>
             ))}
           </div>
@@ -58,14 +67,33 @@ export default function PersonnelPage() {
       }
     >
       <div className="grid gap-6 xl:grid-cols-2">
-        <ArchivePanel tone="mist" eyebrow={personnelAuthorsPage.eyebrow} iconKey="authors" title={personnelAuthorsPage.title} summary={personnelAuthorsPage.summary}>
-          <Link href="/personnel/authors" className="font-ui text-[11px] uppercase tracking-[0.28em] text-[color:var(--color-accent)]">
+        <ArchivePanel
+          tone="mist"
+          eyebrow={personnelAuthorsPage.eyebrow}
+          iconKey="authors"
+          title={personnelAuthorsPage.title}
+          summary={personnelAuthorsPage.summary}
+        >
+          <Link
+            href="/personnel/authors"
+            className="inline-flex items-center gap-2 font-ui text-[11px] uppercase tracking-[0.28em] text-rose-300 transition-colors hover:text-rose-200"
+          >
             Open author branch
+            <ArchiveInlineIcon iconKey="next" size={12} />
           </Link>
         </ArchivePanel>
-        <ArchivePanel eyebrow={personnelDossiersPage.eyebrow} iconKey="dossiers" title={personnelDossiersPage.title} summary={personnelDossiersPage.summary}>
-          <Link href="/personnel/dossiers" className="font-ui text-[11px] uppercase tracking-[0.28em] text-[color:var(--color-accent)]">
+        <ArchivePanel
+          eyebrow={personnelDossiersPage.eyebrow}
+          iconKey="dossiers"
+          title={personnelDossiersPage.title}
+          summary={personnelDossiersPage.summary}
+        >
+          <Link
+            href="/personnel/dossiers"
+            className="inline-flex items-center gap-2 font-ui text-[11px] uppercase tracking-[0.28em] text-rose-300 transition-colors hover:text-rose-200"
+          >
             Open dossier branch
+            <ArchiveInlineIcon iconKey="next" size={12} />
           </Link>
         </ArchivePanel>
       </div>
@@ -82,30 +110,41 @@ export default function PersonnelPage() {
           <Link
             key={dossier.slug}
             href={dossier.href}
-            className="group rounded-[28px] border border-[color:var(--border-soft)] bg-white/6 p-5 transition-transform duration-300 hover:-translate-y-1"
+            style={{
+              backgroundImage:
+                "linear-gradient(180deg, #0d1014 0%, #070809 100%)",
+            }}
+            className="group/dossier relative flex flex-col overflow-hidden rounded-md border border-white/10 p-5 transition-[transform,border-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-white/25"
           >
-            <div className="flex items-start justify-between gap-4">
-              <ArchiveIconBadge
-                iconKey="dossiers"
-                className="h-10 w-10 rounded-[14px]"
-                size={16}
-                tone="muted"
-              />
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 opacity-[0.04]"
+              style={{
+                backgroundImage:
+                  "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
+                backgroundSize: "28px 28px",
+              }}
+            />
+            <div className="relative flex items-center justify-between gap-4">
+              <p className="font-ui text-[10px] uppercase tracking-[0.32em] text-stone-400">
+                {dossier.fileCode}
+              </p>
               <ArchiveInlineIcon
                 iconKey="next"
-                size={16}
-                className="mt-1 text-[color:var(--text-muted)] transition-transform duration-300 group-hover:translate-x-0.5"
+                size={14}
+                className="text-stone-300 transition-transform duration-500 group-hover/dossier:translate-x-1"
               />
             </div>
-            <p className="font-ui text-[10px] uppercase tracking-[0.28em] text-[color:var(--text-muted)]">
-              {dossier.fileCode}
-            </p>
-            <h3 className="archive-title-card mt-3 font-heading text-[color:var(--text-strong)]">
+            <h3 className="relative mt-4 font-heading text-2xl font-bold tracking-wide text-white">
               {dossier.callsign}
             </h3>
-            <p className="mt-3 text-sm leading-relaxed text-[color:var(--text-soft)]">
+            <p className="relative mt-3 text-sm leading-relaxed text-stone-300">
               {dossier.summary}
             </p>
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-px scale-x-[0.3] origin-left bg-linear-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/dossier:scale-x-100"
+            />
           </Link>
         ))}
       </div>

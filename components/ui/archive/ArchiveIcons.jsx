@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import {
   IconAddressBook,
   IconArrowLeft,
@@ -31,7 +32,6 @@ import {
   IconX,
   IconZoomIn,
 } from "@tabler/icons-react";
-import { cn } from "@/lib/utils";
 
 function withArchiveStroke(Icon) {
   function ArchiveIcon(props) {
@@ -87,12 +87,15 @@ export function getRouteIconKey(href = "") {
   if (href.startsWith("/operation")) return "operation";
   if (href.startsWith("/evidence")) return "evidence";
   if (href.startsWith("/tunnel")) return "tunnel";
-  if (href.startsWith("/personnel/authors") || href === "/authors") return "authors";
-  if (href.startsWith("/personnel/dossiers") || href.startsWith("/bio")) return "dossiers";
+  if (href.startsWith("/personnel/authors") || href === "/authors")
+    return "authors";
+  if (href.startsWith("/personnel/dossiers") || href.startsWith("/bio"))
+    return "dossiers";
   if (href.startsWith("/personnel")) return "personnel";
   if (href.startsWith("/book")) return "book";
   if (href.startsWith("/press")) return "press";
-  if (href.startsWith("/contact") || href.startsWith("mailto:")) return "contact";
+  if (href.startsWith("/contact") || href.startsWith("mailto:"))
+    return "contact";
   return "open";
 }
 
@@ -139,7 +142,7 @@ export function ArchiveIconBadge({
     <span
       aria-hidden="true"
       className={cn(
-        "inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-[16px] border backdrop-blur-sm",
+        "inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/50 backdrop-blur-sm",
         badgeToneClasses[tone] ?? badgeToneClasses.panel,
         className,
       )}

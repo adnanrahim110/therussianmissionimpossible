@@ -1,9 +1,11 @@
-import { ArchiveIconBadge, ArchiveInlineIcon } from "@/components/ui/archive/ArchiveIcons";
+import Image from "next/image";
+import Link from "next/link";
+
+import { ArchiveInlineIcon } from "@/components/ui/archive/ArchiveIcons";
 import { ArchivePageShell } from "@/components/ui/archive/ArchivePageShell";
 import { dossiers, personnelDossiersPage, siteMeta } from "@/lib/archive-data";
 import { buildMetadata } from "@/lib/seo";
-import Image from "next/image";
-import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 export const metadata = buildMetadata({
   title: `Personnel Dossiers | ${siteMeta.title}`,
@@ -25,54 +27,89 @@ export default function PersonnelDossiersPage() {
       summary={personnelDossiersPage.summary}
     >
       <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-        {dossiers.map((dossier, index) => (
-          <Link
-            key={dossier.slug}
-            href={dossier.href}
-            className={index % 3 === 0 ? "group overflow-hidden rounded-[28px] border border-[color:rgba(242,13,13,0.2)] bg-[linear-gradient(180deg,rgba(28,42,53,0.97),rgba(16,26,33,0.99))] transition-transform duration-300 hover:-translate-y-1" : "group overflow-hidden rounded-[28px] border border-[color:var(--border-soft)] bg-[linear-gradient(180deg,var(--surface-panel-alt),var(--surface-panel-alt-strong))] transition-transform duration-300 hover:-translate-y-1"}
-          >
-            <div className="relative aspect-[4/3]">
-              {dossier.photo ? (
-                <Image
-                  src={dossier.photo}
-                  alt={dossier.callsign}
-                  fill
-                  sizes="(min-width: 1280px) 30vw, (min-width: 768px) 46vw, 100vw"
-                  className="object-cover"
-                />
-              ) : (
-                <div className="flex h-full items-center justify-center bg-[color:var(--surface-panel)] text-[color:var(--text-muted)]">
-                  Photo classified
-                </div>
+        {dossiers.map((dossier, index) => {
+          const isAccent = index % 3 === 0;
+          return (
+            <Link
+              key={dossier.slug}
+              href={dossier.href}
+              style={{
+                backgroundImage:
+                  "linear-gradient(180deg, #0d1014 0%, #070809 100%)",
+              }}
+              className={cn(
+                "group/dossier relative flex flex-col overflow-hidden rounded-md border transition-[transform,border-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5",
+                isAccent
+                  ? "border-rose-500/30 hover:border-rose-400/55"
+                  : "border-white/10 hover:border-white/25",
               )}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
-            </div>
-            <div className="px-5 py-5 text-[color:var(--text-primary)]">
-              <div className="flex items-start justify-between gap-4">
-                <ArchiveIconBadge
-                  iconKey="dossiers"
-                  tone={index % 3 === 0 ? "accent" : "muted"}
-                  className="h-10 w-10 rounded-[14px]"
-                  size={16}
-                />
-                <ArchiveInlineIcon
-                  iconKey="next"
-                  size={16}
-                  className="mt-1 text-[color:var(--text-muted)] transition-transform duration-300 group-hover:translate-x-0.5"
-                />
+            >
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 z-[1] opacity-[0.04]"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
+                  backgroundSize: "32px 32px",
+                }}
+              />
+
+              <div className="relative aspect-[4/3] overflow-hidden">
+                {dossier.photo ? (
+                  <Image
+                    src={dossier.photo}
+                    alt={dossier.callsign}
+                    fill
+                    sizes="(min-width: 1280px) 30vw, (min-width: 768px) 46vw, 100vw"
+                    className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/dossier:scale-[1.04]"
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center bg-black font-ui text-[10px] uppercase tracking-[0.28em] text-stone-500">
+                    Photo classified
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/20 to-transparent" />
               </div>
-              <p className="font-ui text-[10px] uppercase tracking-[0.28em] text-[color:var(--text-muted)]">
-                {dossier.fileCode}
-              </p>
-              <h2 className="archive-title-card mt-3 font-heading text-[color:var(--text-strong)]">
-                {dossier.callsign}
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-[color:var(--text-soft)]">
-                {dossier.summary}
-              </p>
-            </div>
-          </Link>
-        ))}
+
+              <div className="relative z-[2] flex flex-col p-5 text-stone-100">
+                <div className="flex items-center justify-between gap-4">
+                  <p
+                    className={cn(
+                      "font-ui text-[10px] uppercase tracking-[0.32em]",
+                      isAccent ? "text-rose-300/85" : "text-stone-400",
+                    )}
+                  >
+                    {dossier.fileCode}
+                  </p>
+                  <ArchiveInlineIcon
+                    iconKey="next"
+                    size={14}
+                    className={cn(
+                      "transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/dossier:translate-x-1",
+                      isAccent ? "text-rose-200" : "text-stone-300",
+                    )}
+                  />
+                </div>
+                <h2 className="mt-4 font-heading text-2xl font-bold tracking-wide text-white md:text-[1.7rem]">
+                  {dossier.callsign}
+                </h2>
+                <p className="mt-3 text-sm leading-relaxed text-stone-300">
+                  {dossier.summary}
+                </p>
+              </div>
+
+              <span
+                aria-hidden="true"
+                className={cn(
+                  "pointer-events-none absolute inset-x-0 bottom-0 h-px scale-x-[0.3] origin-left transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/dossier:scale-x-100",
+                  isAccent
+                    ? "bg-linear-to-r from-transparent via-rose-400/80 to-transparent"
+                    : "bg-linear-to-r from-transparent via-white/30 to-transparent",
+                )}
+              />
+            </Link>
+          );
+        })}
       </div>
     </ArchivePageShell>
   );

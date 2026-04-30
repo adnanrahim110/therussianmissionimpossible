@@ -37,7 +37,7 @@ export default function BookPage() {
       ]}
       aside={
         <ArchivePanel tone="mist" eyebrow="Publication" iconKey="book" title={BOOK.genre} summary={BOOK.publisher}>
-          <div className="archive-image-frame overflow-hidden rounded-[24px]">
+          <div className="overflow-hidden rounded-md border border-white/10 bg-black">
             <Image
               src="/imgs/bookcover.jpg"
               alt="Operation Stream 3.0 book cover"
@@ -55,7 +55,7 @@ export default function BookPage() {
             {BOOK.themes.map((theme) => (
               <span
                 key={theme}
-                className="rounded-full border border-white/12 bg-white/6 px-3 py-2 text-sm text-[color:var(--text-soft)]"
+                className="rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm text-stone-100"
               >
                 {theme}
               </span>
@@ -70,7 +70,7 @@ export default function BookPage() {
           title={missionFileDownload.title}
           summary={missionFileDownload.summary}
         >
-          <div className="space-y-3 text-sm leading-relaxed text-[color:var(--text-soft)]">
+          <div className="space-y-3 text-sm leading-relaxed text-stone-200">
             <p>Status: {missionFileDownload.status}</p>
           </div>
         </ArchivePanel>

@@ -5,6 +5,7 @@ import { useLenis } from "lenis/react";
 import { ScrollTrigger } from "@/lib/gsap";
 import { useReducedMotion } from "motion/react";
 import { useEffect } from "react";
+import { AccentBackdrop } from "./AccentBackdrop";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { PageTransition } from "./PageTransition";
@@ -49,7 +50,8 @@ export function SiteShell({ children }) {
       }}
     >
       <ScrollSync prefersReducedMotion={prefersReducedMotion} />
-      <div className="relative flex min-h-screen-safe flex-col grain-overlay">
+      <AccentBackdrop />
+      <div className="relative z-10 flex min-h-screen flex-col">
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[70] focus:rounded-[2px] focus:bg-white focus:px-4 focus:py-2 focus:text-slate-950"

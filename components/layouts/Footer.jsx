@@ -1,80 +1,106 @@
+import Image from "next/image";
+import Link from "next/link";
+
 import {
   ArchiveInlineIcon,
   getRouteIconKey,
 } from "@/components/ui/archive/ArchiveIcons";
 import { archiveFiles, siteMeta, supportRoutes } from "@/lib/archive-data";
-import Image from "next/image";
-import Link from "next/link";
+
 import { Container } from "../ui/Container";
 
 function FooterLink({ href, iconKey, children }) {
   return (
     <li className="list-none">
-      <Link href={href} className="footer-link-premium group">
+      <Link
+        href={href}
+        className="group flex items-center justify-between gap-3 py-2 font-ui text-[12px] uppercase tracking-[0.18em] text-stone-300 transition-colors hover:text-white"
+      >
         <span className="inline-flex min-w-0 items-center gap-3">
           {iconKey ? (
             <ArchiveInlineIcon
               iconKey={iconKey}
-              size={15}
-              className="footer-link-premium-icon"
+              size={14}
+              className="text-stone-500 transition-colors group-hover:text-rose-300"
             />
           ) : null}
           <span className="truncate">{children}</span>
         </span>
         <ArchiveInlineIcon
           iconKey="next"
-          size={15}
-          className="footer-link-premium-arrow"
+          size={14}
+          className="text-stone-600 transition-[transform,color] group-hover:translate-x-1 group-hover:text-rose-300"
         />
       </Link>
     </li>
   );
 }
 
+function ColumnHeader({ code, label }) {
+  return (
+    <div className="flex items-center gap-3 font-ui text-[10px] uppercase tracking-[0.32em] text-stone-400">
+      <span className="font-medium text-stone-300">{code}</span>
+      <span aria-hidden="true" className="h-px w-8 bg-white/15" />
+      <span>{label}</span>
+    </div>
+  );
+}
+
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-(--border-soft) bg-[linear-gradient(180deg,rgba(13,23,30,0.98),rgba(18,31,40,0.99))] py-12 text-(--text-primary) lg:py-16">
-      <div className="pointer-events-none absolute inset-0 archive-grid-overlay opacity-25" />
-      <div className="pointer-events-none absolute inset-x-[8%] top-0 h-40 bg-[radial-gradient(circle_at_center,rgba(242,13,13,0.09),transparent_72%)] blur-[100px]" />
-      <Container className="relative z-10">
+    <footer className="relative overflow-hidden border-t border-white/10 bg-stone-950 py-12 text-stone-100 lg:py-16">
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
+          backgroundSize: "40px 40px",
+          maskImage:
+            "linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 100%)",
+        }}
+      />
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-rose-500/30 to-transparent"
+      />
+
+      <Container className="relative">
         <div className="grid gap-10 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)_minmax(0,0.78fr)]">
           <div>
-            <Link href="/" className="flex items-end gap-3 mt-3">
+            <Link href="/" className="flex items-end gap-3">
               <Image
                 src="/imgs/logo.png"
                 alt={siteMeta.shortTitle}
                 width={220}
                 height={220}
-                className="h-20 w-auto md:h-38"
+                className="h-20 w-auto md:h-32"
               />
-              <div className="hidden min-[1180px]:block pb-3">
-                <p className="font-ui text-sm uppercase tracking-[0.3em] text-(--text-muted)">
+              <div className="hidden pb-2 min-[1180px]:block">
+                <p className="font-ui text-[10px] uppercase tracking-[0.32em] text-stone-400">
                   Operation
                 </p>
-                <p className="archive-title-nav font-heading text-white text-5xl!">
+                <p className="font-heading text-4xl font-bold text-white">
                   Stream 3.0
                 </p>
               </div>
             </Link>
-            <p className="mt-4 max-w-lg text-base leading-relaxed text-(--text-soft)">
+            <p className="mt-5 max-w-lg text-sm leading-relaxed text-stone-300 md:text-base">
               {siteMeta.description}
             </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <span className="rounded-full border border-(--border-soft) bg-(--surface-chip) px-4 py-2 font-ui text-[10px] uppercase tracking-[0.24em] text-(--text-muted)">
-                Declassified archive
-              </span>
-              <span className="rounded-full border border-accent/10 bg-(--surface-chip-accent) px-4 py-2 font-ui text-[10px] uppercase tracking-[0.24em] text-(--text-soft)">
-                Mission access
-              </span>
+            <div className="mt-6 flex items-center gap-3 font-ui text-[10px] uppercase tracking-[0.28em] text-rose-200">
+              <span
+                aria-hidden="true"
+                className="size-1.5 rounded-full bg-rose-500 shadow-[0_0_10px_rgba(242,13,13,0.7)] animate-pulse"
+              />
+              Declassified archive · Mission access open
             </div>
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2">
             <div>
-              <p className="font-ui text-[11px] uppercase tracking-[0.3em] text-(--text-muted)">
-                Archive files
-              </p>
-              <ul className="mt-4 space-y-2">
+              <ColumnHeader code="01" label="Archive Files" />
+              <ul className="mt-4 divide-y divide-white/5">
                 {archiveFiles.map((file) => (
                   <FooterLink
                     key={file.href}
@@ -88,10 +114,8 @@ export function Footer() {
             </div>
 
             <div>
-              <p className="font-ui text-[11px] uppercase tracking-[0.3em] text-(--text-muted)">
-                Support routes
-              </p>
-              <ul className="mt-4 space-y-2">
+              <ColumnHeader code="02" label="Support Routes" />
+              <ul className="mt-4 divide-y divide-white/5">
                 {supportRoutes.map((route) => (
                   <FooterLink
                     key={route.href}
@@ -106,22 +130,20 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="font-ui text-[11px] uppercase tracking-[0.3em] text-(--text-muted)">
-              Publisher
-            </p>
-            <p className="mt-4 inline-flex items-center gap-3 text-base leading-relaxed text-(--text-soft)">
+            <ColumnHeader code="03" label="Publisher" />
+            <p className="mt-4 inline-flex items-center gap-3 text-sm leading-relaxed text-stone-200 md:text-base">
               <ArchiveInlineIcon
                 iconKey="publisher"
-                size={18}
-                className="text-(--text-muted)"
+                size={16}
+                className="text-stone-500"
               />
               {siteMeta.publisher}
             </p>
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-(--text-soft) md:text-base">
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-stone-400">
               Rights, press, and archive correspondence are routed through the
               contact desk rather than listed as a public office address.
             </p>
-            <div className="mt-6 space-y-2">
+            <ul className="mt-5 divide-y divide-white/5">
               <FooterLink
                 href={`mailto:${siteMeta.contactEmail}`}
                 iconKey="contact"
@@ -131,15 +153,15 @@ export function Footer() {
               <FooterLink href="/contact" iconKey="contact">
                 Open Contact Desk
               </FooterLink>
-            </div>
+            </ul>
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-3 border-t border-(--border-soft) pt-5 sm:flex-row sm:items-center sm:justify-between">
-          <p className="font-ui text-[11px] uppercase tracking-[0.28em] text-(--text-muted)">
+        <div className="mt-10 flex flex-col gap-3 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
+          <p className="font-ui text-[10px] uppercase tracking-[0.28em] text-stone-400">
             &copy; {new Date().getFullYear()} {siteMeta.shortTitle}
           </p>
-          <p className="font-ui text-[10px] uppercase tracking-[0.28em] text-(--text-faint)">
+          <p className="font-ui text-[10px] uppercase tracking-[0.28em] text-stone-500">
             Declassified archive edition
           </p>
         </div>

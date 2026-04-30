@@ -1,5 +1,11 @@
 "use client";
 
+import { AnimatePresence, motion } from "motion/react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
+
 import { Button } from "@/components/ui/Button";
 import {
   primaryNav,
@@ -8,11 +14,7 @@ import {
   utilityNav,
 } from "@/lib/archive-data";
 import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "motion/react";
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+
 import { Container } from "../ui/Container";
 
 function linkIsActive(pathname, href) {
@@ -27,10 +29,10 @@ function DesktopNavLink({ href, label, pathname }) {
     <Link
       href={href}
       className={cn(
-        "inline-flex items-center gap-2 rounded-full border border-transparent px-3 py-2 font-ui text-[11px] uppercase tracking-[0.26em] transition-colors",
+        "inline-flex items-center gap-2 rounded-md border border-transparent px-3 py-2 font-ui text-[11px] uppercase tracking-[0.26em] transition-colors",
         active
-          ? "border-[rgba(242,13,13,0.18)] bg-[linear-gradient(180deg,rgba(255,255,255,0.1),rgba(255,255,255,0.05))] text-white"
-          : "text-(--text-muted) hover:bg-(--surface-chip) hover:text-white",
+          ? "border-rose-500/30 bg-white/10 text-white"
+          : "text-stone-300 hover:bg-white/5 hover:text-white",
       )}
     >
       {label}
@@ -73,10 +75,10 @@ export function Header() {
         <Container className="relative">
           <div
             className={cn(
-              "flex items-center justify-between gap-4 rounded-[28px] border py-2 pl-2 pr-4 transition-all duration-300 md:pr-5",
+              "flex items-center justify-between gap-4 rounded-md border py-2 pl-2 pr-4 transition-colors duration-300 md:pr-5",
               isScrolled
-                ? "border-(--border-soft) bg-[linear-gradient(180deg,rgba(16,26,33,0.94),rgba(11,20,27,0.96))] shadow-[0_22px_70px_rgba(6,12,18,0.32)] backdrop-blur-xl"
-                : "border-[rgba(255,255,255,0.08)] bg-[linear-gradient(180deg,rgba(18,29,37,0.82),rgba(12,22,28,0.88))] backdrop-blur-lg",
+                ? "border-white/10 bg-stone-950/95 backdrop-blur"
+                : "border-white/5 bg-stone-950/80 backdrop-blur",
             )}
           >
             <Link href="/" className="flex items-center gap-3">
@@ -88,10 +90,10 @@ export function Header() {
                 className="h-12 w-auto md:h-14"
               />
               <div className="hidden min-[1180px]:block">
-                <p className="font-ui text-[10px] uppercase tracking-[0.3em] text-(--text-muted)">
+                <p className="font-ui text-[10px] uppercase tracking-[0.3em] text-stone-400">
                   Operation
                 </p>
-                <p className="archive-title-nav font-heading text-white">
+                <p className="font-heading text-lg font-bold text-white">
                   Stream 3.0
                 </p>
               </div>
@@ -127,7 +129,7 @@ export function Header() {
               aria-expanded={mobileOpen}
               aria-label={mobileOpen ? "Close navigation" : "Open navigation"}
               onClick={() => setMobileOpen((value) => !value)}
-              className="rounded-full border border-(--border-soft) bg-(--surface-chip) px-4 py-2 font-ui text-[11px] uppercase tracking-[0.28em] text-white transition-colors hover:bg-(--surface-chip-strong) lg:hidden"
+              className="rounded-md border border-white/10 bg-white/5 px-4 py-2 font-ui text-[11px] uppercase tracking-[0.28em] text-white transition-colors hover:bg-white/10 lg:hidden"
             >
               {mobileOpen ? "Close" : "Menu"}
             </button>
@@ -141,10 +143,10 @@ export function Header() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-[rgba(6,12,18,0.86)] px-4 py-5 backdrop-blur-xl lg:hidden"
+            className="fixed inset-0 z-50 bg-black/95 px-4 py-5 lg:hidden"
           >
-            <div className="mx-auto flex min-h-full max-w-3xl flex-col gap-5 rounded-[30px] border border-(--border-soft) bg-[linear-gradient(180deg,rgba(16,27,35,0.98),rgba(10,19,25,0.99))] p-5 shadow-[0_30px_120px_rgba(6,12,18,0.42)]">
-              <div className="flex items-center justify-between gap-4 border-b border-(--border-soft) pb-4">
+            <div className="mx-auto flex min-h-full max-w-3xl flex-col gap-5 rounded-md border border-white/10 bg-stone-950 p-5">
+              <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-4">
                 <Link href="/" className="flex items-center gap-3">
                   <Image
                     src="/imgs/logo.png"
@@ -154,10 +156,10 @@ export function Header() {
                     className="h-12 w-auto"
                   />
                   <div>
-                    <p className="font-ui text-[10px] uppercase tracking-[0.3em] text-(--text-muted)">
+                    <p className="font-ui text-[10px] uppercase tracking-[0.3em] text-stone-400">
                       Archive Routes
                     </p>
-                    <p className="archive-title-nav font-heading text-white">
+                    <p className="font-heading text-lg font-bold text-white">
                       {siteMeta.shortTitle}
                     </p>
                   </div>
@@ -166,7 +168,7 @@ export function Header() {
                 <button
                   type="button"
                   onClick={() => setMobileOpen(false)}
-                  className="rounded-full border border-(--border-soft) bg-(--surface-chip) px-4 py-2 font-ui text-[11px] uppercase tracking-[0.28em] text-white"
+                  className="rounded-md border border-white/10 bg-white/5 px-4 py-2 font-ui text-[11px] uppercase tracking-[0.28em] text-white"
                 >
                   Close
                 </button>
@@ -174,7 +176,7 @@ export function Header() {
 
               <div className="grid gap-5 md:grid-cols-2">
                 <div className="space-y-3">
-                  <p className="font-ui text-[11px] uppercase tracking-[0.3em] text-(--text-muted)">
+                  <p className="font-ui text-[11px] font-medium uppercase tracking-[0.3em] text-stone-400">
                     Core files
                   </p>
                   {primaryNav.map((item, index) => (
@@ -187,10 +189,10 @@ export function Header() {
                       <Link
                         href={item.href}
                         className={cn(
-                          "archive-title-nav block rounded-[22px] border px-4 py-4 font-heading transition-colors",
+                          "block rounded-md border px-4 py-4 font-heading text-lg font-bold tracking-wide transition-colors",
                           linkIsActive(pathname, item.href)
-                            ? "border-[rgba(242,13,13,0.34)] bg-[linear-gradient(180deg,rgba(255,255,255,0.1),rgba(255,255,255,0.05))] text-white"
-                            : "border-(--border-soft) bg-[linear-gradient(180deg,var(--surface-chip-strong),var(--surface-chip))] text-(--text-primary)",
+                            ? "border-rose-500/40 bg-white/10 text-white"
+                            : "border-white/10 bg-white/5 text-stone-100 hover:border-white/20",
                         )}
                       >
                         {item.label}
@@ -200,7 +202,7 @@ export function Header() {
                 </div>
 
                 <div className="space-y-3">
-                  <p className="font-ui text-[11px] uppercase tracking-[0.3em] text-(--text-muted)">
+                  <p className="font-ui text-[11px] font-medium uppercase tracking-[0.3em] text-stone-400">
                     Utility routes
                   </p>
                   {utilityNav.map((item, index) => (
@@ -212,21 +214,21 @@ export function Header() {
                     >
                       <Link
                         href={item.href}
-                        className="block rounded-[22px] border border-(--border-soft) bg-[linear-gradient(180deg,var(--surface-chip-strong),var(--surface-chip))] px-4 py-4 font-ui text-[11px] uppercase tracking-[0.28em] text-(--text-primary)"
+                        className="block rounded-md border border-white/10 bg-white/5 px-4 py-4 font-ui text-[11px] uppercase tracking-[0.28em] text-stone-100 transition-colors hover:border-white/20"
                       >
                         {item.label}
                       </Link>
                     </motion.div>
                   ))}
 
-                  <div className="rounded-[26px] border border-(--border-soft) bg-[linear-gradient(180deg,var(--surface-panel-alt),var(--surface-panel-alt-strong))] p-5 text-(--text-primary)">
-                    <p className="font-ui text-[10px] uppercase tracking-[0.28em] text-(--text-muted)">
+                  <div className="rounded-md border border-white/10 bg-stone-900 p-5 text-stone-100">
+                    <p className="font-ui text-[10px] font-medium uppercase tracking-[0.28em] text-stone-400">
                       Recommended route
                     </p>
-                    <p className="archive-title-nav mt-3 font-heading text-(--text-strong)">
+                    <p className="mt-3 font-heading text-2xl font-bold text-white">
                       Tunnel Descent
                     </p>
-                    <p className="mt-3 text-sm leading-relaxed text-(--text-soft)">
+                    <p className="mt-3 text-sm leading-relaxed text-stone-200">
                       {tunnelPage.summary}
                     </p>
                     <div className="mt-4">

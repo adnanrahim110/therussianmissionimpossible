@@ -87,7 +87,7 @@ function IconButton({
       aria-label={label}
       onClick={onClick}
       disabled={disabled}
-      className={`inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/18 bg-[linear-gradient(180deg,rgba(14,24,31,0.9),rgba(7,13,18,0.94))] text-(--text-strong) shadow-[0_18px_45px_rgba(0,0,0,0.32)] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-[rgba(242,13,13,0.34)] hover:bg-[linear-gradient(180deg,rgba(25,38,48,0.96),rgba(10,18,24,0.98))] hover:text-white active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:translate-y-0 disabled:hover:border-white/18 ${className}`}
+      className={`inline-flex size-12 items-center justify-center rounded-md border border-white/15 bg-stone-950 text-white transition-colors hover:border-white/30 hover:bg-stone-900 active:bg-stone-800 disabled:cursor-not-allowed disabled:opacity-40 ${className}`}
     >
       <ArchiveInlineIcon iconKey={iconKey} size={20} />
     </button>
@@ -176,7 +176,7 @@ export function ArchiveMapGallery({ items = [] }) {
                   key={item.id}
                   type="button"
                   onClick={() => setActiveIndex(absoluteIndex)}
-                  className="group relative shrink-0 overflow-hidden rounded-3xl border border-(--border-soft) bg-[linear-gradient(180deg,var(--surface-panel),var(--surface-panel-strong))] shadow-[0_24px_70px_rgba(6,12,18,0.22)] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-[rgba(242,13,13,0.28)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-(--surface-canvas)"
+                  className="group relative shrink-0 overflow-hidden rounded-md border border-white/10 bg-stone-950 transition-colors hover:border-rose-400/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500"
                   style={{
                     width: item.renderWidth,
                     height: item.renderHeight,
@@ -191,10 +191,10 @@ export function ArchiveMapGallery({ items = [] }) {
                     className="h-full w-full object-cover transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
                   />
 
-                  <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(7,14,19,0.08),rgba(7,14,19,0.62))] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-all duration-300 group-hover:opacity-100">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-full border border-white/18 bg-[linear-gradient(180deg,rgba(14,24,31,0.9),rgba(9,16,22,0.94))] text-white shadow-[0_18px_40px_rgba(0,0,0,0.28)] transition-transform duration-300 group-hover:scale-100 group-hover:translate-y-0 translate-y-2">
-                      <ArchiveInlineIcon iconKey="view" size={24} />
+                  <div className="pointer-events-none absolute inset-0 bg-black/50 opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
+                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                    <div className="flex size-14 items-center justify-center rounded-md border border-white/20 bg-black/70 text-white">
+                      <ArchiveInlineIcon iconKey="view" size={22} />
                     </div>
                   </div>
                 </button>
@@ -207,10 +207,9 @@ export function ArchiveMapGallery({ items = [] }) {
       {mounted && activeItem
         ? createPortal(
             <div
-              className="fixed inset-0 z-90 bg-[rgba(4,8,12,0.92)] backdrop-blur-md"
+              className="fixed inset-0 z-90 bg-black/95"
               onClick={() => setActiveIndex(null)}
             >
-              <div className="absolute inset-0 archive-grid-overlay opacity-15" />
 
               <div className="relative flex h-full w-full items-center justify-center p-3 sm:p-5 lg:p-8">
                 <div className="pointer-events-none absolute left-3 top-3 right-3 z-1 flex justify-end sm:left-5 sm:top-5 sm:right-5 lg:left-8 lg:top-8 lg:right-8">
@@ -267,23 +266,23 @@ export function ArchiveMapGallery({ items = [] }) {
                     priority
                   />
 
-                  <div className="flex w-full max-w-3xl items-center justify-between gap-4 rounded-3xl border border-(--border-soft) bg-[linear-gradient(180deg,rgba(14,24,31,0.88),rgba(8,14,19,0.92))] px-4 py-3 text-(--text-primary) shadow-[0_24px_60px_rgba(0,0,0,0.28)]">
+                  <div className="flex w-full max-w-3xl items-center justify-between gap-4 rounded-md border border-white/10 bg-stone-950 px-4 py-3 text-stone-100">
                     <div className="flex min-w-0 items-center gap-3">
                       <ArchiveIconBadge
                         iconKey="gallery"
-                        className="h-10 w-10 rounded-[14px]"
+                        className="size-10 rounded-md"
                         size={16}
                       />
                       <div className="min-w-0">
-                        <p className="truncate font-ui text-[10px] uppercase tracking-[0.28em] text-(--text-muted)">
+                        <p className="truncate font-ui text-[10px] uppercase tracking-[0.28em] text-stone-400">
                           {activeItem.type}
                         </p>
-                        <p className="truncate text-sm text-(--text-strong) sm:text-base">
+                        <p className="truncate font-bold text-white sm:text-base">
                           {activeItem.title}
                         </p>
                       </div>
                     </div>
-                    <p className="shrink-0 font-ui text-[10px] uppercase tracking-[0.28em] text-(--text-muted)">
+                    <p className="shrink-0 font-ui text-[10px] uppercase tracking-[0.28em] text-stone-400">
                       {String((activeIndex ?? 0) + 1).padStart(2, "0")} /{" "}
                       {String(items.length).padStart(2, "0")}
                     </p>

@@ -52,10 +52,10 @@ export default function OperationPage() {
             summary={phase.summary}
           >
             <div className="space-y-4">
-              <p className="text-sm leading-relaxed text-[color:var(--text-soft)] md:text-base">
+              <p className="text-sm leading-relaxed text-stone-200 md:text-base">
                 {phase.excerpt}
               </p>
-              <ul className="space-y-3 text-sm leading-relaxed text-[color:var(--text-soft)] md:text-base">
+              <ul className="space-y-3 text-sm leading-relaxed text-stone-200 md:text-base">
                 {phase.details.map((detail) => (
                   <li key={detail}>{detail}</li>
                 ))}

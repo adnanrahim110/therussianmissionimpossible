@@ -34,7 +34,7 @@ export default function PressPage() {
       ]}
       aside={
         <ArchivePanel eyebrow="Mission File" iconKey="press" title={missionFileDownload.title} summary={missionFileDownload.summary}>
-          <p className="font-ui text-[11px] uppercase tracking-[0.28em] text-[color:var(--color-accent)]">
+          <p className="font-ui text-[11px] uppercase tracking-[0.28em] text-rose-300">
             Status: {missionFileDownload.status}
           </p>
         </ArchivePanel>
@@ -60,7 +60,7 @@ export default function PressPage() {
                 Open linked route
               </Button>
             ) : (
-              <p className="font-ui text-[11px] uppercase tracking-[0.28em] text-[color:var(--text-muted)]">
+              <p className="font-ui text-[11px] uppercase tracking-[0.28em] text-stone-400">
                 Status: {asset.status}
               </p>
             )}
