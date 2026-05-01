@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRef } from "react";
 
 import { ArchiveIntroGate } from "@/components/archive/ArchiveIntroGate";
@@ -45,6 +46,29 @@ const supportToneMap = {
   },
 };
 
+const heroCheckpointCopy = {
+  mission: {
+    routeLabel: "Mission Brief",
+    signal: "origin / intent",
+  },
+  operation: {
+    routeLabel: "Operational Sequence",
+    signal: "timeline / execution",
+  },
+  evidence: {
+    routeLabel: "Evidence Index",
+    signal: "maps / records",
+  },
+  tunnel: {
+    routeLabel: "Tunnel Descent",
+    signal: "interactive route",
+  },
+  personnel: {
+    routeLabel: "Personnel Registry",
+    signal: "dossiers / authors",
+  },
+};
+
 function ArchiveSceneBackdrop() {
   return (
     <div
@@ -82,7 +106,10 @@ function SectionEyebrow({ code, label, iconKey, accent = false }) {
         <ArchiveInlineIcon iconKey={iconKey} size={14} />
       </span>
       <span
-        className={cn("font-medium", accent ? "text-rose-200" : "text-stone-300")}
+        className={cn(
+          "font-medium",
+          accent ? "text-rose-200" : "text-stone-300",
+        )}
       >
         {code}
       </span>
@@ -183,6 +210,58 @@ function SupportRouteCard({ route }) {
   );
 }
 
+function HeroCheckpointLink({ checkpoint, index, active = false }) {
+  return (
+    <TerminalRow variant={active ? "status" : "success"}>
+      <Link
+        href={checkpoint.href}
+        aria-label={`Open ${checkpoint.title}`}
+        className={cn(
+          "group/checkpoint relative -my-1 flex w-full min-w-0 items-center gap-3 overflow-hidden rounded-[3px] border border-transparent px-2 py-1.5 transition-[border-color,background-color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-rose-300/70",
+          active
+            ? "hover:border-rose-400/35 hover:bg-rose-500/8 hover:shadow-[0_0_24px_rgba(244,63,94,0.14)]"
+            : "hover:border-emerald-300/25 hover:bg-emerald-400/8 hover:shadow-[0_0_24px_rgba(16,185,129,0.12)]",
+        )}
+      >
+        <span
+          aria-hidden="true"
+          className={cn(
+            "pointer-events-none absolute inset-y-1 left-0 w-px origin-top scale-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/checkpoint:scale-y-100 group-focus-visible/checkpoint:scale-y-100",
+            active
+              ? "bg-linear-to-b from-rose-200 via-rose-400 to-transparent"
+              : "bg-linear-to-b from-emerald-200 via-emerald-400 to-transparent",
+          )}
+        />
+        <span className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/[0.07] to-transparent transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/checkpoint:translate-x-full group-focus-visible/checkpoint:translate-x-full" />
+
+        <span className="relative shrink-0 font-ui text-sm tracking-[0.15em] transition-colors duration-500">
+          Checkpoint {String(index + 1).padStart(2, "0")} -
+        </span>
+
+        <span className="relative min-w-0 flex-1">
+          <span
+            className={cn(
+              "block truncate text-sm tracking-wider transition-colors duration-500",
+              active ? "text-accent" : "text-green-500",
+            )}
+          >
+            {checkpoint.routeLabel}
+          </span>
+        </span>
+        <span
+          aria-hidden="true"
+          className={cn(
+            "relative shrink-0 translate-x-0 font-ui text-[10px] uppercase tracking-[0.18em] opacity-60 transition-[transform,opacity,color] duration-500 group-hover/checkpoint:translate-x-1 group-hover/checkpoint:opacity-100",
+            active ? "text-accent" : "text-green-500",
+          )}
+        >
+          Open
+        </span>
+      </Link>
+    </TerminalRow>
+  );
+}
+
 export function ArchiveHub() {
   const scope = useRef(null);
 
@@ -255,6 +334,13 @@ export function ArchiveHub() {
   );
 
   const lastStep = archiveIntro.sequence[archiveIntro.sequence.length - 1];
+  const heroCheckpoints = archiveFiles.map((file) => ({
+    ...file,
+    ...(heroCheckpointCopy[file.id] ?? {
+      routeLabel: file.title,
+      signal: file.status,
+    }),
+  }));
 
   return (
     <div ref={scope} className="relative overflow-hidden">
@@ -317,15 +403,14 @@ export function ArchiveHub() {
               </TerminalRow>
               <TerminalRow variant="status">[STATUS] {lastStep}</TerminalRow>
               <TerminalDivider />
-              {archiveIntro.sequence.map((step, index) => {
-                const isLast = index === archiveIntro.sequence.length - 1;
+              {heroCheckpoints.map((checkpoint, index) => {
                 return (
-                  <TerminalRow
-                    key={step}
-                    variant={isLast ? "status" : "success"}
-                  >
-                    Checkpoint {String(index + 1).padStart(2, "0")} — {step}
-                  </TerminalRow>
+                  <HeroCheckpointLink
+                    key={checkpoint.id}
+                    checkpoint={checkpoint}
+                    index={index}
+                    active={checkpoint.id === "tunnel"}
+                  />
                 );
               })}
             </TerminalBlock>
@@ -418,7 +503,10 @@ export function ArchiveHub() {
                   <ArchiveInlineIcon iconKey="tunnel" size={14} />
                 </span>
                 [SIG] {tunnelSection.title}
-                <span aria-hidden="true" className="ml-1 h-px flex-1 bg-linear-to-r from-rose-500/40 via-white/15 to-transparent" />
+                <span
+                  aria-hidden="true"
+                  className="ml-1 h-px flex-1 bg-linear-to-r from-rose-500/40 via-white/15 to-transparent"
+                />
               </div>
 
               <h3 className="relative mt-5 font-heading text-2xl font-bold tracking-wide text-white md:text-3xl">

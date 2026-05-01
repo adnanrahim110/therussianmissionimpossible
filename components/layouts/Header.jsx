@@ -9,6 +9,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import {
   primaryNav,
+  purchaseCtas,
   siteMeta,
   tunnelPage,
   utilityNav,
@@ -29,12 +30,20 @@ function DesktopNavLink({ href, label, pathname }) {
     <Link
       href={href}
       className={cn(
-        "inline-flex items-center gap-2 rounded-md border border-transparent px-3 py-2 font-ui text-[11px] uppercase tracking-[0.26em] transition-colors",
+        "inline-flex items-center gap-px rounded-md px-2.5 py-2 text-xs capitalize tracking-[0.26em] transition-colors duration-200 ease-in-out font-ui group/nav",
         active
-          ? "border-rose-500/30 bg-white/10 text-white"
-          : "text-stone-300 hover:bg-white/5 hover:text-white",
+          ? " bg-white/10 text-green-500"
+          : "text-stone-300 hover:bg-white/5 hover:text-green-500",
       )}
     >
+      <span
+        className={cn(
+          "invisible transition-all duration-200 ease-in-out",
+          active ? "visible" : "group-hover/nav:visible",
+        )}
+      >
+        {"/"}
+      </span>{" "}
       {label}
     </Link>
   );
@@ -44,6 +53,7 @@ export function Header() {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
 
   const utilityLinks = useMemo(() => utilityNav.slice(0, 3), []);
 
@@ -60,7 +70,59 @@ export function Header() {
 
   useEffect(() => {
     setMobileOpen(false);
+    setHidden(false);
   }, [pathname]);
+
+  useEffect(() => {
+    let frame = 0;
+
+    const sectionWantsHeaderHidden = () => {
+      const triggerLine = Math.min(window.innerHeight * 0.5, 520);
+      return Array.from(document.querySelectorAll("[data-hide-header]")).some(
+        (section) => {
+          const rect = section.getBoundingClientRect();
+          return rect.top <= 4 && rect.bottom >= triggerLine;
+        },
+      );
+    };
+
+    const syncFromSections = () => {
+      if (mobileOpen) {
+        setHidden(false);
+        return;
+      }
+      setHidden(sectionWantsHeaderHidden());
+    };
+
+    const queueSync = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(syncFromSections);
+    };
+
+    const handler = (event) => {
+      const visible = event?.detail?.visible;
+      if (typeof visible === "boolean") {
+        setHidden(mobileOpen ? false : visible || sectionWantsHeaderHidden());
+      }
+    };
+
+    queueSync();
+    window.addEventListener("scroll", queueSync, { passive: true });
+    window.addEventListener("resize", queueSync);
+    window.addEventListener("tunnel-section-visibility", handler);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", queueSync);
+      window.removeEventListener("resize", queueSync);
+      window.removeEventListener("tunnel-section-visibility", handler);
+    };
+  }, [mobileOpen, pathname]);
+
+  useEffect(() => {
+    // If the user opens the mobile menu we shouldn't keep the header hidden.
+    if (mobileOpen && hidden) setHidden(false);
+  }, [mobileOpen, hidden]);
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
@@ -71,7 +133,12 @@ export function Header() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-40 px-3 pt-3 md:px-4">
+      <header
+        className={cn(
+          "fixed inset-x-0 top-0 z-40 px-3 pt-3 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:px-4",
+          hidden ? "-translate-y-full" : "translate-y-0",
+        )}
+      >
         <Container className="relative">
           <div
             className={cn(
@@ -119,8 +186,8 @@ export function Header() {
                   pathname={pathname}
                 />
               ))}
-              <Button href="/tunnel" size="sm">
-                Enter Tunnel
+              <Button href={purchaseCtas.amazon.href} size="sm">
+                Buy Book
               </Button>
             </div>
 

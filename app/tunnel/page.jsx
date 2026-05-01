@@ -18,10 +18,7 @@ export const metadata = buildMetadata({
 export default function TunnelPage() {
   return (
     <ArchivePageShell
-      breadcrumbs={[
-        { label: "Archive", href: "/" },
-        { label: "Tunnel" },
-      ]}
+      breadcrumbs={[{ label: "Archive", href: "/" }, { label: "Tunnel" }]}
       iconKey="tunnel"
       eyebrow={tunnelPage.eyebrow}
       title={tunnelPage.title}
@@ -32,8 +29,14 @@ export default function TunnelPage() {
         { label: "Review Evidence", href: "/evidence", variant: "outline" },
       ]}
       aside={
-        <ArchivePanel eyebrow="Interactive Route" iconKey="tunnel" title={tunnelPage.detail} summary={tunnelPage.prompt} />
+        <ArchivePanel
+          eyebrow="Interactive Route"
+          iconKey="tunnel"
+          title={tunnelPage.detail}
+          summary={tunnelPage.prompt}
+        />
       }
+      noSpacing
     >
       <TunnelExperience
         stops={tunnelStops}

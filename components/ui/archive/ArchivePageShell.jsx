@@ -13,7 +13,7 @@ function ShellBackdrop() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 -z-0 overflow-hidden"
+      className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
     >
       <div
         className="absolute inset-0 opacity-[0.03]"
@@ -42,6 +42,7 @@ export function ArchivePageShell({
   aside,
   children,
   className,
+  noSpacing = false,
 }) {
   return (
     <div className={cn("relative", className)}>
@@ -55,17 +56,14 @@ export function ArchivePageShell({
               {eyebrow || iconKey ? (
                 <div className="flex items-center gap-3 font-ui text-[10px] uppercase tracking-[0.32em]">
                   {iconKey ? (
-                    <span className="inline-flex h-7 w-7 items-center justify-center rounded-[3px] border border-rose-500/40 bg-rose-500/[0.08] text-rose-200">
+                    <span className="inline-flex h-7 w-7 items-center justify-center rounded-[3px] border border-rose-500/40 bg-rose-500/8 text-rose-200">
                       <ArchiveInlineIcon iconKey={iconKey} size={14} />
                     </span>
                   ) : null}
                   {eyebrow ? (
                     <span className="font-medium text-rose-200">{eyebrow}</span>
                   ) : null}
-                  <span
-                    aria-hidden="true"
-                    className="h-px w-10 bg-white/15"
-                  />
+                  <span aria-hidden="true" className="h-px w-10 bg-white/15" />
                   <span className="text-stone-400">Declassified</span>
                 </div>
               ) : null}
@@ -116,9 +114,13 @@ export function ArchivePageShell({
       </section>
 
       <div className="relative">
-        <Container className="relative z-10 space-y-10 py-12 md:py-20 lg:space-y-20 lg:py-28">
-          {children}
-        </Container>
+        {noSpacing ? (
+          children
+        ) : (
+          <Container className="relative z-10 space-y-10 py-12 md:py-20 lg:space-y-20 lg:py-28">
+            {children}
+          </Container>
+        )}
       </div>
     </div>
   );

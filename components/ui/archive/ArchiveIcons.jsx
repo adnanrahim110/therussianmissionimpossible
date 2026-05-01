@@ -4,6 +4,7 @@ import {
   IconArrowLeft,
   IconArrowRight,
   IconBook2,
+  IconBrandAmazon,
   IconBuilding,
   IconBuildingTunnel,
   IconChevronRight,
@@ -74,6 +75,7 @@ const iconRegistry = {
   view: withArchiveStroke(IconZoomIn),
   witness: withArchiveStroke(IconFileDescription),
   personnelBranch: withArchiveStroke(IconAddressBook),
+  amazon: withArchiveStroke(IconBrandAmazon),
 };
 
 export function getArchiveIcon(key) {
