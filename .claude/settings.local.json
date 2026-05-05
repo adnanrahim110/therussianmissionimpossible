@@ -19,7 +19,8 @@
       "Bash(curl *)",
       "Bash(tasklist)",
       "Bash(pnpm exec *)",
-      "Bash(node -e \"require\\('@babel/parser'\\).parse\\(require\\('fs'\\).readFileSync\\('components/archive/TunnelExperience.jsx','utf8'\\),{sourceType:'module',plugins:['jsx']}\\); console.log\\('OK'\\)\")"
+      "Bash(node -e \"require\\('@babel/parser'\\).parse\\(require\\('fs'\\).readFileSync\\('components/archive/TunnelExperience.jsx','utf8'\\),{sourceType:'module',plugins:['jsx']}\\); console.log\\('OK'\\)\")",
+      "Bash(node --check \"D:\\\\xampp_old\\\\htdocs\\\\author\\\\yuri\\\\app\\\\personnel\\\\dossiers\\\\page.jsx\")"
     ]
   }
 }

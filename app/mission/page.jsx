@@ -70,7 +70,7 @@ export default function MissionPage() {
       </div>
 
       <ArchiveSectionHeader
-        eyebrow="Myth or Operation"
+        eyebrow="Myth or Mission"
         iconKey="evidence"
         title={mythPoll.title}
         summary={mythPoll.intro}
