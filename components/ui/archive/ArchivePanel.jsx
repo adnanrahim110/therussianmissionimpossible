@@ -45,7 +45,7 @@ export function ArchivePanel({
         {eyebrow || iconKey ? (
           <div className="flex items-center gap-2.5 font-ui text-[10px] uppercase tracking-[0.32em] text-stone-400">
             {iconKey ? (
-              <span className="inline-flex h-7 w-7 items-center justify-center rounded-[3px] border border-white/15 bg-white/[0.02] text-stone-300">
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-[3px] border border-white/15 bg-white/2 text-stone-300">
                 <ArchiveInlineIcon iconKey={iconKey} size={14} />
               </span>
             ) : null}
@@ -65,9 +65,27 @@ export function ArchivePanel({
         ) : null}
 
         {summary ? (
-          <p className="text-sm leading-relaxed text-stone-300 md:text-base">
-            {summary}
-          </p>
+          Array.isArray(summary) ? (
+            summary.map((text, index) => (
+              <p
+                key={index}
+                className="text-sm leading-relaxed text-stone-300 md:text-base"
+              >
+                {text}
+              </p>
+            ))
+          ) : (
+            <p
+              className={cn(
+                "text-sm leading-relaxed text-stone-300 md:text-base",
+                typeof summary === "string" &&
+                  summary.startsWith("“") &&
+                  "italic",
+              )}
+            >
+              {summary}
+            </p>
+          )
         ) : null}
 
         {children ? <div>{children}</div> : null}

@@ -46,7 +46,7 @@ export function ArchivePageShell({
 }) {
   return (
     <div className={cn("relative", className)}>
-      <section className="relative overflow-hidden border-b border-white/10 pt-28 md:pt-36 lg:pt-40">
+      <section className="relative border-b border-white/10 pt-28 md:pt-36 lg:pt-40">
         <ShellBackdrop />
         <Container className="relative z-10 pb-14 md:pb-20">
           <ArchiveBreadcrumbs items={breadcrumbs} />
@@ -78,9 +78,20 @@ export function ArchivePageShell({
                 </p>
               ) : null}
               {detail ? (
-                <p className="mt-5 max-w-3xl text-base leading-relaxed text-stone-300 md:text-lg">
-                  {detail}
-                </p>
+                Array.isArray(detail) ? (
+                  detail.map((text, index) => (
+                    <p
+                      key={index}
+                      className="mt-5 max-w-3xl text-base leading-relaxed text-stone-300 md:text-lg"
+                    >
+                      {text}
+                    </p>
+                  ))
+                ) : (
+                  <p className="mt-5 max-w-3xl text-base leading-relaxed text-stone-300 md:text-lg">
+                    {detail}
+                  </p>
+                )
               ) : null}
 
               {actions.length ? (
@@ -102,7 +113,7 @@ export function ArchivePageShell({
               ) : null}
             </div>
 
-            {aside ? <div>{aside}</div> : null}
+            {aside ? <div className="sticky top-17">{aside}</div> : null}
           </div>
 
           {metrics.length ? (

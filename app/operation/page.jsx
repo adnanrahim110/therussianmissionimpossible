@@ -19,10 +19,7 @@ export const metadata = buildMetadata({
 export default function OperationPage() {
   return (
     <ArchivePageShell
-      breadcrumbs={[
-        { label: "Archive", href: "/" },
-        { label: "Operation" },
-      ]}
+      breadcrumbs={[{ label: "Archive", href: "/" }, { label: "Operation" }]}
       iconKey="operation"
       eyebrow={operationPage.eyebrow}
       title={operationPage.title}
@@ -37,12 +34,18 @@ export default function OperationPage() {
           eyebrow={missionPhaseCards[0].code}
           iconKey="operation"
           title={missionPhaseCards[0].title}
-          summary={missionPhaseCards[0].excerpt}
-        />
+          summary={missionPhaseCards[0].details[0]}
+        >
+          <div className="space-y-4 text-sm leading-relaxed text-stone-200 md:text-base">
+            {missionPhaseCards[0].details.slice(1).map((paragraph, idx) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
+        </ArchivePanel>
       }
     >
       <div className="grid gap-5 lg:grid-cols-2">
-        {missionPhaseCards.map((phase, index) => (
+        {missionPhaseCards.slice(1).map((phase, index) => (
           <ArchivePanel
             key={phase.id}
             tone={index % 2 === 0 ? "steel" : "mist"}
@@ -52,9 +55,6 @@ export default function OperationPage() {
             summary={phase.summary}
           >
             <div className="space-y-4">
-              <p className="text-sm leading-relaxed text-stone-200 md:text-base">
-                {phase.excerpt}
-              </p>
               <ul className="space-y-3 text-sm leading-relaxed text-stone-200 md:text-base">
                 {phase.details.map((detail) => (
                   <li key={detail}>{detail}</li>

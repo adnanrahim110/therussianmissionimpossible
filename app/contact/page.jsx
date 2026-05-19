@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/Button";
 import { ArchivePageShell } from "@/components/ui/archive/ArchivePageShell";
 import { ArchivePanel } from "@/components/ui/archive/ArchivePanel";
 import { contactPage, purchaseCtas, siteMeta } from "@/lib/archive-data";
@@ -13,20 +12,31 @@ export const metadata = buildMetadata({
 export default function ContactPage() {
   return (
     <ArchivePageShell
-      breadcrumbs={[
-        { label: "Archive", href: "/" },
-        { label: "Contact" },
-      ]}
+      breadcrumbs={[{ label: "Archive", href: "/" }, { label: "Contact" }]}
       iconKey="contact"
       eyebrow={contactPage.eyebrow}
       title={contactPage.title}
       summary={contactPage.summary}
       actions={[
-        { label: "Email the Desk", href: `mailto:${siteMeta.contactEmail}`, iconKey: "contact" },
-        { label: purchaseCtas.press.label, href: purchaseCtas.press.href, variant: "outline" },
+        {
+          label: "Email the Desk",
+          href: `mailto:${siteMeta.contactEmail}`,
+          iconKey: "contact",
+        },
+        {
+          label: purchaseCtas.press.label,
+          href: purchaseCtas.press.href,
+          variant: "outline",
+        },
       ]}
       aside={
-        <ArchivePanel tone="mist" eyebrow="Direct Email" iconKey="contact" title={siteMeta.contactEmail} summary={siteMeta.contactAddress.join(", ")} />
+        <ArchivePanel
+          tone="mist"
+          eyebrow="Direct Email"
+          iconKey="contact"
+          title={siteMeta.contactEmail}
+          summary={siteMeta.contactAddress.join(", ")}
+        />
       }
     >
       <div className="grid gap-5 md:grid-cols-3">
@@ -43,7 +53,12 @@ export default function ContactPage() {
         ))}
       </div>
 
-      <ArchivePanel eyebrow="Mailing Address" iconKey="location" title="Archive support office" summary={contactPage.summary}>
+      <ArchivePanel
+        eyebrow="Mailing Address"
+        iconKey="location"
+        title="Archive support office"
+        summary={contactPage.summary}
+      >
         <div className="space-y-2 text-sm leading-relaxed text-stone-200 md:text-base">
           {siteMeta.contactAddress.map((line) => (
             <p key={line}>{line}</p>

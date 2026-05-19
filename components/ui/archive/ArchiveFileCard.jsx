@@ -26,7 +26,7 @@ export function ArchiveFileCard({ file, priority = false }) {
     >
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.04]"
+        className="pointer-events-none absolute inset-0 opacity-4"
         style={{
           backgroundImage:
             "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
@@ -41,13 +41,13 @@ export function ArchiveFileCard({ file, priority = false }) {
           className={cn(
             "pointer-events-none absolute -bottom-6 -right-6 h-40 w-40 transition-[transform,color] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:scale-[1.04]",
             priority
-              ? "text-rose-500/[0.07] group-hover/card:text-rose-400/[0.12]"
-              : "text-white/[0.04] group-hover/card:text-white/[0.07]",
+              ? "text-rose-500/7 group-hover/card:text-rose-400/12"
+              : "text-white/4 group-hover/card:text-white/7",
           )}
         />
       ) : null}
 
-      <div className="relative z-[2] flex h-full flex-col p-6">
+      <div className="relative z-2 flex h-full flex-col p-6">
         <div className="flex items-center justify-between gap-4">
           <span
             className={cn(
@@ -67,13 +67,24 @@ export function ArchiveFileCard({ file, priority = false }) {
           </span>
         </div>
 
-        <h3 className="mt-6 font-heading text-2xl font-bold tracking-wide text-white md:text-[1.7rem]">
+        <h3 className="mt-6 mb-4 font-heading text-2xl font-bold tracking-wide text-white md:text-[1.7rem]">
           {file.title}
         </h3>
 
-        <p className="mt-4 text-sm leading-relaxed text-stone-300 md:text-[0.95rem]">
-          {file.summary}
-        </p>
+        {Array.isArray(file.summary) ? (
+          file.summary.map((line, index) => (
+            <p
+              key={index}
+              className="not-first:mt-2 text-sm leading-relaxed text-stone-300 md:text-[0.95rem]"
+            >
+              {line}
+            </p>
+          ))
+        ) : (
+          <p className="mt-4 text-sm leading-relaxed text-stone-300 md:text-[0.95rem]">
+            {file.summary}
+          </p>
+        )}
 
         <div className="mt-auto flex items-center justify-between gap-4 pt-8">
           <span

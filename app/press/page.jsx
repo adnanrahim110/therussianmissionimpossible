@@ -1,7 +1,11 @@
 import { Button } from "@/components/ui/Button";
 import { ArchivePageShell } from "@/components/ui/archive/ArchivePageShell";
 import { ArchivePanel } from "@/components/ui/archive/ArchivePanel";
-import { missionFileDownload, pressDeskPage, siteMeta } from "@/lib/archive-data";
+import {
+  missionFileDownload,
+  pressDeskPage,
+  siteMeta,
+} from "@/lib/archive-data";
 import { buildMetadata } from "@/lib/seo";
 
 const assetLinks = {
@@ -19,10 +23,7 @@ export const metadata = buildMetadata({
 export default function PressPage() {
   return (
     <ArchivePageShell
-      breadcrumbs={[
-        { label: "Archive", href: "/" },
-        { label: "Press" },
-      ]}
+      breadcrumbs={[{ label: "Archive", href: "/" }, { label: "Press" }]}
       iconKey="press"
       eyebrow={pressDeskPage.eyebrow}
       title={pressDeskPage.title}
@@ -33,7 +34,15 @@ export default function PressPage() {
         { label: "Open Publication File", href: "/book", variant: "outline" },
       ]}
       aside={
-        <ArchivePanel eyebrow="Mission File" iconKey="press" title={missionFileDownload.title} summary={missionFileDownload.summary}>
+        <ArchivePanel
+          eyebrow="Mission File"
+          iconKey="press"
+          title={missionFileDownload.title}
+          summary={[
+            "“Only those who pass the trial by fire will know their true selves.” — Hades, Commander of Akhmat special forces",
+            "A shareable classified‑style dossier intended for readers and journalists. It will eventually bundle summary notes, diagrams, maps, excerpts, and possibly audio.",
+          ]}
+        >
           <p className="font-ui text-[11px] uppercase tracking-[0.28em] text-rose-300">
             Status: {missionFileDownload.status}
           </p>
@@ -46,7 +55,15 @@ export default function PressPage() {
             key={asset.id}
             tone={index % 2 === 0 ? "mist" : "steel"}
             eyebrow={asset.type}
-            iconKey={assetLinks[asset.id] === "/personnel/authors" ? "authors" : assetLinks[asset.id] === "/book" ? "book" : assetLinks[asset.id] === "/contact" ? "contact" : "press"}
+            iconKey={
+              assetLinks[asset.id] === "/personnel/authors"
+                ? "authors"
+                : assetLinks[asset.id] === "/book"
+                  ? "book"
+                  : assetLinks[asset.id] === "/contact"
+                    ? "contact"
+                    : "press"
+            }
             title={asset.title}
             summary={asset.description}
             compact
@@ -55,7 +72,13 @@ export default function PressPage() {
               <Button
                 href={assetLinks[asset.id]}
                 variant="ghost"
-                iconKey={assetLinks[asset.id] === "/personnel/authors" ? "authors" : assetLinks[asset.id] === "/book" ? "book" : "contact"}
+                iconKey={
+                  assetLinks[asset.id] === "/personnel/authors"
+                    ? "authors"
+                    : assetLinks[asset.id] === "/book"
+                      ? "book"
+                      : "contact"
+                }
               >
                 Open linked route
               </Button>

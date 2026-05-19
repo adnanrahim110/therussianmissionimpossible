@@ -13,7 +13,7 @@ export function ArchiveSectionHeader({
   return (
     <header
       className={cn(
-        "max-w-3xl",
+        "max-w-6xl",
         align === "center" && "mx-auto text-center",
         className,
       )}
@@ -26,7 +26,7 @@ export function ArchiveSectionHeader({
           )}
         >
           {iconKey ? (
-            <span className="inline-flex h-7 w-7 items-center justify-center rounded-[3px] border border-white/15 bg-white/[0.02] text-stone-300">
+            <span className="inline-flex h-7 w-7 items-center justify-center rounded-[3px] border border-white/15 bg-white/2 text-stone-300">
               <ArchiveInlineIcon iconKey={iconKey} size={14} />
             </span>
           ) : null}
@@ -40,9 +40,17 @@ export function ArchiveSectionHeader({
         </h2>
       ) : null}
       {summary ? (
-        <p className="mt-4 text-base leading-relaxed text-stone-300 md:text-lg">
-          {summary}
-        </p>
+        Array.isArray(summary) ? (
+          <div className="mt-4 space-y-2 text-base leading-relaxed text-stone-300 md:text-lg">
+            {summary.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
+        ) : (
+          <p className="mt-4 text-base leading-relaxed text-stone-300 md:text-lg">
+            {summary}
+          </p>
+        )
       ) : null}
     </header>
   );

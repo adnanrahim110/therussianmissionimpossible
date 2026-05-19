@@ -32,8 +32,14 @@ export default function MissionPage() {
           eyebrow="Operational Lead"
           iconKey="mission"
           title="Mission Record"
-          summary={missionPage.lead}
-        />
+          summary={missionPage.lead[0]}
+        >
+          <div className="space-y-4 text-sm leading-relaxed text-stone-200 md:text-base">
+            {missionPage.lead.slice(1).map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
+        </ArchivePanel>
       }
     >
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(340px,0.72fr)]">
@@ -57,12 +63,15 @@ export default function MissionPage() {
           title="Mission Points"
         >
           <ul className="space-y-3 text-sm leading-relaxed text-stone-200 md:text-base">
-            {missionPage.points.map((point) => (
+            {missionPage.points.map((point, index) => (
               <li
-                key={point}
-                className="rounded-md border border-white/10 bg-white/5 px-4 py-4"
+                key={point.label}
+                className="rounded-md border border-white/10 bg-white/5 px-4 py-4 flex flex-col gap-2"
               >
-                {point}
+                <h3 className="font-ui text-sm font-semibold uppercase tracking-[0.32em] text-accent">
+                  {String(index + 1).padStart(2, "0")} · {point.label}
+                </h3>
+                <p className="text-sm">{point.description}</p>
               </li>
             ))}
           </ul>
@@ -76,9 +85,10 @@ export default function MissionPage() {
         summary={mythPoll.intro}
       />
 
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)]">
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,0.6fr)_minmax(0,1fr)]">
         <ArchivePanel
           iconKey="archive"
+          eyebrow="Background"
           title={mythPoll.background.title}
           summary={mythPoll.background.body[0]}
         >

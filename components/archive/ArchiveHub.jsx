@@ -27,6 +27,10 @@ import { archiveIntro, tunnelSection } from "@/lib/content";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { highlightWords } from "@/lib/highlight";
 import { cn } from "@/lib/utils";
+import "swiper/css";
+import "swiper/css/autoplay";
+import { Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 const supportToneMap = {
   book: {
@@ -377,6 +381,12 @@ export function ArchiveHub() {
               >
                 {archiveHub.detail}
               </p>
+              <blockquote
+                data-hub-copy
+                className="mt-6 border-l-4 border-accent pl-6 italic font-semibold text-stone-500 md:text-lg"
+              >
+                {archiveHub.quote}
+              </blockquote>
 
               <div data-hub-copy className="mt-8 flex flex-wrap gap-3">
                 <Button
@@ -424,7 +434,7 @@ export function ArchiveHub() {
             data-hub-section-head
             className="mb-10 flex flex-col gap-5 md:mb-14 md:flex-row md:items-end md:justify-between md:gap-8"
           >
-            <div className="max-w-2xl">
+            <div className="max-w-3xl">
               <SectionEyebrow
                 code="CABINET 01"
                 label={`Mission Files / ${String(archiveFiles.length).padStart(2, "0")}`}
@@ -461,18 +471,18 @@ export function ArchiveHub() {
 
       <section className="relative">
         <Container className="relative z-10 pb-20 md:pb-28 lg:pb-32">
-          <div data-hub-section-head className="mb-10 max-w-2xl md:mb-14">
+          <div data-hub-section-head className="mb-10 md:mb-14">
             <SectionEyebrow
               code="CABINET 02"
               label="Auxiliary Routes"
               iconKey="route"
             />
             <h2 className="mt-4 font-heading text-3xl font-bold leading-tight text-white md:text-4xl lg:text-[2.7rem]">
-              Tunnel network &amp; support desk
+              ROUTES TUNNEL NETWORK & SUPPORT DESK
             </h2>
             <p className="mt-3 text-base leading-relaxed text-stone-300 md:text-lg">
-              Move from the cabinet into the route map below — a guided tunnel
-              descent paired with the channels that handle press, rights, and
+              Move from the cabinet into the route map below. A guided tunnel
+              descent. Paired with the channels that handle press, rights, and
               outreach.
             </p>
           </div>
@@ -498,7 +508,7 @@ export function ArchiveHub() {
                 }}
               />
 
-              <div className="relative flex items-center gap-3 font-ui text-[10px] uppercase tracking-[0.32em] text-rose-200">
+              <div className="relative flex items-center gap-3 font-ui text-[10px] uppercase tracking-[0.32em] text-rose-200 mb-3">
                 <span className="inline-flex h-7 w-7 items-center justify-center rounded-[3px] border border-rose-500/40 bg-rose-500/8">
                   <ArchiveInlineIcon iconKey="tunnel" size={14} />
                 </span>
@@ -512,16 +522,42 @@ export function ArchiveHub() {
               <h3 className="relative mt-5 font-heading text-2xl font-bold tracking-wide text-white md:text-3xl">
                 {tunnelSection.subtitle}
               </h3>
-              <p className="relative mt-3 max-w-2xl text-sm leading-relaxed text-stone-300 md:text-base">
-                {tunnelSection.intro}
-              </p>
+              {[
+                "Inside that pipe, soldiers found no room to stand. They crawled. They choked on fumes that peeled at their lungs. Condensate soaked their uniforms and turned skin to smeared charcoal.",
+                "The chapters “inside the pipe”, document the recollection of the soliders underground.",
+                "They moved for hours, then waited for days. Some fell and did not rise.",
+                "Then, the command “Move”. Out of the pipe and immediately—filthy, emaciated—went to storm the enemy strongpoints (“oporniki”).",
+              ].map((line, idx) => (
+                <p
+                  key={idx}
+                  className="relative not-first:mt-2 max-w-2xl text-sm leading-relaxed text-stone-300 md:text-base"
+                >
+                  {line}
+                </p>
+              ))}
 
-              <div className="relative mt-7 grid gap-3 sm:grid-cols-2">
-                {tunnelStops.slice(0, 4).map((stop, idx) => (
-                  <div key={stop.id} data-hub-tunnel-tile>
-                    <TunnelStopTile stop={stop} index={idx} />
-                  </div>
-                ))}
+              <div className="relative mt-2 w-full">
+                <Swiper
+                  modules={[Autoplay]}
+                  loop={true}
+                  autoplay={{ delay: 0 }}
+                  speed={6000}
+                  spaceBetween={12}
+                  slidesPerView={3}
+                  className="*:ease-linear!"
+                >
+                  {tunnelStops.map((stop, idx) => (
+                    <SwiperSlide
+                      key={stop.id}
+                      data-hub-tunnel-tile
+                      className="pt-5!"
+                    >
+                      <div>
+                        <TunnelStopTile stop={stop} index={idx} />
+                      </div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
               </div>
 
               <div className="relative mt-7 flex flex-wrap items-center justify-between gap-3 border-t border-white/5 pt-5">
@@ -539,7 +575,10 @@ export function ArchiveHub() {
               </div>
             </article>
 
-            <div data-hub-support-grid className="grid gap-5">
+            <div
+              data-hub-support-grid
+              className="flex flex-col gap-5 justify-between h-full"
+            >
               {supportRoutes.map((route) => (
                 <div key={route.id} data-hub-support>
                   <SupportRouteCard route={route} />
