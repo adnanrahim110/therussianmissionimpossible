@@ -6,11 +6,16 @@ import {
   TerminalDivider,
   TerminalRow,
 } from "@/components/ui/terminal/Terminal";
-import { authors, personnelAuthorsPage, siteMeta } from "@/lib/archive-data";
+import {
+  authors,
+  personnelAuthorsContent,
+  personnelAuthorsPage,
+} from "@/constants/personnel";
+import { siteMeta } from "@/constants/site";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: `Authors And Witnesses | ${siteMeta.title}`,
+  title: `${personnelAuthorsPage.metadataTitle} | ${siteMeta.title}`,
   description: personnelAuthorsPage.summary,
   path: "/personnel/authors",
 });
@@ -18,11 +23,7 @@ export const metadata = buildMetadata({
 export default function PersonnelAuthorsPage() {
   return (
     <ArchivePageShell
-      breadcrumbs={[
-        { label: "Archive", href: "/" },
-        { label: "Personnel", href: "/personnel" },
-        { label: "Authors" },
-      ]}
+      breadcrumbs={personnelAuthorsContent.breadcrumbs}
       iconKey="authors"
       eyebrow={personnelAuthorsPage.eyebrow}
       title={personnelAuthorsPage.title}

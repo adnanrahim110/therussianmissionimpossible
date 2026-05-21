@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { TerminalBlock, TerminalRow } from "@/components/ui/terminal/Terminal";
-import { archiveIntro } from "@/lib/content";
+import { archiveIntro, archiveIntroUi } from "@/constants/archive";
 import { cn } from "@/lib/utils";
 
 const INTRO_SESSION_KEY = "archive-intro-complete-v3";
@@ -199,7 +199,7 @@ export function ArchiveIntroGate() {
                   {archiveIntro.label}
                 </p>
                 <p className="mt-1 font-ui text-[10px] uppercase tracking-[0.28em] text-rose-300">
-                  Declassified archive access
+                  {archiveIntroUi.accessLabel}
                 </p>
               </div>
             </div>
@@ -211,14 +211,14 @@ export function ArchiveIntroGate() {
               iconKey="close"
               onClick={() => triggerClose(setIsClosing)}
             >
-              Skip
+              {archiveIntroUi.skipButton}
             </Button>
           </header>
 
           <div className="relative grid min-h-0 flex-1 gap-4 p-4 sm:gap-5 sm:p-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.82fr)] lg:p-7">
             <div className="flex min-h-0 flex-col justify-center rounded-md border border-white/10 bg-black/40 p-5 sm:p-6 lg:p-8">
               <p className="font-ui text-[10px] font-medium uppercase tracking-[0.32em] text-stone-400 sm:text-[11px]">
-                Mission file access
+                {archiveIntroUi.missionAccessLabel}
               </p>
               <h1 className="mt-4 font-heading text-[clamp(2.7rem,8vw,5rem)] font-bold leading-[0.84] text-white">
                 {archiveIntro.title}
@@ -228,10 +228,10 @@ export function ArchiveIntroGate() {
               </p>
               <div className="mt-6 flex flex-wrap gap-2 font-ui text-[10px] uppercase tracking-[0.24em]">
                 <span className="rounded-md border border-white/10 bg-white/5 px-3 py-2 text-stone-300">
-                  {progress} decrypted
+                  {progress} {archiveIntroUi.decryptedLabel}
                 </span>
                 <span className="rounded-md border border-rose-500/30 bg-rose-500/10 px-3 py-2 text-rose-200">
-                  Accent secured
+                  {archiveIntroUi.accentLabel}
                 </span>
               </div>
             </div>
@@ -240,7 +240,7 @@ export function ArchiveIntroGate() {
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0">
                   <p className="font-ui text-[10px] font-medium uppercase tracking-[0.3em] text-stone-400">
-                    Current signal
+                    {archiveIntroUi.currentSignalLabel}
                   </p>
                   <motion.p
                     key={activeSignal}
@@ -258,7 +258,7 @@ export function ArchiveIntroGate() {
 
                 <div className="rounded-md border border-white/10 bg-white/5 px-4 py-3 text-right">
                   <p className="font-ui text-[10px] font-medium uppercase tracking-[0.24em] text-stone-400">
-                    Progress
+                    {archiveIntroUi.progressLabel}
                   </p>
                   <p className="mt-2 font-ui text-2xl font-bold text-white">
                     {progress}
@@ -309,7 +309,9 @@ export function ArchiveIntroGate() {
                   iconKey={soundEnabled ? "soundOn" : "soundOff"}
                   onClick={() => setSoundEnabled((value) => !value)}
                 >
-                  {soundEnabled ? "Audio On" : "Audio Off"}
+                  {soundEnabled
+                    ? archiveIntroUi.soundOn
+                    : archiveIntroUi.soundOff}
                 </Button>
                 <Button
                   type="button"
@@ -318,7 +320,9 @@ export function ArchiveIntroGate() {
                   onClick={() => triggerClose(setIsClosing)}
                   disabled={!isReadyToEnter}
                 >
-                  {isReadyToEnter ? "Enter Archive" : "Decrypting..."}
+                  {isReadyToEnter
+                    ? archiveIntroUi.enterArchive
+                    : archiveIntroUi.decrypting}
                 </Button>
               </div>
             </div>

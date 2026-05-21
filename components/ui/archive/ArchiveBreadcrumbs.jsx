@@ -4,13 +4,14 @@ import {
   ArchiveInlineIcon,
   getRouteIconKey,
 } from "@/components/ui/archive/ArchiveIcons";
+import { archiveBreadcrumbsContent } from "@/constants/ui";
 
 export function ArchiveBreadcrumbs({ items = [] }) {
   if (!items.length) return null;
 
   return (
     <nav
-      aria-label="Breadcrumb"
+      aria-label={archiveBreadcrumbsContent.label}
       className="mb-4 flex flex-wrap items-center gap-2 font-ui text-[11px] uppercase tracking-[0.28em] text-stone-400"
     >
       {items.map((item, index) => {

@@ -19,11 +19,13 @@ import {
 import {
   archiveFiles,
   archiveHub,
-  purchaseCtas,
+  archiveHomeContent,
+  archiveIntro,
+  heroCheckpointCopy,
   supportRoutes,
-  tunnelStops,
-} from "@/lib/archive-data";
-import { archiveIntro, tunnelSection } from "@/lib/content";
+} from "@/constants/archive";
+import { purchaseCtas } from "@/constants/navigation";
+import { tunnelSection, tunnelStops } from "@/constants/tunnel";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { highlightWords } from "@/lib/highlight";
 import { cn } from "@/lib/utils";
@@ -47,29 +49,6 @@ const supportToneMap = {
     accent: "text-rose-200",
     border: "border-rose-500/30 hover:border-rose-400/65",
     line: "bg-linear-to-r from-transparent via-rose-400/80 to-transparent",
-  },
-};
-
-const heroCheckpointCopy = {
-  mission: {
-    routeLabel: "Mission Brief",
-    signal: "origin / intent",
-  },
-  operation: {
-    routeLabel: "Operational Sequence",
-    signal: "timeline / execution",
-  },
-  evidence: {
-    routeLabel: "Evidence Index",
-    signal: "maps / records",
-  },
-  tunnel: {
-    routeLabel: "Tunnel Descent",
-    signal: "interactive route",
-  },
-  personnel: {
-    routeLabel: "Personnel Registry",
-    signal: "dossiers / authors",
   },
 };
 
@@ -219,7 +198,7 @@ function HeroCheckpointLink({ checkpoint, index, active = false }) {
     <TerminalRow variant={active ? "status" : "success"}>
       <Link
         href={checkpoint.href}
-        aria-label={`Open ${checkpoint.title}`}
+        aria-label={`${archiveHomeContent.terminal.openAriaPrefix} ${checkpoint.title}`}
         className={cn(
           "group/checkpoint relative -my-1 flex w-full min-w-0 items-center gap-3 overflow-hidden rounded-[3px] border border-transparent px-2 py-1.5 transition-[border-color,background-color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-rose-300/70",
           active
@@ -239,7 +218,8 @@ function HeroCheckpointLink({ checkpoint, index, active = false }) {
         <span className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/[0.07] to-transparent transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/checkpoint:translate-x-full group-focus-visible/checkpoint:translate-x-full" />
 
         <span className="relative shrink-0 font-ui text-sm tracking-[0.15em] transition-colors duration-500">
-          Checkpoint {String(index + 1).padStart(2, "0")} -
+          {archiveHomeContent.terminal.checkpointPrefix}{" "}
+          {String(index + 1).padStart(2, "0")} -
         </span>
 
         <span className="relative min-w-0 flex-1">
@@ -259,7 +239,7 @@ function HeroCheckpointLink({ checkpoint, index, active = false }) {
             active ? "text-accent" : "text-green-500",
           )}
         >
-          Open
+          {archiveHomeContent.terminal.openLabel}
         </span>
       </Link>
     </TerminalRow>
@@ -357,8 +337,8 @@ export function ArchiveHub() {
             <div>
               <div data-hub-copy>
                 <SectionEyebrow
-                  code="ARCHIVE 00"
-                  label="Hub Index"
+                  code={archiveHomeContent.heroEyebrow.code}
+                  label={archiveHomeContent.heroEyebrow.label}
                   iconKey="archive"
                   accent
                 />
@@ -409,9 +389,11 @@ export function ArchiveHub() {
 
             <TerminalBlock data-hub-copy="true" className="xl:mt-3">
               <TerminalRow variant="header">
-                [SIG] Archive Handshake
+                {archiveHomeContent.terminal.header}
               </TerminalRow>
-              <TerminalRow variant="status">[STATUS] {lastStep}</TerminalRow>
+              <TerminalRow variant="status">
+                {archiveHomeContent.terminal.statusPrefix} {lastStep}
+              </TerminalRow>
               <TerminalDivider />
               {heroCheckpoints.map((checkpoint, index) => {
                 return (
@@ -436,16 +418,15 @@ export function ArchiveHub() {
           >
             <div className="max-w-3xl">
               <SectionEyebrow
-                code="CABINET 01"
-                label={`Mission Files / ${String(archiveFiles.length).padStart(2, "0")}`}
+                code={archiveHomeContent.missionCabinet.code}
+                label={`${archiveHomeContent.missionCabinet.labelPrefix} / ${String(archiveFiles.length).padStart(2, "0")}`}
                 iconKey="open"
               />
               <h2 className="mt-4 font-heading text-3xl font-bold leading-tight text-white md:text-4xl lg:text-[2.7rem]">
-                Mission cabinet
+                {archiveHomeContent.missionCabinet.title}
               </h2>
               <p className="mt-3 text-base leading-relaxed text-stone-300 md:text-lg">
-                Every file below is a sealed entry from the operation. Open one
-                to descend into its dossier.
+                {archiveHomeContent.missionCabinet.summary}
               </p>
             </div>
           </div>
@@ -462,7 +443,11 @@ export function ArchiveHub() {
                   index === 0 || index === 1 ? "xl:col-span-3" : "xl:col-span-2"
                 }
               >
-                <ArchiveFileCard file={file} priority={index === 0} />
+                <ArchiveFileCard
+                  file={file}
+                  priority={index === 0}
+                  openLabel={archiveHomeContent.fileCardOpenLabel}
+                />
               </div>
             ))}
           </div>
@@ -473,17 +458,15 @@ export function ArchiveHub() {
         <Container className="relative z-10 pb-20 md:pb-28 lg:pb-32">
           <div data-hub-section-head className="mb-10 md:mb-14">
             <SectionEyebrow
-              code="CABINET 02"
-              label="Auxiliary Routes"
+              code={archiveHomeContent.routeNetwork.code}
+              label={archiveHomeContent.routeNetwork.label}
               iconKey="route"
             />
             <h2 className="mt-4 font-heading text-3xl font-bold leading-tight text-white md:text-4xl lg:text-[2.7rem]">
-              ROUTES TUNNEL NETWORK & SUPPORT DESK
+              {archiveHomeContent.routeNetwork.title}
             </h2>
             <p className="mt-3 text-base leading-relaxed text-stone-300 md:text-lg">
-              Move from the cabinet into the route map below. A guided tunnel
-              descent. Paired with the channels that handle press, rights, and
-              outreach.
+              {archiveHomeContent.routeNetwork.summary}
             </p>
           </div>
 
@@ -512,7 +495,8 @@ export function ArchiveHub() {
                 <span className="inline-flex h-7 w-7 items-center justify-center rounded-[3px] border border-rose-500/40 bg-rose-500/8">
                   <ArchiveInlineIcon iconKey="tunnel" size={14} />
                 </span>
-                [SIG] {tunnelSection.title}
+                {archiveHomeContent.tunnelFeature.signalPrefix}{" "}
+                {tunnelSection.title}
                 <span
                   aria-hidden="true"
                   className="ml-1 h-px flex-1 bg-linear-to-r from-rose-500/40 via-white/15 to-transparent"
@@ -522,12 +506,7 @@ export function ArchiveHub() {
               <h3 className="relative mt-5 font-heading text-2xl font-bold tracking-wide text-white md:text-3xl">
                 {tunnelSection.subtitle}
               </h3>
-              {[
-                "Inside that pipe, soldiers found no room to stand. They crawled. They choked on fumes that peeled at their lungs. Condensate soaked their uniforms and turned skin to smeared charcoal.",
-                "The chapters “inside the pipe”, document the recollection of the soliders underground.",
-                "They moved for hours, then waited for days. Some fell and did not rise.",
-                "Then, the command “Move”. Out of the pipe and immediately—filthy, emaciated—went to storm the enemy strongpoints (“oporniki”).",
-              ].map((line, idx) => (
+              {archiveHomeContent.tunnelFeature.body.map((line, idx) => (
                 <p
                   key={idx}
                   className="relative not-first:mt-2 max-w-2xl text-sm leading-relaxed text-stone-300 md:text-base"
@@ -562,7 +541,7 @@ export function ArchiveHub() {
 
               <div className="relative mt-7 flex flex-wrap items-center justify-between gap-3 border-t border-white/5 pt-5">
                 <p className="font-ui text-[10px] uppercase tracking-[0.28em] text-stone-500">
-                  Six guided stops · scroll-driven descent
+                  {archiveHomeContent.tunnelFeature.note}
                 </p>
                 <Button
                   size="sm"
@@ -570,7 +549,7 @@ export function ArchiveHub() {
                   href={purchaseCtas.tunnel.href}
                   iconKey={purchaseCtas.tunnel.iconKey}
                 >
-                  Enter tunnel
+                  {archiveHomeContent.tunnelFeature.button}
                 </Button>
               </div>
             </article>

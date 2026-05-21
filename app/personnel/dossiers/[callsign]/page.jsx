@@ -1,5 +1,6 @@
 import { PersonnelDossierDetail } from "@/components/archive/PersonnelDossierDetail";
-import { dossiers, siteMeta } from "@/lib/archive-data";
+import { dossiers, personnelDossierDetailContent } from "@/constants/personnel";
+import { siteMeta } from "@/constants/site";
 import { buildMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
 
@@ -17,7 +18,7 @@ export async function generateMetadata({ params }) {
 
   return buildMetadata({
     title: `"${dossier.callsign}" | ${siteMeta.title}`,
-    description: `Declassified dossier for ${dossier.callsign}. ${dossier.summary}`,
+    description: `${personnelDossierDetailContent.metadataDescriptionPrefix} ${dossier.callsign}. ${dossier.summary}`,
     path: `/personnel/dossiers/${dossier.slug}`,
     image: dossier.photo || "/imgs/logo-f.png",
     type: "article",

@@ -7,13 +7,14 @@ import {
   evidenceGallery,
   evidenceHighlights,
   evidencePage,
+  evidencePageContent,
   evidenceSection,
-  siteMeta,
-} from "@/lib/archive-data";
+} from "@/constants/evidence";
+import { siteMeta } from "@/constants/site";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: `Evidence File | ${siteMeta.title}`,
+  title: `${evidencePage.metadataTitle} | ${siteMeta.title}`,
   description: evidencePage.summary,
   path: "/evidence",
 });
@@ -21,19 +22,13 @@ export const metadata = buildMetadata({
 export default function EvidencePage() {
   return (
     <ArchivePageShell
-      breadcrumbs={[
-        { label: "Archive", href: "/" },
-        { label: "Evidence" },
-      ]}
+      breadcrumbs={evidencePageContent.breadcrumbs}
       iconKey="evidence"
       eyebrow={evidencePage.eyebrow}
       title={evidencePage.title}
       summary={evidencePage.summary}
       detail={evidencePage.detail}
-      actions={[
-        { label: "Open Personnel File", href: "/personnel" },
-        { label: "Enter Tunnel Descent", href: "/tunnel", variant: "outline" },
-      ]}
+      actions={evidencePageContent.actions}
       aside={
         <ArchivePanel
           eyebrow={evidenceSection.featuredLabel}
@@ -60,17 +55,17 @@ export default function EvidencePage() {
               variant="ghost"
               iconKey={item.href.startsWith("/personnel") ? "personnel" : "evidence"}
             >
-              Open linked file
+              {evidencePageContent.buttonLabel}
             </Button>
           </ArchivePanel>
         ))}
       </div>
 
       <ArchiveSectionHeader
-        eyebrow="Gallery"
+        eyebrow={evidencePageContent.gallerySection.eyebrow}
         iconKey="gallery"
-        title="Evidence Gallery"
-        summary="Archive map materials are presented as a justified gallery, with shared row heights and natural image widths."
+        title={evidencePageContent.gallerySection.title}
+        summary={evidencePageContent.gallerySection.summary}
       />
 
       <ArchiveMapGallery items={evidenceGallery} />

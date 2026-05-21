@@ -10,10 +10,10 @@ import { Button } from "@/components/ui/Button";
 import {
   primaryNav,
   purchaseCtas,
-  siteMeta,
-  tunnelPage,
+  headerContent,
   utilityNav,
-} from "@/lib/archive-data";
+} from "@/constants/navigation";
+import { siteMeta } from "@/constants/site";
 import { cn } from "@/lib/utils";
 
 import { Container } from "../ui/Container";
@@ -158,10 +158,10 @@ export function Header() {
               />
               <div className="hidden min-[1180px]:block">
                 <p className="font-ui text-[10px] uppercase tracking-[0.3em] text-stone-400">
-                  Operation
+                  {headerContent.operationLabel}
                 </p>
                 <p className="font-heading text-lg font-bold text-white">
-                  Stream 3.0
+                  {headerContent.title}
                 </p>
               </div>
             </Link>
@@ -187,18 +187,22 @@ export function Header() {
                 />
               ))}
               <Button href={purchaseCtas.amazon.href} size="sm">
-                Buy Book
+                {headerContent.buyButton}
               </Button>
             </div>
 
             <button
               type="button"
               aria-expanded={mobileOpen}
-              aria-label={mobileOpen ? "Close navigation" : "Open navigation"}
+              aria-label={
+                mobileOpen
+                  ? headerContent.menuCloseAria
+                  : headerContent.menuOpenAria
+              }
               onClick={() => setMobileOpen((value) => !value)}
               className="rounded-md border border-white/10 bg-white/5 px-4 py-2 font-ui text-[11px] uppercase tracking-[0.28em] text-white transition-colors hover:bg-white/10 lg:hidden"
             >
-              {mobileOpen ? "Close" : "Menu"}
+              {mobileOpen ? headerContent.menuClose : headerContent.menuOpen}
             </button>
           </div>
         </Container>
@@ -224,7 +228,7 @@ export function Header() {
                   />
                   <div>
                     <p className="font-ui text-[10px] uppercase tracking-[0.3em] text-stone-400">
-                      Archive Routes
+                      {headerContent.mobileTitle}
                     </p>
                     <p className="font-heading text-lg font-bold text-white">
                       {siteMeta.shortTitle}
@@ -237,14 +241,14 @@ export function Header() {
                   onClick={() => setMobileOpen(false)}
                   className="rounded-md border border-white/10 bg-white/5 px-4 py-2 font-ui text-[11px] uppercase tracking-[0.28em] text-white"
                 >
-                  Close
+                  {headerContent.menuClose}
                 </button>
               </div>
 
               <div className="grid gap-5 md:grid-cols-2">
                 <div className="space-y-3">
                   <p className="font-ui text-[11px] font-medium uppercase tracking-[0.3em] text-stone-400">
-                    Core files
+                    {headerContent.coreFilesLabel}
                   </p>
                   {primaryNav.map((item, index) => (
                     <motion.div
@@ -270,7 +274,7 @@ export function Header() {
 
                 <div className="space-y-3">
                   <p className="font-ui text-[11px] font-medium uppercase tracking-[0.3em] text-stone-400">
-                    Utility routes
+                    {headerContent.utilityRoutesLabel}
                   </p>
                   {utilityNav.map((item, index) => (
                     <motion.div
@@ -290,16 +294,18 @@ export function Header() {
 
                   <div className="rounded-md border border-white/10 bg-stone-900 p-5 text-stone-100">
                     <p className="font-ui text-[10px] font-medium uppercase tracking-[0.28em] text-stone-400">
-                      Recommended route
+                      {headerContent.recommendedRouteLabel}
                     </p>
                     <p className="mt-3 font-heading text-2xl font-bold text-white">
-                      Tunnel Descent
+                      {headerContent.recommendedRouteTitle}
                     </p>
                     <p className="mt-3 text-sm leading-relaxed text-stone-200">
-                      {tunnelPage.summary}
+                      {headerContent.recommendedRouteSummary}
                     </p>
                     <div className="mt-4">
-                      <Button href="/tunnel">Open Tunnel</Button>
+                      <Button href="/tunnel">
+                        {headerContent.recommendedRouteButton}
+                      </Button>
                     </div>
                   </div>
                 </div>

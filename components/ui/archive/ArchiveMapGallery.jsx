@@ -4,6 +4,7 @@ import {
   ArchiveIconBadge,
   ArchiveInlineIcon,
 } from "@/components/ui/archive/ArchiveIcons";
+import { archiveMapGalleryContent } from "@/constants/ui";
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -181,7 +182,7 @@ export function ArchiveMapGallery({ items = [] }) {
                     width: item.renderWidth,
                     height: item.renderHeight,
                   }}
-                  aria-label={`Preview ${item.title}`}
+                  aria-label={`${archiveMapGalleryContent.previewPrefix} ${item.title}`}
                 >
                   <Image
                     src={item.image}
@@ -215,7 +216,7 @@ export function ArchiveMapGallery({ items = [] }) {
                 <div className="pointer-events-none absolute left-3 top-3 right-3 z-1 flex justify-end sm:left-5 sm:top-5 sm:right-5 lg:left-8 lg:top-8 lg:right-8">
                   <div className="pointer-events-auto">
                     <IconButton
-                      label="Close preview"
+                      label={archiveMapGalleryContent.closePreview}
                       iconKey="close"
                       onClick={(event) => {
                         event.stopPropagation();
@@ -228,7 +229,7 @@ export function ArchiveMapGallery({ items = [] }) {
                 <div className="pointer-events-none absolute inset-y-0 left-3 z-1 hidden items-center sm:flex lg:left-8">
                   <div className="pointer-events-auto">
                     <IconButton
-                      label="Previous image"
+                      label={archiveMapGalleryContent.previousImage}
                       iconKey="previous"
                       onClick={(event) => {
                         event.stopPropagation();
@@ -242,7 +243,7 @@ export function ArchiveMapGallery({ items = [] }) {
                 <div className="pointer-events-none absolute inset-y-0 right-3 z-1 hidden items-center sm:flex lg:right-8">
                   <div className="pointer-events-auto">
                     <IconButton
-                      label="Next image"
+                      label={archiveMapGalleryContent.nextImage}
                       iconKey="next"
                       onClick={(event) => {
                         event.stopPropagation();
@@ -290,7 +291,7 @@ export function ArchiveMapGallery({ items = [] }) {
 
                   <div className="flex items-center gap-3 sm:hidden">
                     <IconButton
-                      label="Previous image"
+                      label={archiveMapGalleryContent.previousImage}
                       iconKey="previous"
                       onClick={() =>
                         canGoPrev && setActiveIndex((value) => value - 1)
@@ -298,7 +299,7 @@ export function ArchiveMapGallery({ items = [] }) {
                       disabled={!canGoPrev}
                     />
                     <IconButton
-                      label="Next image"
+                      label={archiveMapGalleryContent.nextImage}
                       iconKey="next"
                       onClick={() =>
                         canGoNext && setActiveIndex((value) => value + 1)

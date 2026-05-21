@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/Button";
+import { archiveShellContent } from "@/constants/ui";
 import { Container } from "@/components/ui/Container";
 import { ArchiveBreadcrumbs } from "@/components/ui/archive/ArchiveBreadcrumbs";
 import {
@@ -64,7 +65,9 @@ export function ArchivePageShell({
                     <span className="font-medium text-rose-200">{eyebrow}</span>
                   ) : null}
                   <span aria-hidden="true" className="h-px w-10 bg-white/15" />
-                  <span className="text-stone-400">Declassified</span>
+                  <span className="text-stone-400">
+                    {archiveShellContent.declassified}
+                  </span>
                 </div>
               ) : null}
 

@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/archive/ArchiveIcons";
 import { cn } from "@/lib/utils";
 
-export function ArchiveFileCard({ file, priority = false }) {
+export function ArchiveFileCard({ file, priority = false, openLabel }) {
   const WatermarkIcon = getArchiveIcon(file.iconKey);
 
   return (
@@ -93,7 +93,7 @@ export function ArchiveFileCard({ file, priority = false }) {
               priority ? "text-rose-200" : "text-stone-300",
             )}
           >
-            Open file
+            {openLabel}
           </span>
           <ArchiveInlineIcon
             iconKey="next"

@@ -1,4 +1,5 @@
-import { dossiers, routeCatalog } from "@/lib/archive-data";
+import { dossiers } from "@/constants/personnel";
+import { routeCatalog } from "@/constants/routes";
 
 export const dynamic = "force-static";
 

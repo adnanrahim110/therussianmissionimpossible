@@ -3,19 +3,15 @@ import { ArchivePageShell } from "@/components/ui/archive/ArchivePageShell";
 import { ArchivePanel } from "@/components/ui/archive/ArchivePanel";
 import {
   missionFileDownload,
+  pressAssetLinks,
   pressDeskPage,
-  siteMeta,
-} from "@/lib/archive-data";
+  pressPageContent,
+} from "@/constants/press";
+import { siteMeta } from "@/constants/site";
 import { buildMetadata } from "@/lib/seo";
 
-const assetLinks = {
-  "author-bios": "/personnel/authors",
-  "book-summary": "/book",
-  "contact-sheet": "/contact",
-};
-
 export const metadata = buildMetadata({
-  title: `Press Desk | ${siteMeta.title}`,
+  title: `${pressDeskPage.metadataTitle} | ${siteMeta.title}`,
   description: pressDeskPage.summary,
   path: "/press",
 });
@@ -23,28 +19,22 @@ export const metadata = buildMetadata({
 export default function PressPage() {
   return (
     <ArchivePageShell
-      breadcrumbs={[{ label: "Archive", href: "/" }, { label: "Press" }]}
+      breadcrumbs={pressPageContent.breadcrumbs}
       iconKey="press"
       eyebrow={pressDeskPage.eyebrow}
       title={pressDeskPage.title}
       summary={pressDeskPage.summary}
       detail={missionFileDownload.summary}
-      actions={[
-        { label: "Open Contact Desk", href: "/contact" },
-        { label: "Open Publication File", href: "/book", variant: "outline" },
-      ]}
+      actions={pressPageContent.actions}
       aside={
         <ArchivePanel
-          eyebrow="Mission File"
+          eyebrow={pressPageContent.aside.eyebrow}
           iconKey="press"
           title={missionFileDownload.title}
-          summary={[
-            "“Only those who pass the trial by fire will know their true selves.” — Hades, Commander of Akhmat special forces",
-            "A shareable classified‑style dossier intended for readers and journalists. It will eventually bundle summary notes, diagrams, maps, excerpts, and possibly audio.",
-          ]}
+          summary={pressPageContent.aside.summary}
         >
           <p className="font-ui text-[11px] uppercase tracking-[0.28em] text-rose-300">
-            Status: {missionFileDownload.status}
+            {pressPageContent.aside.statusLabel} {missionFileDownload.status}
           </p>
         </ArchivePanel>
       }
@@ -56,11 +46,11 @@ export default function PressPage() {
             tone={index % 2 === 0 ? "mist" : "steel"}
             eyebrow={asset.type}
             iconKey={
-              assetLinks[asset.id] === "/personnel/authors"
+              pressAssetLinks[asset.id] === "/personnel/authors"
                 ? "authors"
-                : assetLinks[asset.id] === "/book"
+                : pressAssetLinks[asset.id] === "/book"
                   ? "book"
-                  : assetLinks[asset.id] === "/contact"
+                  : pressAssetLinks[asset.id] === "/contact"
                     ? "contact"
                     : "press"
             }
@@ -68,23 +58,23 @@ export default function PressPage() {
             summary={asset.description}
             compact
           >
-            {assetLinks[asset.id] ? (
+            {pressAssetLinks[asset.id] ? (
               <Button
-                href={assetLinks[asset.id]}
+                href={pressAssetLinks[asset.id]}
                 variant="ghost"
                 iconKey={
-                  assetLinks[asset.id] === "/personnel/authors"
+                  pressAssetLinks[asset.id] === "/personnel/authors"
                     ? "authors"
-                    : assetLinks[asset.id] === "/book"
+                    : pressAssetLinks[asset.id] === "/book"
                       ? "book"
                       : "contact"
                 }
               >
-                Open linked route
+                {pressPageContent.linkedRouteButton}
               </Button>
             ) : (
               <p className="font-ui text-[11px] uppercase tracking-[0.28em] text-stone-400">
-                Status: {asset.status}
+                {pressPageContent.aside.statusLabel} {asset.status}
               </p>
             )}
           </ArchivePanel>

@@ -4,14 +4,15 @@ import { ArchivePanel } from "@/components/ui/archive/ArchivePanel";
 import { ArchiveSectionHeader } from "@/components/ui/archive/ArchiveSectionHeader";
 import {
   missionPage,
+  missionPageContent,
   mythPoll,
-  purchaseCtas,
-  siteMeta,
-} from "@/lib/archive-data";
+} from "@/constants/mission";
+import { purchaseCtas } from "@/constants/navigation";
+import { siteMeta } from "@/constants/site";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: `Mission File | ${siteMeta.title}`,
+  title: `${missionPage.metadataTitle} | ${siteMeta.title}`,
   description: missionPage.summary,
   path: "/mission",
 });
@@ -19,19 +20,16 @@ export const metadata = buildMetadata({
 export default function MissionPage() {
   return (
     <ArchivePageShell
-      breadcrumbs={[{ label: "Archive", href: "/" }, { label: "Mission" }]}
+      breadcrumbs={missionPageContent.breadcrumbs}
       title={missionPage.title}
       summary={missionPage.summary}
       detail={missionPage.detail}
-      actions={[
-        { label: "Open Operation File", href: "/operation" },
-        { label: "Enter Tunnel Route", href: "/tunnel", variant: "outline" },
-      ]}
+      actions={missionPageContent.actions}
       aside={
         <ArchivePanel
-          eyebrow="Operational Lead"
+          eyebrow={missionPageContent.aside.eyebrow}
           iconKey="mission"
-          title="Mission Record"
+          title={missionPageContent.aside.title}
           summary={missionPage.lead[0]}
         >
           <div className="space-y-4 text-sm leading-relaxed text-stone-200 md:text-base">
@@ -44,9 +42,9 @@ export default function MissionPage() {
     >
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(340px,0.72fr)]">
         <ArchivePanel
-          eyebrow="Narrative Frame"
+          eyebrow={missionPageContent.narrativePanel.eyebrow}
           iconKey="witness"
-          title="Mission Record"
+          title={missionPageContent.narrativePanel.title}
           summary={missionPage.body[0]}
         >
           <div className="space-y-4 text-sm leading-relaxed text-stone-200 md:text-base">
@@ -58,9 +56,9 @@ export default function MissionPage() {
 
         <ArchivePanel
           tone="mist"
-          eyebrow="Mission Points"
+          eyebrow={missionPageContent.pointsPanel.eyebrow}
           iconKey="route"
-          title="Mission Points"
+          title={missionPageContent.pointsPanel.title}
         >
           <ul className="space-y-3 text-sm leading-relaxed text-stone-200 md:text-base">
             {missionPage.points.map((point, index) => (
@@ -79,7 +77,7 @@ export default function MissionPage() {
       </div>
 
       <ArchiveSectionHeader
-        eyebrow="Myth or Mission"
+        eyebrow={missionPageContent.mythSection.eyebrow}
         iconKey="evidence"
         title={mythPoll.title}
         summary={mythPoll.intro}
@@ -88,7 +86,7 @@ export default function MissionPage() {
       <div className="grid gap-6 xl:grid-cols-[minmax(0,0.6fr)_minmax(0,1fr)]">
         <ArchivePanel
           iconKey="archive"
-          eyebrow="Background"
+          eyebrow={missionPageContent.backgroundPanel.eyebrow}
           title={mythPoll.background.title}
           summary={mythPoll.background.body[0]}
         >
@@ -104,7 +102,7 @@ export default function MissionPage() {
             <ArchivePanel
               key={section.title}
               tone="mist"
-              eyebrow="Briefing Layer"
+              eyebrow={missionPageContent.mythPanel.eyebrow}
               iconKey="witness"
               title={section.title}
               summary={section.body}
@@ -115,9 +113,9 @@ export default function MissionPage() {
       </div>
 
       <ArchivePanel
-        eyebrow="Continue the archive"
+        eyebrow={missionPageContent.continuePanel.eyebrow}
         iconKey="route"
-        title="Continue Reading"
+        title={missionPageContent.continuePanel.title}
         summary={missionPage.lead}
       >
         <div className="flex flex-wrap gap-3">

@@ -1,0 +1,43 @@
+"use client";
+
+import { useMemo } from "react";
+import * as THREE from "three";
+import { clamp, radialPoint } from "../utils";
+
+export function WallScratches({ curve }) {
+  const scratches = useMemo(() => {
+    const items = [];
+
+    for (let i = 0; i < 72; i += 1) {
+      const t = 0.04 + Math.random() * 0.9;
+      const angle =
+        Math.random() > 0.5
+          ? Math.PI * (0.12 + Math.random() * 0.72)
+          : -Math.PI * (0.12 + Math.random() * 0.72);
+
+      const length = 0.12 + Math.random() * 0.45;
+      const start = radialPoint(curve, t, angle, 0.032);
+      const end = radialPoint(curve, clamp(t + length / 55, 0, 1), angle, 0.032);
+
+      items.push({
+        id: `scratch-${i}`,
+        curve: new THREE.CatmullRomCurve3([start, end]),
+        color: Math.random() > 0.55 ? "#9a6c55" : "#0b0706",
+        radius: 0.0014 + Math.random() * 0.0012,
+      });
+    }
+
+    return items;
+  }, [curve]);
+
+  return (
+    <group>
+      {scratches.map((scratch) => (
+        <mesh key={scratch.id}>
+          <tubeGeometry args={[scratch.curve, 8, scratch.radius, 5, false]} />
+          <meshBasicMaterial color={scratch.color} transparent opacity={0.42} />
+        </mesh>
+      ))}
+    </group>
+  );
+}

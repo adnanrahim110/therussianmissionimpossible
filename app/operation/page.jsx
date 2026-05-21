@@ -4,14 +4,15 @@ import { ArchivePanel } from "@/components/ui/archive/ArchivePanel";
 import {
   missionPhaseCards,
   operationPage,
-  purchaseCtas,
-  siteMeta,
-  tunnelPage,
-} from "@/lib/archive-data";
+  operationPageContent,
+} from "@/constants/operation";
+import { purchaseCtas } from "@/constants/navigation";
+import { siteMeta } from "@/constants/site";
+import { tunnelPage } from "@/constants/tunnel";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: `Operation File | ${siteMeta.title}`,
+  title: `${operationPage.metadataTitle} | ${siteMeta.title}`,
   description: operationPage.summary,
   path: "/operation",
 });
@@ -19,16 +20,13 @@ export const metadata = buildMetadata({
 export default function OperationPage() {
   return (
     <ArchivePageShell
-      breadcrumbs={[{ label: "Archive", href: "/" }, { label: "Operation" }]}
+      breadcrumbs={operationPageContent.breadcrumbs}
       iconKey="operation"
       eyebrow={operationPage.eyebrow}
       title={operationPage.title}
       summary={operationPage.summary}
       detail={operationPage.detail}
-      actions={[
-        { label: "Enter Tunnel Descent", href: "/tunnel" },
-        { label: "Review Evidence", href: "/evidence", variant: "outline" },
-      ]}
+      actions={operationPageContent.actions}
       aside={
         <ArchivePanel
           eyebrow={missionPhaseCards[0].code}
@@ -66,7 +64,7 @@ export default function OperationPage() {
       </div>
 
       <ArchivePanel
-        eyebrow="Linked routes"
+        eyebrow={operationPageContent.linkedRoutes.eyebrow}
         iconKey="route"
         title={tunnelPage.title}
         summary={tunnelPage.summary}
@@ -76,7 +74,7 @@ export default function OperationPage() {
             {purchaseCtas.tunnel.label}
           </Button>
           <Button href="/evidence" variant="outline" iconKey="evidence">
-            Open Evidence File
+            {operationPageContent.linkedRoutes.evidenceButton}
           </Button>
         </div>
       </ArchivePanel>

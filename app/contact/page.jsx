@@ -1,10 +1,13 @@
 import { ArchivePageShell } from "@/components/ui/archive/ArchivePageShell";
 import { ArchivePanel } from "@/components/ui/archive/ArchivePanel";
-import { contactPage, purchaseCtas, siteMeta } from "@/lib/archive-data";
+import { ContactForm } from "@/components/contact/ContactForm";
+import { contactPage, contactPageContent } from "@/constants/contact";
+import { purchaseCtas } from "@/constants/navigation";
+import { siteMeta } from "@/constants/site";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: `Support Desk | ${siteMeta.title}`,
+  title: `${contactPage.metadataTitle} | ${siteMeta.title}`,
   description: contactPage.summary,
   path: "/contact",
 });
@@ -12,14 +15,14 @@ export const metadata = buildMetadata({
 export default function ContactPage() {
   return (
     <ArchivePageShell
-      breadcrumbs={[{ label: "Archive", href: "/" }, { label: "Contact" }]}
+      breadcrumbs={contactPageContent.breadcrumbs}
       iconKey="contact"
       eyebrow={contactPage.eyebrow}
       title={contactPage.title}
       summary={contactPage.summary}
       actions={[
         {
-          label: "Email the Desk",
+          label: contactPageContent.actions.email,
           href: `mailto:${siteMeta.contactEmail}`,
           iconKey: "contact",
         },
@@ -32,31 +35,19 @@ export default function ContactPage() {
       aside={
         <ArchivePanel
           tone="mist"
-          eyebrow="Direct Email"
+          eyebrow={contactPageContent.directEmailPanel.eyebrow}
           iconKey="contact"
           title={siteMeta.contactEmail}
           summary={siteMeta.contactAddress.join(", ")}
         />
       }
     >
-      <div className="grid gap-5 md:grid-cols-3">
-        {contactPage.channels.map((channel, index) => (
-          <ArchivePanel
-            key={channel.label}
-            tone={index === 1 ? "steel" : "mist"}
-            eyebrow="Request Channel"
-            iconKey="contact"
-            title={channel.label}
-            summary={channel.value}
-            compact
-          />
-        ))}
-      </div>
+      <ContactForm />
 
       <ArchivePanel
-        eyebrow="Mailing Address"
+        eyebrow={contactPageContent.addressPanel.eyebrow}
         iconKey="location"
-        title="Archive support office"
+        title={contactPageContent.addressPanel.title}
         summary={contactPage.summary}
       >
         <div className="space-y-2 text-sm leading-relaxed text-stone-200 md:text-base">

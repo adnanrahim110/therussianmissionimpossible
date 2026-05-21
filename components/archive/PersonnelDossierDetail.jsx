@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/Button";
 import { ArchivePageShell } from "@/components/ui/archive/ArchivePageShell";
 import { ArchivePanel } from "@/components/ui/archive/ArchivePanel";
-import { siteMeta } from "@/lib/archive-data";
+import { personnelDossierDetailContent } from "@/constants/personnel";
+import { siteMeta } from "@/constants/site";
 
 const gridTexture = {
   backgroundImage:
@@ -20,9 +21,7 @@ export function PersonnelDossierDetail({ dossier }) {
   return (
     <ArchivePageShell
       breadcrumbs={[
-        { label: "Archive", href: "/" },
-        { label: "Personnel", href: "/personnel" },
-        { label: "Dossiers", href: "/personnel/dossiers" },
+        ...personnelDossierDetailContent.breadcrumbs,
         { label: dossier.callsign },
       ]}
       iconKey="dossiers"
@@ -30,32 +29,27 @@ export function PersonnelDossierDetail({ dossier }) {
       title={`"${dossier.callsign}"`}
       summary={dossier.summary}
       detail={`${dossier.archetype} / ${dossier.role}`}
-      actions={[
-        {
-          label: "Back to Dossiers",
-          href: "/personnel/dossiers",
-          variant: "outline",
-        },
-        { label: "Contact Desk", href: "/contact", variant: "ghost" },
-      ]}
+      actions={personnelDossierDetailContent.actions}
       aside={
         <ArchivePanel
-          eyebrow="File Status"
+          eyebrow={personnelDossierDetailContent.aside.eyebrow}
           iconKey="dossiers"
-          title="Declassified"
+          title={personnelDossierDetailContent.aside.title}
           summary={dossier.role}
         >
           <div className="space-y-2 font-ui text-[11px] uppercase tracking-[0.28em]">
             <div className="flex items-center justify-between gap-3 text-stone-400">
-              <span>Cabinet</span>
-              <span className="text-stone-200">03 / Personnel</span>
+              <span>{personnelDossierDetailContent.aside.cabinetLabel}</span>
+              <span className="text-stone-200">
+                {personnelDossierDetailContent.aside.cabinetValue}
+              </span>
             </div>
             <div className="flex items-center justify-between gap-3 text-stone-400">
-              <span>Reference</span>
+              <span>{personnelDossierDetailContent.aside.referenceLabel}</span>
               <span className="text-rose-300">{dossier.fileCode}</span>
             </div>
             <div className="flex items-center justify-between gap-3 text-stone-400">
-              <span>Source</span>
+              <span>{personnelDossierDetailContent.aside.sourceLabel}</span>
               <span className="text-stone-200">{siteMeta.shortTitle}</span>
             </div>
           </div>
@@ -74,7 +68,7 @@ export function PersonnelDossierDetail({ dossier }) {
             />
           ) : (
             <div className="flex h-[28rem] w-full items-center justify-center bg-[#0a0a0c] font-ui text-[11px] uppercase tracking-[0.32em] text-stone-500">
-              Photo classified
+              {personnelDossierDetailContent.photoClassified}
             </div>
           )}
 
@@ -95,7 +89,7 @@ export function PersonnelDossierDetail({ dossier }) {
               <span className="text-rose-200">{dossier.fileCode}</span>
             </span>
             <span className="rounded-[3px] border border-rose-400/45 px-2 py-1 font-ui text-[9px] tracking-[0.4em] text-rose-200">
-              Declassified
+              {personnelDossierDetailContent.declassified}
             </span>
           </div>
 
@@ -107,7 +101,8 @@ export function PersonnelDossierDetail({ dossier }) {
               {dossier.callsign}
             </h2>
             <p className="mt-2 font-ui text-[10px] uppercase tracking-[0.32em] text-stone-400">
-              Role · <span className="text-stone-200">{dossier.role}</span>
+              {personnelDossierDetailContent.roleLabel} ·{" "}
+              <span className="text-stone-200">{dossier.role}</span>
             </p>
           </div>
 
@@ -131,12 +126,15 @@ export function PersonnelDossierDetail({ dossier }) {
 
         <div className="flex flex-col gap-5">
           <ArchivePanel
-            eyebrow="Archetype"
+            eyebrow={personnelDossierDetailContent.archetypeEyebrow}
             iconKey="personnel"
             title={dossier.archetype}
             summary={dossier.analysis}
           />
-          <ArchivePanel eyebrow="Mentality" iconKey="witness">
+          <ArchivePanel
+            eyebrow={personnelDossierDetailContent.mentalityEyebrow}
+            iconKey="witness"
+          >
             <blockquote className="relative pl-4 font-heading text-lg leading-relaxed text-stone-100 md:text-xl">
               <span
                 aria-hidden="true"
@@ -146,7 +144,10 @@ export function PersonnelDossierDetail({ dossier }) {
             </blockquote>
           </ArchivePanel>
           {traits.length > 0 ? (
-            <ArchivePanel eyebrow="Behavior Profile" iconKey="authors">
+            <ArchivePanel
+              eyebrow={personnelDossierDetailContent.behaviorProfileEyebrow}
+              iconKey="authors"
+            >
               <ul className="flex flex-wrap gap-2">
                 {traits.map((trait, index) => (
                   <li
@@ -166,24 +167,24 @@ export function PersonnelDossierDetail({ dossier }) {
       </div>
 
       <ArchivePanel
-        eyebrow="Archive Routing"
+        eyebrow={personnelDossierDetailContent.routing.eyebrow}
         iconKey="route"
-        title="Continue Browsing"
+        title={personnelDossierDetailContent.routing.title}
         summary={dossier.analysis}
       >
         <div className="flex flex-wrap gap-3">
           <Button href="/tunnel" iconKey="tunnel">
-            Enter Tunnel Descent
+            {personnelDossierDetailContent.routing.tunnel}
           </Button>
           <Button href="/evidence" variant="outline" iconKey="evidence">
-            Review Evidence
+            {personnelDossierDetailContent.routing.evidence}
           </Button>
           <Button
             href="/personnel/dossiers"
             variant="ghost"
             iconKey="dossiers"
           >
-            All Dossiers
+            {personnelDossierDetailContent.routing.allDossiers}
           </Button>
         </div>
       </ArchivePanel>

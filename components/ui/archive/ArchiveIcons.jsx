@@ -5,6 +5,8 @@ import {
   IconArrowRight,
   IconBook2,
   IconBrandAmazon,
+  IconBrandInstagram,
+  IconBrandTiktok,
   IconBuilding,
   IconBuildingTunnel,
   IconChevronRight,
@@ -76,6 +78,8 @@ const iconRegistry = {
   witness: withArchiveStroke(IconFileDescription),
   personnelBranch: withArchiveStroke(IconAddressBook),
   amazon: withArchiveStroke(IconBrandAmazon),
+  instagram: withArchiveStroke(IconBrandInstagram),
+  tiktok: withArchiveStroke(IconBrandTiktok),
 };
 
 export function getArchiveIcon(key) {

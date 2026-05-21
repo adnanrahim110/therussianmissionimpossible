@@ -9,12 +9,13 @@ import {
   personnelAuthorsPage,
   personnelDossiersPage,
   personnelIntro,
-  siteMeta,
-} from "@/lib/archive-data";
+  personnelPageContent,
+} from "@/constants/personnel";
+import { siteMeta } from "@/constants/site";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: `Personnel Registry | ${siteMeta.title}`,
+  title: `${personnelIntro.metadataTitle} | ${siteMeta.title}`,
   description: personnelIntro.summary,
   path: "/personnel",
 });
@@ -22,10 +23,7 @@ export const metadata = buildMetadata({
 export default function PersonnelPage() {
   return (
     <ArchivePageShell
-      breadcrumbs={[
-        { label: "Archive", href: "/" },
-        { label: "Personnel" },
-      ]}
+      breadcrumbs={personnelPageContent.breadcrumbs}
       iconKey="personnel"
       eyebrow={personnelIntro.eyebrow}
       title={personnelIntro.title}
@@ -33,9 +31,9 @@ export default function PersonnelPage() {
       detail={personnelIntro.detail}
       aside={
         <ArchivePanel
-          eyebrow="Registry Map"
+          eyebrow={personnelPageContent.registryPanel.eyebrow}
           iconKey="personnelBranch"
-          title="Branch Access"
+          title={personnelPageContent.registryPanel.title}
           summary={personnelIntro.detail}
         >
           <div className="space-y-3">
@@ -78,7 +76,7 @@ export default function PersonnelPage() {
             href="/personnel/authors"
             className="inline-flex items-center gap-2 font-ui text-[11px] uppercase tracking-[0.28em] text-rose-300 transition-colors hover:text-rose-200"
           >
-            Open author branch
+            {personnelPageContent.branchLinks.authors}
             <ArchiveInlineIcon iconKey="next" size={12} />
           </Link>
         </ArchivePanel>
@@ -92,16 +90,16 @@ export default function PersonnelPage() {
             href="/personnel/dossiers"
             className="inline-flex items-center gap-2 font-ui text-[11px] uppercase tracking-[0.28em] text-rose-300 transition-colors hover:text-rose-200"
           >
-            Open dossier branch
+            {personnelPageContent.branchLinks.dossiers}
             <ArchiveInlineIcon iconKey="next" size={12} />
           </Link>
         </ArchivePanel>
       </div>
 
       <ArchiveSectionHeader
-        eyebrow="Featured dossiers"
+        eyebrow={personnelPageContent.featuredSection.eyebrow}
         iconKey="dossiers"
-        title="Faces Inside The Operation"
+        title={personnelPageContent.featuredSection.title}
         summary={personnelDossiersPage.summary}
       />
 

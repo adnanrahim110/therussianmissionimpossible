@@ -1,5 +1,11 @@
 import { SiteShell } from "@/components/layouts/SiteShell";
-import { siteMeta } from "@/lib/archive-data";
+import {
+  siteImages,
+  siteKeywords,
+  siteMeta,
+  siteStructuredData,
+  siteUrls,
+} from "@/constants/site";
 import { Bebas_Neue, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 
@@ -22,15 +28,14 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 function resolveMetadataBase() {
-  const fallback = "https://operationpipe.com";
   const value = process.env.NEXT_PUBLIC_SITE_URL;
 
-  if (!value) return new URL(fallback);
+  if (!value) return new URL(siteUrls.fallback);
 
   try {
     return new URL(value.startsWith("http") ? value : `https://${value}`);
   } catch {
-    return new URL(fallback);
+    return new URL(siteUrls.fallback);
   }
 }
 
@@ -44,16 +49,7 @@ export const metadata = {
   alternates: {
     canonical: "/",
   },
-  keywords: [
-    "Operation Stream 3.0",
-    "The Russian Mission Impossible",
-    "Kursk",
-    "Sudzha",
-    "gas pipeline",
-    "documentary narrative",
-    "modern warfare",
-    "CGG International",
-  ],
+  keywords: siteKeywords,
   openGraph: {
     title: siteMeta.title,
     description: siteMeta.description,
@@ -61,7 +57,7 @@ export const metadata = {
     locale: "en_US",
     images: [
       {
-        url: "/imgs/logo-f.png",
+        url: siteImages.openGraph,
         alt: siteMeta.title,
       },
     ],
@@ -70,7 +66,7 @@ export const metadata = {
     card: "summary_large_image",
     title: siteMeta.title,
     description: siteMeta.description,
-    images: ["/imgs/logo-f.png"],
+    images: [siteImages.openGraph],
   },
   robots: {
     index: true,
@@ -88,9 +84,9 @@ export default function RootLayout({ children }) {
       "@type": "Organization",
       name: siteMeta.publisher,
     },
-    inLanguage: "en",
-    genre: "Documentary narrative",
-    bookFormat: "https://schema.org/Hardcover",
+    inLanguage: siteStructuredData.inLanguage,
+    genre: siteStructuredData.genre,
+    bookFormat: siteStructuredData.bookFormat,
   };
 
   return (

@@ -5,7 +5,13 @@ import {
   ArchiveInlineIcon,
   getRouteIconKey,
 } from "@/components/ui/archive/ArchiveIcons";
-import { archiveFiles, siteMeta, supportRoutes } from "@/lib/archive-data";
+import { socialLinks } from "@/constants/links";
+import {
+  footerArchiveLinks,
+  footerContent,
+  footerSupportLinks,
+} from "@/constants/navigation";
+import { siteMeta } from "@/constants/site";
 
 import { Container } from "../ui/Container";
 
@@ -46,6 +52,31 @@ function ColumnHeader({ code, label }) {
   );
 }
 
+function FooterSocialLink({ href, iconKey, label }) {
+  return (
+    <li className="list-none">
+      <Link
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        aria-label={`${label} for ${siteMeta.shortTitle}`}
+        className="group relative flex h-11 min-w-0 items-center gap-3 overflow-hidden rounded border border-white/10 bg-white/3 px-3 text-stone-300 shadow-[0_14px_34px_rgba(0,0,0,0.22)] transition-[border-color,background-color,color,box-shadow] hover:border-rose-300/35 hover:bg-rose-500/8 hover:text-white hover:shadow-[0_18px_40px_rgba(242,13,13,0.14)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-300"
+      >
+        <span
+          aria-hidden="true"
+          className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/20 to-transparent opacity-0 transition-opacity group-hover:opacity-100"
+        />
+        <span className="flex size-7 shrink-0 items-center justify-center rounded border border-white/10 bg-stone-950/70 text-rose-200 transition-colors group-hover:border-rose-300/30 group-hover:bg-rose-950/30">
+          <ArchiveInlineIcon iconKey={iconKey} size={16} stroke={1.65} />
+        </span>
+        <span className="truncate font-ui text-[10px] uppercase tracking-[0.24em]">
+          {label}
+        </span>
+      </Link>
+    </li>
+  );
+}
+
 export function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-white/10 bg-stone-950 py-12 text-stone-100 lg:py-16">
@@ -78,10 +109,10 @@ export function Footer() {
               />
               <div className="hidden pb-2 min-[1180px]:block">
                 <p className="font-ui text-[10px] uppercase tracking-[0.32em] text-stone-400">
-                  Operation
+                  {footerContent.operationLabel}
                 </p>
                 <p className="font-heading text-4xl font-bold text-white">
-                  Stream 3.0
+                  {footerContent.title}
                 </p>
               </div>
             </Link>
@@ -93,15 +124,18 @@ export function Footer() {
                 aria-hidden="true"
                 className="size-1.5 rounded-full bg-rose-500 shadow-[0_0_10px_rgba(242,13,13,0.7)] animate-pulse"
               />
-              Declassified archive · Mission access open
+              {footerContent.status}
             </div>
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2">
             <div>
-              <ColumnHeader code="01" label="Archive Files" />
+              <ColumnHeader
+                code={footerContent.archiveColumn.code}
+                label={footerContent.archiveColumn.label}
+              />
               <ul className="mt-4 divide-y divide-white/5">
-                {archiveFiles.map((file) => (
+                {footerArchiveLinks.map((file) => (
                   <FooterLink
                     key={file.href}
                     href={file.href}
@@ -114,9 +148,12 @@ export function Footer() {
             </div>
 
             <div>
-              <ColumnHeader code="02" label="Support Routes" />
+              <ColumnHeader
+                code={footerContent.supportColumn.code}
+                label={footerContent.supportColumn.label}
+              />
               <ul className="mt-4 divide-y divide-white/5">
-                {supportRoutes.map((route) => (
+                {footerSupportLinks.map((route) => (
                   <FooterLink
                     key={route.href}
                     href={route.href}
@@ -130,7 +167,10 @@ export function Footer() {
           </div>
 
           <div>
-            <ColumnHeader code="03" label="Publisher" />
+            <ColumnHeader
+              code={footerContent.publisherColumn.code}
+              label={footerContent.publisherColumn.label}
+            />
             <p className="mt-4 inline-flex items-center gap-3 text-sm leading-relaxed text-stone-200 md:text-base">
               <ArchiveInlineIcon
                 iconKey="publisher"
@@ -140,8 +180,7 @@ export function Footer() {
               {siteMeta.publisher}
             </p>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-stone-400">
-              Rights, press, and archive correspondence are routed through the
-              contact desk rather than listed as a public office address.
+              {footerContent.publisherNote}
             </p>
             <ul className="mt-5 divide-y divide-white/5">
               <FooterLink
@@ -150,9 +189,16 @@ export function Footer() {
               >
                 {siteMeta.contactEmail}
               </FooterLink>
-              <FooterLink href="/contact" iconKey="contact">
-                Open Contact Desk
-              </FooterLink>
+            </ul>
+            <ul className="mt-4 grid gap-3 min-[420px]:grid-cols-2">
+              {socialLinks.map((social) => (
+                <FooterSocialLink
+                  key={social.href}
+                  href={social.href}
+                  iconKey={social.iconKey}
+                  label={social.label}
+                />
+              ))}
             </ul>
           </div>
         </div>
@@ -162,7 +208,7 @@ export function Footer() {
             &copy; {new Date().getFullYear()} {siteMeta.shortTitle}
           </p>
           <p className="font-ui text-[10px] uppercase tracking-[0.28em] text-stone-500">
-            Declassified archive edition
+            {footerContent.edition}
           </p>
         </div>
       </Container>

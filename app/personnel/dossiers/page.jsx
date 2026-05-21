@@ -2,12 +2,17 @@ import Link from "next/link";
 
 import { ArchiveInlineIcon } from "@/components/ui/archive/ArchiveIcons";
 import { ArchivePageShell } from "@/components/ui/archive/ArchivePageShell";
-import { dossiers, personnelDossiersPage, siteMeta } from "@/lib/archive-data";
+import {
+  dossiers,
+  personnelDossiersContent,
+  personnelDossiersPage,
+} from "@/constants/personnel";
+import { siteMeta } from "@/constants/site";
 import { buildMetadata } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
 export const metadata = buildMetadata({
-  title: `Personnel Dossiers | ${siteMeta.title}`,
+  title: `${personnelDossiersPage.metadataTitle} | ${siteMeta.title}`,
   description: personnelDossiersPage.summary,
   path: "/personnel/dossiers",
 });
@@ -47,11 +52,7 @@ const scanlineTexture = {
 export default function PersonnelDossiersPage() {
   return (
     <ArchivePageShell
-      breadcrumbs={[
-        { label: "Archive", href: "/" },
-        { label: "Personnel", href: "/personnel" },
-        { label: "Dossiers" },
-      ]}
+      breadcrumbs={personnelDossiersContent.breadcrumbs}
       iconKey="dossiers"
       eyebrow={personnelDossiersPage.eyebrow}
       title={personnelDossiersPage.title}
@@ -61,11 +62,12 @@ export default function PersonnelDossiersPage() {
         <div className="flex items-center gap-3">
           <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-rose-400" />
           <span className="text-stone-200">
-            Cabinet 03 / Personnel Dossiers
+            {personnelDossiersContent.cabinetLabel}
           </span>
         </div>
         <span className="hidden sm:inline">
-          {dossiers.length.toString().padStart(2, "0")} files on record
+          {dossiers.length.toString().padStart(2, "0")}{" "}
+          {personnelDossiersContent.filesOnRecord}
         </span>
       </div>
 
@@ -79,7 +81,7 @@ export default function PersonnelDossiersPage() {
             <Link
               key={dossier.slug}
               href={dossier.href}
-              aria-label={`Open dossier ${dossier.callsign}`}
+              aria-label={`${personnelDossiersContent.openDossierAriaPrefix} ${dossier.callsign}`}
               style={{ "--aspect": aspect }}
               className={cn(
                 "group/file relative w-full overflow-hidden border bg-black/70 transition-[border-color,transform,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5",
@@ -100,7 +102,7 @@ export default function PersonnelDossiersPage() {
                 />
               ) : (
                 <div className="flex h-80 w-full items-center justify-center bg-[#0a0a0c] font-ui text-[10px] uppercase tracking-[0.32em] text-stone-500 md:h-full">
-                  Photo classified
+                  {personnelDossiersContent.photoClassified}
                 </div>
               )}
 
@@ -141,7 +143,7 @@ export default function PersonnelDossiersPage() {
                       : "border-white/25 text-stone-100/85",
                   )}
                 >
-                  Declassified
+                  {personnelDossiersContent.declassified}
                 </span>
               </div>
 
@@ -161,7 +163,7 @@ export default function PersonnelDossiersPage() {
                   {dossier.summary}
                 </p>
                 <div className="mt-3 flex items-center justify-between gap-3 font-ui text-[10px] uppercase tracking-[0.32em] text-stone-400">
-                  <span>Open file</span>
+                  <span>{personnelDossiersContent.openFile}</span>
                   <ArchiveInlineIcon
                     iconKey="next"
                     size={14}
