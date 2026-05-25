@@ -1,22 +1,23 @@
 "use client";
 
 import { useGLTF } from "@react-three/drei";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import * as THREE from "three";
 import { TUNNEL_MODELS } from "../assets";
 import { prepareModelScene } from "../materials";
+import { radialPoint } from "../utils";
 
 export function PipeCables({ curve }) {
   const pipePackGltf = useGLTF(TUNNEL_MODELS.oldPipePack);
 
   const cables = useMemo(() => {
     const configs = [
-      { x: -0.5, y: 0.21, radius: 0.013, color: "#070404", phase: 0.4 },
-      { x: -0.43, y: 0.34, radius: 0.009, color: "#1b0f0c", phase: 1.9 },
-      { x: -0.36, y: 0.42, radius: 0.006, color: "#090606", phase: 2.8 },
-      { x: 0.52, y: 0.22, radius: 0.011, color: "#120c09", phase: 1.2 },
-      { x: 0.44, y: 0.36, radius: 0.007, color: "#070504", phase: 3.1 },
-      { x: 0.35, y: 0.46, radius: 0.005, color: "#25130f", phase: 4.3 },
+      { angle: 2.74, radius: 0.013, color: "#070404", phase: 0.4 },
+      { angle: 2.47, radius: 0.009, color: "#1b0f0c", phase: 1.9 },
+      { angle: 2.28, radius: 0.006, color: "#090606", phase: 2.8 },
+      { angle: 0.40, radius: 0.011, color: "#120c09", phase: 1.2 },
+      { angle: 0.67, radius: 0.007, color: "#070504", phase: 3.1 },
+      { angle: 0.92, radius: 0.005, color: "#25130f", phase: 4.3 },
     ];
 
     return configs.map((cfg, cfgIndex) => {
@@ -24,15 +25,18 @@ export function PipeCables({ curve }) {
 
       for (let i = 0; i <= 95; i += 1) {
         const t = i / 95;
-        const p = curve.getPointAt(t);
         const sag =
           Math.sin(t * Math.PI * 7.5 + cfg.phase) * 0.017 +
           Math.sin(t * Math.PI * 21 + cfgIndex) * 0.004;
-        const wander = Math.sin(t * Math.PI * 4 + cfg.phase) * 0.018;
-
-        points.push(
-          new THREE.Vector3(p.x + cfg.x + wander, p.y + cfg.y + sag, p.z),
-        );
+        
+        // Compute base point perfectly offset from the wall
+        // We use cfg.radius * 0.9 to embed it very slightly into the wall
+        const p = radialPoint(curve, t, cfg.angle, cfg.radius * 0.9);
+        
+        // Apply vertical sag
+        p.y += sag;
+        
+        points.push(p);
       }
 
       return {
@@ -46,23 +50,23 @@ export function PipeCables({ curve }) {
 
   const brokenDrops = useMemo(() => {
     return [
-      { t: 0.18, x: -0.47, y: 0.3, length: 0.2 },
-      { t: 0.36, x: 0.47, y: 0.31, length: 0.26 },
-      { t: 0.57, x: -0.42, y: 0.37, length: 0.18 },
-      { t: 0.79, x: 0.39, y: 0.43, length: 0.23 },
+      { t: 0.18, angle: 2.6, length: 0.2 },
+      { t: 0.36, angle: 0.5, length: 0.26 },
+      { t: 0.57, angle: 2.4, length: 0.18 },
+      { t: 0.79, angle: 0.7, length: 0.23 },
     ].map((item, index) => {
-      const p = curve.getPointAt(item.t);
+      const base = radialPoint(curve, item.t, item.angle, 0.008);
       const points = [
-        new THREE.Vector3(p.x + item.x, p.y + item.y, p.z + 0.05),
+        new THREE.Vector3(base.x, base.y, base.z + 0.05),
         new THREE.Vector3(
-          p.x + item.x + (index % 2 ? 0.04 : -0.035),
-          p.y + item.y - item.length * 0.45,
-          p.z - 0.03,
+          base.x + (index % 2 ? 0.04 : -0.035),
+          base.y - item.length * 0.45,
+          base.z - 0.03,
         ),
         new THREE.Vector3(
-          p.x + item.x + (index % 2 ? -0.02 : 0.03),
-          p.y + item.y - item.length,
-          p.z - 0.09,
+          base.x + (index % 2 ? -0.02 : 0.03),
+          base.y - item.length,
+          base.z - 0.09,
         ),
       ];
 
@@ -76,15 +80,13 @@ export function PipeCables({ curve }) {
 
   const sidePipeProps = useMemo(() => {
     return [
-      { t: 0.28, x: -0.52, y: 0.05, scale: 0.16, rot: 0.18 },
-      { t: 0.61, x: 0.5, y: 0.08, scale: 0.14, rot: -0.22 },
+      { t: 0.28, angle: Math.PI - 0.15, scale: 0.16, rot: 0.18 },
+      { t: 0.61, angle: 0.15, scale: 0.14, rot: -0.22 },
     ].map((item, index) => {
-      const p = curve.getPointAt(item.t);
-
       return {
         ...item,
         id: `industrial-side-pipe-${index}`,
-        position: new THREE.Vector3(p.x + item.x, p.y + item.y, p.z),
+        position: radialPoint(curve, item.t, item.angle, 0.08),
       };
     });
   }, [curve]);
@@ -99,6 +101,22 @@ export function PipeCables({ curve }) {
       }),
     );
   }, [pipePackGltf.scene, sidePipeProps]);
+
+  useEffect(() => {
+    return () => {
+      sidePipeScenes.forEach((scene) => {
+        scene.traverse((child) => {
+          if (child.isMesh && child.material) {
+            if (Array.isArray(child.material)) {
+              child.material.forEach((m) => m.dispose());
+            } else {
+              child.material.dispose();
+            }
+          }
+        });
+      });
+    };
+  }, [sidePipeScenes]);
 
   return (
     <group>

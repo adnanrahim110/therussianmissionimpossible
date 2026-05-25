@@ -4,7 +4,7 @@ import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { createDustSpriteTexture } from "../textures";
-import { clamp } from "../utils";
+import { clamp, createSeededRandom } from "../utils";
 
 export function NearDust({ progress, curve }) {
   const pointsRef = useRef(null);
@@ -13,10 +13,11 @@ export function NearDust({ progress, curve }) {
 
   const positions = useMemo(() => {
     const data = new Float32Array(count * 3);
+    const rng = createSeededRandom(2468);
 
     for (let index = 0; index < count; index += 1) {
-      let x = (Math.random() - 0.5) * 1.05;
-      let y = -0.18 + (Math.random() - 0.5) * 0.64;
+      let x = (rng() - 0.5) * 1.05;
+      let y = -0.18 + (rng() - 0.5) * 0.64;
 
       if (Math.abs(x) < 0.16 && y < -0.12) {
         x += x >= 0 ? 0.22 : -0.22;
@@ -24,7 +25,7 @@ export function NearDust({ progress, curve }) {
 
       data[index * 3] = x;
       data[index * 3 + 1] = y;
-      data[index * 3 + 2] = 0.8 - Math.random() * 6.4;
+      data[index * 3 + 2] = 0.8 - rng() * 6.4;
     }
 
     return data;

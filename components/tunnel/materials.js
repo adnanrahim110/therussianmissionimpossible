@@ -80,12 +80,7 @@ export function usePbrTextureSet(textureSet, options = {}) {
   return textures;
 }
 
-export function addUv2FromUv(geometry) {
-  if (!geometry?.attributes?.uv || geometry.attributes.uv2) return geometry;
 
-  geometry.setAttribute("uv2", geometry.attributes.uv.clone());
-  return geometry;
-}
 
 export function findFirstMesh(object) {
   let found = null;

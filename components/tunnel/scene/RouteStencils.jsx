@@ -25,7 +25,7 @@ export function RouteStencils({ curve }) {
     ].map((item, index) => ({
       ...item,
       id: `stencil-${index}`,
-      position: radialPoint(curve, item.t, item.angle, 0.038),
+      position: radialPoint(curve, item.t, item.angle, 0.004),
     }));
   }, [curve]);
 
@@ -46,9 +46,12 @@ export function RouteStencils({ curve }) {
             <meshBasicMaterial
               map={texture}
               transparent
-              opacity={0.72}
+              opacity={0.85}
               depthWrite={false}
               side={THREE.DoubleSide}
+              polygonOffset
+              polygonOffsetFactor={-4}
+              polygonOffsetUnits={-4}
             />
           </mesh>
         );

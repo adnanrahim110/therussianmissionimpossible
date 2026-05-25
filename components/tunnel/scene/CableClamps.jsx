@@ -2,23 +2,26 @@
 
 import { useMemo } from "react";
 import * as THREE from "three";
+import { createSeededRandom, radialPoint } from "../utils";
 
 export function CableClamps({ curve }) {
   const clamps = useMemo(() => {
     const items = [];
+    const rng = createSeededRandom(42);
 
     for (let i = 0; i < 18; i += 1) {
       const t = 0.06 + i * 0.052;
       const side = i % 3 === 0 ? 1 : -1;
-      const p = curve.getPointAt(t);
+      
+      // Calculate angle so clamps sit on the upper sides of the pipe
+      // Roughly equivalent to the old x=0.45, y=0.28 manual offsets
+      const baseAngle = side > 0 ? 0.55 : 2.58; 
+      const angle = baseAngle + (rng() - 0.5) * 0.15 + Math.sin(i) * 0.08;
 
       items.push({
         id: `clamp-${i}`,
-        position: new THREE.Vector3(
-          p.x + side * (0.43 + Math.random() * 0.04),
-          p.y + 0.28 + Math.sin(i) * 0.04,
-          p.z,
-        ),
+        position: radialPoint(curve, t, angle, 0.002),
+        rotation: [0, 0, angle - Math.PI / 2],
         side,
       });
     }
@@ -29,7 +32,7 @@ export function CableClamps({ curve }) {
   return (
     <group>
       {clamps.map((item) => (
-        <group key={item.id} position={item.position}>
+        <group key={item.id} position={item.position} rotation={item.rotation}>
           <mesh castShadow receiveShadow>
             <boxGeometry args={[0.075, 0.026, 0.055]} />
             <meshStandardMaterial

@@ -2,28 +2,29 @@
 
 import { useMemo } from "react";
 import * as THREE from "three";
-import { clamp, radialPoint } from "../utils";
+import { clamp, createSeededRandom, radialPoint } from "../utils";
 
 export function WallScratches({ curve }) {
   const scratches = useMemo(() => {
     const items = [];
+    const rng = createSeededRandom(1234);
 
     for (let i = 0; i < 72; i += 1) {
-      const t = 0.04 + Math.random() * 0.9;
+      const t = 0.04 + rng() * 0.9;
       const angle =
-        Math.random() > 0.5
-          ? Math.PI * (0.12 + Math.random() * 0.72)
-          : -Math.PI * (0.12 + Math.random() * 0.72);
+        rng() > 0.5
+          ? Math.PI * (0.12 + rng() * 0.72)
+          : -Math.PI * (0.12 + rng() * 0.72);
 
-      const length = 0.12 + Math.random() * 0.45;
+      const length = 0.12 + rng() * 0.45;
       const start = radialPoint(curve, t, angle, 0.032);
       const end = radialPoint(curve, clamp(t + length / 55, 0, 1), angle, 0.032);
 
       items.push({
         id: `scratch-${i}`,
         curve: new THREE.CatmullRomCurve3([start, end]),
-        color: Math.random() > 0.55 ? "#9a6c55" : "#0b0706",
-        radius: 0.0014 + Math.random() * 0.0012,
+        color: rng() > 0.55 ? "#9a6c55" : "#0b0706",
+        radius: 0.0014 + rng() * 0.0012,
       });
     }
 

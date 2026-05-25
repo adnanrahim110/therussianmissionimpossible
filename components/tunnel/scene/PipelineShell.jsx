@@ -4,18 +4,18 @@ import { useMemo } from "react";
 import * as THREE from "three";
 import { TUNNEL_TEXTURES } from "../assets";
 import { PIPE_RADIUS } from "../constants";
-import { addUv2FromUv, usePbrTextureSet } from "../materials";
+import { usePbrTextureSet } from "../materials";
 import { radialPoint } from "../utils";
 
 export function PipelineShell({ curve }) {
   const pipeMaps = usePbrTextureSet(TUNNEL_TEXTURES.pipeRust, {
-    repeat: [2.35, 18],
-    anisotropy: 8,
+    repeat: [400, 12],
+    anisotropy: 16,
   });
 
   const geometry = useMemo(() => {
     const tube = new THREE.TubeGeometry(curve, 280, PIPE_RADIUS, 128, false);
-    return addUv2FromUv(tube);
+    return tube;
   }, [curve]);
 
   return (
@@ -25,13 +25,16 @@ export function PipelineShell({ curve }) {
         <meshPhysicalMaterial
           {...pipeMaps}
           side={THREE.BackSide}
-          color="#6a493c"
-          roughness={0.72}
-          metalness={0.45}
-          normalScale={new THREE.Vector2(0.86, 0.86)}
-          envMapIntensity={0.12}
-          clearcoat={0.05}
-          clearcoatRoughness={0.78}
+          color="#42342c"
+          roughness={0.88}
+          metalness={0.85}
+          normalScale={new THREE.Vector2(1.2, 1.2)}
+          envMapIntensity={0.2}
+          clearcoat={0.02}
+          clearcoatRoughness={0.8}
+          displacementScale={0.025}
+          displacementBias={-0.0125}
+          bumpScale={0.01}
         />
       </mesh>
 
@@ -54,11 +57,11 @@ function LowerPipeStains({ curve }) {
 
       return {
         id: `lower-pipe-stain-${index}`,
-        position: radialPoint(curve, t, angle, 0.029),
+        position: radialPoint(curve, t, angle, 0.002),
         angle,
         width: 0.28 + (index % 4) * 0.045,
         height: 0.52 + (index % 5) * 0.08,
-        opacity: 0.16 + (index % 4) * 0.018,
+        opacity: 0.25 + (index % 4) * 0.025,
       };
     });
   }, [curve]);
@@ -77,9 +80,14 @@ function LowerPipeStains({ curve }) {
             map={darkRustMaps.map}
             color="#120807"
             transparent
+            premultipliedAlpha
             opacity={stain.opacity}
             depthWrite={false}
             side={THREE.DoubleSide}
+            blending={THREE.MultiplyBlending}
+            polygonOffset
+            polygonOffsetFactor={-1}
+            polygonOffsetUnits={-1}
           />
         </mesh>
       ))}
@@ -104,11 +112,11 @@ function PipeWallGrime({ curve }) {
 
       return {
         id: `pipe-wall-grime-${index}`,
-        position: radialPoint(curve, t, angle, 0.027),
+        position: radialPoint(curve, t, angle, 0.002),
         angle,
         width: 0.18 + (index % 3) * 0.08,
         height: 0.5 + (index % 6) * 0.1,
-        opacity: 0.08 + (index % 5) * 0.018,
+        opacity: 0.14 + (index % 5) * 0.025,
       };
     });
   }, [curve]);
@@ -127,9 +135,14 @@ function PipeWallGrime({ curve }) {
             map={grimeMaps.map}
             color="#2c100b"
             transparent
+            premultipliedAlpha
             opacity={item.opacity}
             depthWrite={false}
             side={THREE.DoubleSide}
+            blending={THREE.MultiplyBlending}
+            polygonOffset
+            polygonOffsetFactor={-2}
+            polygonOffsetUnits={-2}
           />
         </mesh>
       ))}

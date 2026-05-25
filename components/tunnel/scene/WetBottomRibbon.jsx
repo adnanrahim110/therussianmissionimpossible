@@ -4,12 +4,12 @@ import { useMemo } from "react";
 import * as THREE from "three";
 import { TUNNEL_TEXTURES } from "../assets";
 import { PIPE_RADIUS } from "../constants";
-import { addUv2FromUv, usePbrTextureSet } from "../materials";
+import { usePbrTextureSet } from "../materials";
 
 export function WetBottomRibbon({ curve }) {
   const mudMaps = usePbrTextureSet(TUNNEL_TEXTURES.mud, {
-    repeat: [1.2, 13],
-    anisotropy: 8,
+    repeat: [400, 4],
+    anisotropy: 16,
   });
 
   const bottomCurve = useMemo(() => {
@@ -26,7 +26,7 @@ export function WetBottomRibbon({ curve }) {
 
   const geometry = useMemo(() => {
     const tube = new THREE.TubeGeometry(bottomCurve, 190, 0.14, 18, false);
-    return addUv2FromUv(tube);
+    return tube;
   }, [bottomCurve]);
 
   return (
@@ -35,15 +35,17 @@ export function WetBottomRibbon({ curve }) {
         <primitive attach="geometry" object={geometry} />
         <meshPhysicalMaterial
           {...mudMaps}
-          color="#17110d"
-          roughness={0.46}
+          color="#161210"
+          roughness={0.65}
           metalness={0.08}
-          normalScale={new THREE.Vector2(0.55, 0.55)}
-          clearcoat={0.35}
-          clearcoatRoughness={0.38}
-          specularIntensity={0.7}
+          normalScale={new THREE.Vector2(1.2, 1.2)}
+          clearcoat={0.25}
+          clearcoatRoughness={0.45}
+          specularIntensity={0.5}
+          displacementScale={0.015}
+          displacementBias={-0.0075}
           transparent
-          opacity={0.72}
+          opacity={0.85}
         />
       </mesh>
 
@@ -54,8 +56,8 @@ export function WetBottomRibbon({ curve }) {
 
 function GlossyPuddleStrips({ curve }) {
   const aerialMudMaps = usePbrTextureSet(TUNNEL_TEXTURES.aerialMud, {
-    repeat: [0.8, 7.5],
-    anisotropy: 8,
+    repeat: [200, 2],
+    anisotropy: 16,
   });
 
   const strips = useMemo(() => {
@@ -86,7 +88,7 @@ function GlossyPuddleStrips({ curve }) {
 
       return {
         id: `glossy-puddle-strip-${index}`,
-        geometry: addUv2FromUv(tube),
+        geometry: tube,
         opacity: index === 1 ? 0.36 : 0.28,
       };
     });
@@ -99,12 +101,12 @@ function GlossyPuddleStrips({ curve }) {
           <primitive attach="geometry" object={strip.geometry} />
           <meshPhysicalMaterial
             {...aerialMudMaps}
-            color="#10100f"
-            roughness={0.2}
-            metalness={0.04}
-            clearcoat={0.88}
-            clearcoatRoughness={0.16}
-            specularIntensity={0.95}
+            color="#14110f"
+            roughness={0.35}
+            metalness={0.05}
+            clearcoat={0.6}
+            clearcoatRoughness={0.25}
+            specularIntensity={0.7}
             transparent
             opacity={strip.opacity}
             depthWrite={false}

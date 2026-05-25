@@ -5,7 +5,6 @@ import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { PIPE_RADIUS, TUNNEL_ENTRANCE_END } from "../constants";
 import { clamp, getCameraCurveProgress, smoothstep } from "../utils";
-import { HeadlightVolumetricBeam } from "./HeadlightVolumetricBeam";
 
 export function VehicleCameraRig({ progress, curve }) {
   const { camera, scene } = useThree();
@@ -64,9 +63,26 @@ export function VehicleCameraRig({ progress, curve }) {
     const bump = Math.sin(progress * 130) * 0.0065 * bumpMask;
     const roll = Math.sin(time * 5.6 + progress * 9) * 0.009 * entrancePush;
 
+    // Simulate speed breakers over the 3 pipe joints
+    const getJointBump = (checkT) => {
+      let b = 0;
+      [0.25, 0.5, 0.75].forEach((jt) => {
+        const dist = Math.abs(checkT - jt);
+        if (dist < 0.008) {
+          // Sharp curve to simulate rolling over a metal flange
+          // We use (1 - smoothstep) because the custom utils.js smoothstep doesn't support inverted edges
+          b += (1 - smoothstep(0, 0.008, dist)) * 0.075;
+        }
+      });
+      return b;
+    };
+
+    const camJointBump = getJointBump(t);
+    const lookJointBump = getJointBump(t + 0.004) * 0.8; // Front wheels hit first
+
     const insideCamera = new THREE.Vector3(
       current.x + slowSway + lateralScrape,
-      current.y - PIPE_RADIUS * 0.53 + vibrationY + fastShake + bump,
+      current.y - PIPE_RADIUS * 0.53 + vibrationY + fastShake + bump + camJointBump,
       current.z,
     );
 
@@ -78,7 +94,7 @@ export function VehicleCameraRig({ progress, curve }) {
 
     camera.lookAt(
       look.x + slowSway * 0.18,
-      look.y - PIPE_RADIUS * 0.36,
+      look.y - PIPE_RADIUS * 0.36 + lookJointBump,
       look.z,
     );
 
@@ -96,17 +112,17 @@ export function VehicleCameraRig({ progress, curve }) {
 
     if (leftWallLightRef.current) {
       leftWallLightRef.current.position.set(camX - 0.22, lightY, lightZ);
-      leftWallLightRef.current.intensity = 42 * flicker * headlightRamp;
+      leftWallLightRef.current.intensity = 35 * flicker * headlightRamp;
     }
 
     if (rightWallLightRef.current) {
       rightWallLightRef.current.position.set(camX + 0.22, lightY, lightZ);
-      rightWallLightRef.current.intensity = 38 * flicker * headlightRamp;
+      rightWallLightRef.current.intensity = 32 * flicker * headlightRamp;
     }
 
     if (centerLightRef.current) {
       centerLightRef.current.position.set(camX, lightY - 0.035, lightZ);
-      centerLightRef.current.intensity = 28 * flicker * headlightRamp;
+      centerLightRef.current.intensity = 25 * flicker * headlightRamp;
     }
 
     leftTarget.position.set(
@@ -152,11 +168,11 @@ export function VehicleCameraRig({ progress, curve }) {
       <spotLight
         ref={leftWallLightRef}
         color="#fff0d5"
-        intensity={42}
-        distance={23}
-        angle={0.86}
-        penumbra={0.98}
-        decay={1.22}
+        intensity={35}
+        distance={35}
+        angle={1.1}
+        penumbra={1.0}
+        decay={1.5}
         castShadow
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
@@ -166,22 +182,22 @@ export function VehicleCameraRig({ progress, curve }) {
       <spotLight
         ref={rightWallLightRef}
         color="#ffe4bc"
-        intensity={38}
-        distance={23}
-        angle={0.86}
-        penumbra={0.98}
-        decay={1.22}
+        intensity={32}
+        distance={35}
+        angle={1.1}
+        penumbra={1.0}
+        decay={1.5}
         castShadow={false}
       />
 
       <spotLight
         ref={centerLightRef}
         color="#ffd8aa"
-        intensity={28}
-        distance={18}
-        angle={0.52}
-        penumbra={0.97}
-        decay={1.3}
+        intensity={25}
+        distance={28}
+        angle={0.8}
+        penumbra={1.0}
+        decay={1.6}
         castShadow={false}
       />
 
@@ -196,12 +212,10 @@ export function VehicleCameraRig({ progress, curve }) {
       <pointLight
         ref={redRearRef}
         color="#9c1117"
-        intensity={0.85}
-        distance={4}
+        intensity={2.5}
+        distance={6}
         decay={2.2}
       />
-
-      <HeadlightVolumetricBeam progress={progress} />
     </>
   );
 }

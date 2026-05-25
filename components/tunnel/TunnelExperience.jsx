@@ -53,13 +53,7 @@ export function TunnelExperience({ stops = [] }) {
             onLeaveBack: () => dispatchTunnelHeaderVisibility(false),
             onRefresh: (self) =>
               dispatchTunnelHeaderVisibility(Boolean(self.isActive)),
-            snap: conditions?.reduce
-              ? false
-              : {
-                  snapTo: normalizedStops.map((stop) => stop.progress),
-                  duration: 0.24,
-                  ease: "power1.inOut",
-                },
+            snap: false,
             onUpdate(self) {
               const nextProgress = clamp(self.progress, 0, 1);
               const nextIndex = getStopIndexByProgress(

@@ -1,7 +1,7 @@
 "use client";
 
 import { useGLTF } from "@react-three/drei";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { TUNNEL_MODELS } from "../assets";
 import { prepareModelScene } from "../materials";
 import { radialPoint, radialRotation } from "../utils";
@@ -11,13 +11,13 @@ export function JunctionBoxes({ curve }) {
 
   const boxes = useMemo(() => {
     return [
-      { t: 0.24, angle: Math.PI * 0.64, scale: 0.38 },
-      { t: 0.48, angle: -Math.PI * 0.5, scale: 0.34 },
-      { t: 0.73, angle: Math.PI * 0.28, scale: 0.36 },
+      { t: 0.24, angle: Math.PI * 0.64, scale: 0.12 },
+      { t: 0.48, angle: -Math.PI * 0.5, scale: 0.14 },
+      { t: 0.73, angle: Math.PI * 0.28, scale: 0.12 },
     ].map((item, index) => ({
       ...item,
       id: `junction-box-${index}`,
-      position: radialPoint(curve, item.t, item.angle, 0.07),
+      position: radialPoint(curve, item.t, item.angle, 0.005),
     }));
   }, [curve]);
 
@@ -31,6 +31,22 @@ export function JunctionBoxes({ curve }) {
       }),
     );
   }, [boxes, electricalBoxesGltf.scene]);
+
+  useEffect(() => {
+    return () => {
+      boxScenes.forEach((scene) => {
+        scene.traverse((child) => {
+          if (child.isMesh && child.material) {
+            if (Array.isArray(child.material)) {
+              child.material.forEach((m) => m.dispose());
+            } else {
+              child.material.dispose();
+            }
+          }
+        });
+      });
+    };
+  }, [boxScenes]);
 
   return (
     <group>
@@ -56,3 +72,5 @@ export function JunctionBoxes({ curve }) {
     </group>
   );
 }
+
+useGLTF.preload(TUNNEL_MODELS.electricalBoxes);
