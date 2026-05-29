@@ -44,6 +44,41 @@ export const authors = authorProfiles.map((author, index) => {
   };
 });
 
+export const civiliansProfiles = [
+  {
+    name: "Elena Egorovna Sukhareva",
+    description: "The head of the training and methodological center for disaster medicine at the Kursk Regional Multidisciplinary Clinical Hospital. She was one of the first to meet the participants of Operation “Stream 3.0”"
+  },
+  {
+    name: "Nurse Nika",
+  },
+  {
+    name: "Alexander Shtatenko - Uncle Sasha",
+    description: "Due to his heroic efforts, not only survived, but also helped his neigbors survive the occupation of Sudzha"
+  },
+  {
+    name: "Olga Mikhailovna Minchenko",
+    description: "a 101-year-old resident of Sudzha who survived the occupation by the Armed Forces of Ukraine."
+  },
+];
+
+const civiliansPhotoMap = {
+  "elena-egorovna-sukhareva": "/imgs/civilians/elena.png",
+  "nurse-nika": "/imgs/civilians/nika.jpg",
+  "alexander-shtatenko-uncle-sasha": "/imgs/civilians/sasha.png",
+  "olga-mikhailovna-minchenko": "/imgs/civilians/olga.png",
+}
+
+export const civilians = civiliansProfiles.map((civilian, index) => {
+  const id = slugify(civilian.name);
+  return {
+    ...civilian,
+    id,
+    fileCode: `CIV-${String(index + 1).padStart(2, "0")}`,
+    photo: civiliansPhotoMap[id] ?? null,
+  };
+});
+
 export const characterDossiers = [
   {
     callsign: "HADES",
@@ -506,20 +541,37 @@ export const characterDossiers = [
   },
   {
     callsign: "TIMSO",
-    archetype: "The Dissenter",
-    role: "Counter-Narrative Analyst",
+    archetype: "The Connector",
+    role: "Counter-Perspective Analyst",
     photo: "/imgs/bio/timso.jpeg",
     summary:
-      "Introduces alternative interpretation. He challenges dominant narratives and unified meaning, representing ideological tension.",
+      "The alternative observer of modern conflict. Rather than a combat-oriented figure, he operates in the informational and ideological dimension, emphasizing ambiguity, contradiction, and competing versions of reality.",
     traits: [
-      "Ideological tension",
-      "Multiplicity of perspective",
-      "Narrative opposition",
-      "Critical questioning",
+      "Strong individual conviction",
+      "Resistance to imposed narratives",
+      "Heightened interpretive awareness",
+      "Cognitive independence",
     ],
-    mentality: "There is always another interpretation.",
+    mentality: "Every conflict creates more than one version of events.",
     analysis:
-      "His function is not destructive but essential — by challenging unified meaning, he prevents the dangerous rigidity of unchallenged narrative.",
+      "He preserves personal interpretation within environments dominated by collective pressure and polarized perspectives. By questioning and reinterpreting events, he embodies the truth that modern warfare generates competing truths and contested memory — information itself becomes part of the battlefield.",
+  },
+  {
+    callsign: "DOBRYNYA",
+    archetype: "The Shield",
+    role: "Stabilizing Combat Anchor",
+    photo: "/imgs/bio/Dobrynya.jpg",
+    summary:
+      "Represents controlled strength under pressure. Where others react emotionally to stress, uncertainty, or exhaustion, he maintains a consistent operational rhythm — stabilizing the group by reducing the chaos around him.",
+    traits: [
+      "Controlled emotional expression",
+      "Low-reactivity decision making",
+      "Reliability under prolonged strain",
+      "Collective orientation over impulse",
+    ],
+    mentality: "Panic wastes energy. Keep moving.",
+    analysis:
+      "His effectiveness comes from consistency rather than intensity. Through emotional restraint and stress compartmentalization, he slows escalation, preserves structure, and maintains momentum — a counter-force to the psychological contagion of fear and panic, representing endurance as a tactical asset.",
   },
 ];
 
@@ -558,8 +610,8 @@ export const personnelIntro = {
 
 export const personnelAuthorsPage = {
   eyebrow: authorsIntro.eyebrow,
-  metadataTitle: "Authors And Witnesses",
-  title: "Authors And Witnesses",
+  metadataTitle: "Authors And Civilians",
+  title: "Authors And Civilians",
   summary: authorsIntro.body,
 };
 

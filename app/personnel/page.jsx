@@ -41,7 +41,7 @@ export default function PersonnelPage() {
               <Link
                 key={branch.label}
                 href={branch.href}
-                className="group/branch flex items-center justify-between gap-4 rounded-md border border-white/10 bg-white/[0.02] px-4 py-3 text-sm leading-relaxed text-stone-200 transition-[border-color,background-color] duration-500 hover:border-white/30 hover:bg-white/[0.05]"
+                className="group/branch flex items-center justify-between gap-4 rounded-md border border-white/10 bg-white/2 px-4 py-3 text-sm leading-relaxed text-stone-200 transition-[border-color,background-color] duration-500 hover:border-white/30 hover:bg-white/5"
               >
                 <span className="inline-flex min-w-0 items-center gap-3">
                   <ArchiveInlineIcon

@@ -1,6 +1,6 @@
-import Image from "next/image";
-
 import { ArchivePageShell } from "@/components/ui/archive/ArchivePageShell";
+import { ArchiveSectionHeader } from "@/components/ui/archive/ArchiveSectionHeader";
+import { CiviliansGallery } from "@/components/ui/archive/CiviliansGallery";
 import {
   TerminalBlock,
   TerminalDivider,
@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/terminal/Terminal";
 import {
   authors,
+  civilians,
   personnelAuthorsContent,
   personnelAuthorsPage,
 } from "@/constants/personnel";
@@ -29,18 +30,23 @@ export default function PersonnelAuthorsPage() {
       title={personnelAuthorsPage.title}
       summary={personnelAuthorsPage.summary}
     >
+      <ArchiveSectionHeader
+        eyebrow={"Authors"}
+        iconKey="authors"
+        title={"Authors"}
+        summary="Their work is not commentary. It is a dossier. Interviews, diaries, and field notes are arranged so the reader crawls the pipe themselves. No narrator. Just the truth of those who were there."
+      />
       <div className="grid gap-5">
         {authors.map((author) => (
           <TerminalBlock key={author.id}>
-            <div className="grid gap-6 md:grid-cols-[160px_minmax(0,1fr)] md:items-start">
+            <div className="grid gap-6 md:grid-cols-[minmax(0,260px)_minmax(0,1fr)] md:items-start">
               {author.photo ? (
-                <div className="relative aspect-square w-40 overflow-hidden rounded-md border border-white/10 bg-black md:w-full">
-                  <Image
+                <div className="relative w-full max-w-65 overflow-hidden rounded-md border border-white/10 bg-black">
+                  <img
                     src={author.photo}
                     alt={author.name}
-                    fill
-                    sizes="(min-width: 768px) 160px, 160px"
-                    className="object-cover grayscale-15"
+                    draggable={false}
+                    className="block h-auto w-full select-none object-cover grayscale-15"
                   />
                   <div
                     aria-hidden="true"
@@ -70,6 +76,14 @@ export default function PersonnelAuthorsPage() {
           </TerminalBlock>
         ))}
       </div>
+
+      <ArchiveSectionHeader
+        eyebrow={"Civilians"}
+        iconKey="witness"
+        title={"Civilians"}
+        summary="They were not soldiers. They became the reason soldiers crawled through the pipe."
+      />
+      <CiviliansGallery items={civilians} />
     </ArchivePageShell>
   );
 }

@@ -2,7 +2,6 @@ export const PIPE_DIAMETER = 1.4;
 export const PIPE_RADIUS = PIPE_DIAMETER / 2;
 
 export const TUNNEL_ENTRANCE_END = 0.1;
-export const TUNNEL_EXIT_START = 0.88;
 export const TUNNEL_CAMERA_MAX_T = 0.985;
 
 export const MAP_ROUTE_POINTS = [

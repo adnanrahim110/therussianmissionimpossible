@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import { cn } from "@/lib/utils";
 
 const blockBase =
@@ -74,70 +72,5 @@ export function TerminalRow({
 export function TerminalDivider({ className }) {
   return (
     <div role="separator" className={cn("my-1 h-px bg-white/10", className)} />
-  );
-}
-
-export function TerminalLink({
-  href,
-  index,
-  title,
-  meta,
-  icon: Icon,
-  accent = false,
-  external = false,
-  className,
-}) {
-  const Component = external ? "a" : Link;
-  const externalProps = external
-    ? { target: "_blank", rel: "noopener noreferrer" }
-    : {};
-
-  return (
-    <Component
-      href={href}
-      {...externalProps}
-      className={cn(
-        "group flex items-center gap-3 rounded-md border border-white/10 bg-black/40 px-4 py-3 font-ui text-sm text-stone-100 transition-colors hover:border-white/30 hover:bg-black/55 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40",
-        accent &&
-          "border-rose-500/30 hover:border-rose-400/60 hover:bg-rose-500/10",
-        className,
-      )}
-    >
-      {index ? (
-        <span
-          className={cn(
-            "shrink-0 tracking-wider",
-            accent ? "text-rose-300" : "text-stone-400",
-          )}
-        >
-          {index}
-        </span>
-      ) : null}
-      {Icon ? (
-        <Icon
-          className={cn(
-            "size-4 shrink-0",
-            accent ? "text-rose-300" : "text-emerald-400/80",
-          )}
-        />
-      ) : null}
-      <span className="min-w-0 flex-1">
-        <span className="block truncate tracking-wide text-white">{title}</span>
-        {meta ? (
-          <span className="mt-0.5 block truncate text-[11px] tracking-[0.18em] text-stone-400 normal-case">
-            {meta}
-          </span>
-        ) : null}
-      </span>
-      <span
-        aria-hidden="true"
-        className={cn(
-          "shrink-0 text-base transition-transform group-hover:translate-x-1",
-          accent ? "text-rose-300" : "text-stone-300",
-        )}
-      >
-        →
-      </span>
-    </Component>
   );
 }

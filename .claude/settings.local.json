@@ -20,7 +20,18 @@
       "Bash(tasklist)",
       "Bash(pnpm exec *)",
       "Bash(node -e \"require\\('@babel/parser'\\).parse\\(require\\('fs'\\).readFileSync\\('components/archive/TunnelExperience.jsx','utf8'\\),{sourceType:'module',plugins:['jsx']}\\); console.log\\('OK'\\)\")",
-      "Bash(node --check \"D:\\\\xampp_old\\\\htdocs\\\\author\\\\yuri\\\\app\\\\personnel\\\\dossiers\\\\page.jsx\")"
+      "Bash(node --check \"D:\\\\xampp_old\\\\htdocs\\\\author\\\\yuri\\\\app\\\\personnel\\\\dossiers\\\\page.jsx\")",
+      "Bash(node -e ' *)",
+      "Bash(npx eslint *)",
+      "Bash(npm run *)",
+      "Bash(node -e \"const p=require\\('./package.json'\\); console.log\\(JSON.stringify\\(p.scripts,null,2\\)\\); console.log\\('deps:', Object.keys\\(p.dependencies||{}\\).join\\(', '\\)\\); console.log\\('devDeps:', Object.keys\\(p.devDependencies||{}\\).join\\(', '\\)\\)\")",
+      "Bash(node _scan.mjs)",
+      "Bash(grep -rln \"CursorGlowField\" . --include=*.jsx --include=*.js)",
+      "Bash(grep -rln \"useCursorGlow\" . --include=*.jsx --include=*.js)",
+      "Bash(node _scan2.mjs)",
+      "Bash(git rm *)",
+      "Bash(rm -f _scan.mjs _scan2.mjs)",
+      "Bash(node -e \"const fs=require\\('fs'\\);const l=fs.readFileSync\\('constants/tunnel.js','utf8'\\).split\\(/\\\\r?\\\\n/\\);if\\(l[129].trim\\(\\)!=='];'\\){console.error\\('UNEXPECTED line130:',JSON.stringify\\(l[129]\\)\\);process.exit\\(1\\);}fs.writeFileSync\\('constants/tunnel.js',l.slice\\(0,130\\).join\\('\\\\n'\\)+'\\\\n'\\);console.log\\('truncated tunnel.js to 130 lines'\\);\")"
     ]
   }
 }

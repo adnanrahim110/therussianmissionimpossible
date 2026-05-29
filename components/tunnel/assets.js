@@ -1,6 +1,5 @@
 const TEXTURE_ROOT = "/assets/tunnel/textures";
 const MODEL_ROOT = "/assets/tunnel/models";
-const HDRI_ROOT = "/assets/tunnel/hdri";
 
 export const TUNNEL_TEXTURES = {
   pipeRust: {
@@ -52,8 +51,4 @@ export const TUNNEL_MODELS = {
   wires: `${MODEL_ROOT}/wires/wires.glb`,
   oldPipePack:
     `${MODEL_ROOT}/old-industrial-pipe-pack/old_industrial_pipe_pack_pbr.glb`,
-};
-
-export const TUNNEL_HDRI = {
-  abandonedTiledRoom: `${HDRI_ROOT}/abandoned_tiled_room_1k.exr`,
 };
