@@ -271,7 +271,7 @@ export const characterDossiers = [
     callsign: "ZHORA",
     archetype: "The Thinker",
     role: "Historical Context Analyst",
-    photo: null,
+    photo: "/imgs/bio/zhora.jpg",
     summary:
       "Contextualizes present events within historical continuity. This perspective provides psychological distance, ideological grounding, and endurance through meaning.",
     traits: [
