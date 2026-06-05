@@ -9,7 +9,7 @@ import { smoothstep } from "./utils";
 export function TunnelScene({ progress, activeIndex, stops, onSelectStop }) {
   const entranceVignette = 1 - smoothstep(0.02, 0.18, progress);
   const exitFade = smoothstep(0.965, 1, progress);
-  const uiOpacity = smoothstep(0.08, 0.12, progress);
+  const uiOpacity = smoothstep(0.005, 0.035, progress);
 
   return (
     <div className="relative h-full min-h-0 overflow-hidden bg-black">
@@ -41,7 +41,12 @@ export function TunnelScene({ progress, activeIndex, stops, onSelectStop }) {
           onSelect={onSelectStop}
         />
 
-        <OperationBriefingCard />
+        <OperationBriefingCard
+          stops={stops}
+          activeIndex={activeIndex}
+          progress={progress}
+          onSelectStop={onSelectStop}
+        />
         <PipelineStatsCard />
       </div>
 

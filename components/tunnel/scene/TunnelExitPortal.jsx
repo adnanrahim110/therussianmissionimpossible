@@ -14,7 +14,6 @@ export function TunnelExitPortal({ progress, curve }) {
   const plateMatRef = useRef(null);
   const rimMatRef = useRef(null);
   const diskMatRef = useRef(null);
-  const hazeMatRef = useRef(null);
   const redMarkerMatRef = useRef(null);
   const warmLightRef = useRef(null);
   const redLightRef = useRef(null);
@@ -48,9 +47,6 @@ export function TunnelExitPortal({ progress, curve }) {
     if (rimMatRef.current) rimMatRef.current.opacity = reveal;
     if (diskMatRef.current) {
       diskMatRef.current.opacity = reveal * 0.5 + finalBloom * 0.36;
-    }
-    if (hazeMatRef.current) {
-      hazeMatRef.current.opacity = reveal * 0.18 + finalBloom * 0.26;
     }
     if (redMarkerMatRef.current) redMarkerMatRef.current.opacity = reveal;
 
@@ -121,18 +117,6 @@ export function TunnelExitPortal({ progress, curve }) {
         <meshBasicMaterial
           ref={diskMatRef}
           color="#fff0cf"
-          transparent
-          opacity={0}
-          depthWrite={false}
-          side={THREE.DoubleSide}
-        />
-      </mesh>
-
-      <mesh position={[0, 0, 0.09]}>
-        <ringGeometry args={[PIPE_RADIUS * 0.46, PIPE_RADIUS * 1.18, 96]} />
-        <meshBasicMaterial
-          ref={hazeMatRef}
-          color="#ffd9aa"
           transparent
           opacity={0}
           depthWrite={false}

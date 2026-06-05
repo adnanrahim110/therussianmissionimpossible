@@ -9,7 +9,7 @@ export function WallScratches({ curve }) {
     const items = [];
     const rng = createSeededRandom(1234);
 
-    for (let i = 0; i < 72; i += 1) {
+    for (let i = 0; i < 92; i += 1) {
       const t = 0.04 + rng() * 0.9;
       const angle =
         rng() > 0.5
@@ -23,7 +23,8 @@ export function WallScratches({ curve }) {
       items.push({
         id: `scratch-${i}`,
         curve: new THREE.CatmullRomCurve3([start, end]),
-        color: rng() > 0.55 ? "#9a6c55" : "#0b0706",
+        color: rng() > 0.58 ? "#5f717b" : "#020304",
+        opacity: 0.12 + rng() * 0.2,
         radius: 0.0014 + rng() * 0.0012,
       });
     }
@@ -36,7 +37,11 @@ export function WallScratches({ curve }) {
       {scratches.map((scratch) => (
         <mesh key={scratch.id}>
           <tubeGeometry args={[scratch.curve, 8, scratch.radius, 5, false]} />
-          <meshBasicMaterial color={scratch.color} transparent opacity={0.42} />
+          <meshBasicMaterial
+            color={scratch.color}
+            transparent
+            opacity={scratch.opacity}
+          />
         </mesh>
       ))}
     </group>

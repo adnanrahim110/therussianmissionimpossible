@@ -6,6 +6,12 @@ import * as THREE from "three";
 import { PIPE_RADIUS, TUNNEL_ENTRANCE_END } from "../constants";
 import { clamp, getCameraCurveProgress, smoothstep } from "../utils";
 
+const HEADLIGHTS = {
+  left: 30,
+  right: 26,
+  center: 18,
+};
+
 export function VehicleCameraRig({ progress, curve }) {
   const { camera, scene } = useThree();
 
@@ -112,17 +118,20 @@ export function VehicleCameraRig({ progress, curve }) {
 
     if (leftWallLightRef.current) {
       leftWallLightRef.current.position.set(camX - 0.22, lightY, lightZ);
-      leftWallLightRef.current.intensity = 35 * flicker * headlightRamp;
+      leftWallLightRef.current.intensity =
+        HEADLIGHTS.left * flicker * headlightRamp;
     }
 
     if (rightWallLightRef.current) {
       rightWallLightRef.current.position.set(camX + 0.22, lightY, lightZ);
-      rightWallLightRef.current.intensity = 32 * flicker * headlightRamp;
+      rightWallLightRef.current.intensity =
+        HEADLIGHTS.right * flicker * headlightRamp;
     }
 
     if (centerLightRef.current) {
       centerLightRef.current.position.set(camX, lightY - 0.035, lightZ);
-      centerLightRef.current.intensity = 25 * flicker * headlightRamp;
+      centerLightRef.current.intensity =
+        HEADLIGHTS.center * flicker * headlightRamp;
     }
 
     leftTarget.position.set(
@@ -149,7 +158,7 @@ export function VehicleCameraRig({ progress, curve }) {
 
     if (lowSoftFillRef.current) {
       lowSoftFillRef.current.position.set(camX, camY + 0.08, camZ - 0.85);
-      lowSoftFillRef.current.intensity = 0.38 + entrancePush * 0.16;
+      lowSoftFillRef.current.intensity = 0.3 + entrancePush * 0.12;
     }
 
     if (redRearRef.current) {
@@ -167,12 +176,12 @@ export function VehicleCameraRig({ progress, curve }) {
     <>
       <spotLight
         ref={leftWallLightRef}
-        color="#fff0d5"
-        intensity={35}
-        distance={35}
-        angle={1.1}
+        color="#dbe9ff"
+        intensity={HEADLIGHTS.left}
+        distance={30}
+        angle={0.94}
         penumbra={1.0}
-        decay={1.5}
+        decay={1.8}
         castShadow
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
@@ -181,30 +190,30 @@ export function VehicleCameraRig({ progress, curve }) {
 
       <spotLight
         ref={rightWallLightRef}
-        color="#ffe4bc"
-        intensity={32}
-        distance={35}
-        angle={1.1}
+        color="#c7dcff"
+        intensity={HEADLIGHTS.right}
+        distance={30}
+        angle={0.94}
         penumbra={1.0}
-        decay={1.5}
+        decay={1.8}
         castShadow={false}
       />
 
       <spotLight
         ref={centerLightRef}
-        color="#ffd8aa"
-        intensity={25}
-        distance={28}
-        angle={0.8}
+        color="#8fbaff"
+        intensity={HEADLIGHTS.center}
+        distance={23}
+        angle={0.62}
         penumbra={1.0}
-        decay={1.6}
+        decay={1.9}
         castShadow={false}
       />
 
       <pointLight
         ref={lowSoftFillRef}
-        color="#7a4434"
-        intensity={0.48}
+        color="#39495c"
+        intensity={0.36}
         distance={4.4}
         decay={2}
       />

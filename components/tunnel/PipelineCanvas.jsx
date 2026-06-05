@@ -6,7 +6,6 @@ import * as THREE from "three";
 import { CableClamps } from "./scene/CableClamps";
 import { CrawlerTracks } from "./scene/CrawlerTracks";
 import { JunctionBoxes } from "./scene/JunctionBoxes";
-import { NearDust } from "./scene/NearDust";
 import { PipeCables } from "./scene/PipeCables";
 import { PipeJoints } from "./scene/PipeJoints";
 import { PipelineShell } from "./scene/PipelineShell";
@@ -76,7 +75,6 @@ export function PipelineCanvas({ progress }) {
         className="absolute inset-0"
       >
         <color attach="background" args={["#000000"]} />
-        <fog attach="fog" args={["#020101", 3.2, 19]} />
 
         <Suspense fallback={null}>
           <PipelineShell curve={curve} />
@@ -90,7 +88,6 @@ export function PipelineCanvas({ progress }) {
           <RouteStencils curve={curve} />
           <WallScratches curve={curve} />
           <SedimentAndDebris curve={curve} />
-          <NearDust progress={progress} curve={curve} />
           <TunnelEntrancePortal progress={progress} curve={curve} />
           <TunnelExitPortal progress={progress} curve={curve} />
         </Suspense>

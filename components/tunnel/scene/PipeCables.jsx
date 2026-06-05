@@ -1,15 +1,10 @@
 "use client";
 
-import { useGLTF } from "@react-three/drei";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import * as THREE from "three";
-import { TUNNEL_MODELS } from "../assets";
-import { prepareModelScene } from "../materials";
 import { radialPoint } from "../utils";
 
 export function PipeCables({ curve }) {
-  const pipePackGltf = useGLTF(TUNNEL_MODELS.oldPipePack);
-
   const cables = useMemo(() => {
     const configs = [
       { angle: 2.74, radius: 0.013, color: "#070404", phase: 0.4 },
@@ -78,45 +73,31 @@ export function PipeCables({ curve }) {
     });
   }, [curve]);
 
-  const sidePipeProps = useMemo(() => {
-    return [
-      { t: 0.28, angle: Math.PI - 0.15, scale: 0.16, rot: 0.18 },
-      { t: 0.61, angle: 0.15, scale: 0.14, rot: -0.22 },
-    ].map((item, index) => {
+  const sidePipes = useMemo(() => {
+    const configs = [
+      { start: 0.25, end: 0.31, angle: Math.PI - 0.15, radius: 0.018 },
+      { start: 0.585, end: 0.645, angle: 0.15, radius: 0.016 },
+    ];
+
+    return configs.map((cfg, index) => {
+      const points = [];
+
+      for (let i = 0; i <= 18; i += 1) {
+        const local = i / 18;
+        const t = cfg.start + (cfg.end - cfg.start) * local;
+        const angle =
+          cfg.angle + Math.sin(local * Math.PI * 2 + index) * 0.012;
+
+        points.push(radialPoint(curve, t, angle, cfg.radius + 0.008));
+      }
+
       return {
-        ...item,
-        id: `industrial-side-pipe-${index}`,
-        position: radialPoint(curve, item.t, item.angle, 0.08),
+        id: `wall-side-pipe-${index}`,
+        curve: new THREE.CatmullRomCurve3(points),
+        radius: cfg.radius,
       };
     });
   }, [curve]);
-
-  const sidePipeScenes = useMemo(() => {
-    return sidePipeProps.map((_, index) =>
-      prepareModelScene(pipePackGltf.scene, {
-        castShadow: index === 0,
-        receiveShadow: true,
-        color: "#2b1710",
-        colorMix: 0.5,
-      }),
-    );
-  }, [pipePackGltf.scene, sidePipeProps]);
-
-  useEffect(() => {
-    return () => {
-      sidePipeScenes.forEach((scene) => {
-        scene.traverse((child) => {
-          if (child.isMesh && child.material) {
-            if (Array.isArray(child.material)) {
-              child.material.forEach((m) => m.dispose());
-            } else {
-              child.material.dispose();
-            }
-          }
-        });
-      });
-    };
-  }, [sidePipeScenes]);
 
   return (
     <group>
@@ -142,14 +123,15 @@ export function PipeCables({ curve }) {
         </mesh>
       ))}
 
-      {sidePipeProps.map((item, index) => (
-        <primitive
-          key={item.id}
-          object={sidePipeScenes[index]}
-          position={item.position}
-          rotation={[0, Math.PI / 2, item.rot]}
-          scale={item.scale}
-        />
+      {sidePipes.map((pipe) => (
+        <mesh key={pipe.id} castShadow receiveShadow>
+          <tubeGeometry args={[pipe.curve, 42, pipe.radius, 10, false]} />
+          <meshStandardMaterial
+            color="#120b08"
+            roughness={0.84}
+            metalness={0.42}
+          />
+        </mesh>
       ))}
     </group>
   );

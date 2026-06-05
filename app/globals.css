@@ -76,6 +76,7 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+
     *,
     *::before,
     *::after {
@@ -88,5 +89,19 @@
 
   button {
     @apply cursor-pointer;
+  }
+}
+
+@layer components {
+  .scroll_thin::-webkit-scrollbar {
+    @apply w-1.5;
+  }
+
+  .scroll_thin::-webkit-scrollbar-thumb {
+    @apply bg-stone-700 rounded-full;
+  }
+
+  .scroll_thin::-webkit-scrollbar-thumb:hover {
+    @apply bg-stone-600;
   }
 }

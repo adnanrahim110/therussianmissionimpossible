@@ -71,19 +71,15 @@ export function normalizeStops(stops) {
 }
 
 export function getStopIndexByProgress(stops, progress) {
-  let nearestIndex = 0;
-  let nearestDistance = Number.POSITIVE_INFINITY;
+  let activeIndex = 0;
 
   stops.forEach((stop, index) => {
-    const distance = Math.abs(stop.progress - progress);
-
-    if (distance < nearestDistance) {
-      nearestDistance = distance;
-      nearestIndex = index;
+    if (progress + 0.001 >= stop.progress) {
+      activeIndex = index;
     }
   });
 
-  return nearestIndex;
+  return activeIndex;
 }
 
 export function dispatchTunnelHeaderVisibility(visible) {
